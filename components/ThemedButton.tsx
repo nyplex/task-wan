@@ -1,8 +1,8 @@
-import { useState } from "react";
 import { ButtonSpinner, Button as GSButton } from "@/components/ui/button";
-import { HStack } from "./ui/hstack";
-import ThemedText from "./ThemedText";
 import clsx from "clsx";
+import { useState } from "react";
+import ThemedText from "./ThemedText";
+import { HStack } from "./ui/hstack";
 
 type Props = {
   title: string;
@@ -37,7 +37,7 @@ const ThemedButton = ({
     "h-[48px]": size === "large",
     "h-[36px]": size === "small",
     "rounded-[10px]": true,
-    "bg-primary-50 data-[active=true]:bg-primary-0": variant === "primary",
+    "bg-primary-0 data-[active=true]:bg-primary-50": variant === "primary",
     "bg-[#C6C2C2]": variant === "primary" && disabled,
     "bg-error": variant === "primary" && destructive && !disabled,
     "bg-transparent data-[active=true]:bg-transparent": variant === "secondary",

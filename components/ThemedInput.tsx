@@ -1,7 +1,7 @@
-import { KeyboardType } from "react-native";
-import { Input, InputField } from "./ui/input";
-import { Box } from "./ui/box";
 import clsx from "clsx";
+import { KeyboardType } from "react-native";
+import { Box } from "./ui/box";
+import { Input, InputField } from "./ui/input";
 
 type Props = {
   isInvalid?: boolean;
@@ -32,7 +32,7 @@ const ThemedInput = ({
   });
 
   const CNIconBox = clsx("h-full w-[50px] justify-center items-center", {
-    "bg-primary-200": !isInvalid,
+    "bg-primary-0": !isInvalid,
     "bg-[#C6C2C2]": isDisabled,
     "bg-error": isInvalid && !isDisabled,
   });
