@@ -1,4 +1,4 @@
-import { Box } from "@/components/ui/box";
+import { Box } from "@/components/gluestack/box";
 import clsx from "clsx";
 
 type Props = {
@@ -17,7 +17,10 @@ const SliderIndicator = ({ length, currentIndex }: Props) => {
   return (
     <Box className="flex-row items-center mt-4 ">
       {Array.from({ length }, (_, index) => (
-        <Box key={index} className={getIndicatorStyle(index)} />
+        <Box
+          key={index}
+          className={getIndicatorStyle(index)}
+        />
       ))}
     </Box>
   );

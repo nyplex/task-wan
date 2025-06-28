@@ -1,85 +1,83 @@
-import fonts from "@/assets/fonts/fonts";
-import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
 import "@/global.css";
-import { supabase } from "@/lib/supabase";
-import { DarkTheme, ThemeProvider } from "@react-navigation/native";
-import { Session } from "@supabase/supabase-js";
-import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
-import * as SplashScreen from "expo-splash-screen";
-import { StatusBar } from "expo-status-bar";
-import { useEffect, useState } from "react";
-import { useColorScheme } from "react-native";
+import { Provider, useSelector } from "react-redux";
+import store from "@/redux/store";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { GluestackUIProvider } from "@/components/gluestack/gluestack-ui-provider";
+import { ThemeProvider, DarkTheme } from "@react-navigation/native";
+import { Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import useAuthListener from "@/hooks/useAuthListener";
+import { selectSession } from "@/redux/slices/authSlice/authSelectors";
+import useErrors from "@/hooks/useErrors";
+import { selectAppState } from "@/redux/slices/appSlice/appSelectors";
+import BottomSheetProvider from "@/context/BottomSheetProvider";
 
-// @ts-ignore
-globalThis.RNFB_SILENCE_MODULAR_DEPRECATION_WARNINGS = true; // Suppress warnings for Firebase modular imports
+function InnerLayout() {
+  useAuthListener();
+  // useErrors();
+  const session = useSelector(selectSession);
+  const isAppLoading = useSelector(selectAppState);
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
-SplashScreen.hideAsync();
-
-export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [session, setSession] = useState<Session | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [loaded] = useFonts(fonts);
-
-  // if (!loaded) {
-  //   return null;
-  // }
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setIsLoading(false);
-    });
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-      setIsLoading(false);
-    });
-  }, []);
-
-  if (isLoading) {
-    return null;
+  if (isAppLoading.isLoading) {
+    return null; // or a loading spinner
   }
 
-  return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <GluestackUIProvider>
-        {/* <Provider store={store}> */}
-        {/* <BottomSheetProvider> */}
-        <ThemeProvider
-          // value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
-          value={DarkTheme}
-        >
-          <Stack>
-            <Stack.Protected guard={!session}>
-              <Stack.Screen
-                name="(app)"
-                options={{
-                  title: "(app)",
-                  headerShown: false,
-                }}
-              />
-            </Stack.Protected>
-            <Stack.Protected guard={!!session}>
-              <Stack.Screen
-                name="(root)"
-                options={{
-                  title: "(root)",
-                  headerShown: false,
-                }}
-              />
-            </Stack.Protected>
-          </Stack>
+  const IS_STORYBOOK = false;
 
-          {/* <ErrorContainer /> */}
-          <StatusBar style="light" translucent={true} />
-        </ThemeProvider>
-        {/* </BottomSheetProvider> */}
-        {/* </Provider> */}
-      </GluestackUIProvider>
-    </GestureHandlerRootView>
+  return (
+    <>
+      <Stack>
+        <Stack.Protected guard={IS_STORYBOOK}>
+          <Stack.Screen
+            name="Storybook"
+            options={{
+              title: "Storybook",
+              headerShown: false,
+            }}
+          />
+        </Stack.Protected>
+        <Stack.Protected guard={!session && !IS_STORYBOOK}>
+          <Stack.Screen
+            name="(app)"
+            options={{
+              title: "(app)",
+              headerShown: false,
+            }}
+          />
+        </Stack.Protected>
+        <Stack.Protected guard={!!session && !IS_STORYBOOK}>
+          <Stack.Screen
+            name="(root)"
+            options={{
+              title: "(root)",
+              headerShown: false,
+            }}
+          />
+        </Stack.Protected>
+      </Stack>
+    </>
+  );
+}
+
+export default function RootLayout() {
+  return (
+    <Provider store={store}>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <GluestackUIProvider mode="light">
+          <ThemeProvider
+            // value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+            value={DarkTheme}>
+            <BottomSheetProvider>
+              <InnerLayout />
+              <StatusBar
+                style="dark"
+                translucent={true}
+                backgroundColor="transparent"
+              />
+            </BottomSheetProvider>
+          </ThemeProvider>
+        </GluestackUIProvider>
+      </GestureHandlerRootView>
+    </Provider>
   );
 }

@@ -1,11 +1,7 @@
-import { Text, View } from "react-native";
+import VerificationCodeScreen from "@/screens/verificationCode/VerificationCodeScreen";
 
 const VerificationCode = () => {
-  return (
-    <View style={{ flex: 1 }}>
-      <Text>VerificationCode</Text>
-    </View>
-  );
+  return <VerificationCodeScreen />;
 };
 
 export default VerificationCode;
