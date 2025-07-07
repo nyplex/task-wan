@@ -1,22 +1,11 @@
-import { Middleware, configureStore } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
+import { listenerMiddleware } from "./middlewares/listenerMiddlewares";
 import devToolsEnhancer from "redux-devtools-expo-dev-plugin";
 import appReducer from "./slices/appSlice/appSlice";
 import authReducer from "./slices/authSlice/authSlice";
-import errorsReducer, { setError } from "./slices/errorsSlice/errorsSlice";
-import { isRejectedWithValue } from "@reduxjs/toolkit";
+import errorsReducer from "./slices/errorsSlice/errorsSlice";
 import { apiSlice } from "./slices/apiSlice/apiSlice";
 
-export const errorLogger: Middleware = (storeAPI) => (next) => (action) => {
-  if (isRejectedWithValue(action)) {
-    action.type;
-    storeAPI.dispatch(
-      setError({
-        message: action.payload as string | "An unknown error occurred",
-      })
-    );
-  }
-  return next(action);
-};
 const store = configureStore({
   reducer: {
     app: appReducer,
@@ -26,7 +15,7 @@ const store = configureStore({
   },
   devTools: false,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(apiSlice.middleware, errorLogger),
+    getDefaultMiddleware().prepend(listenerMiddleware.middleware).concat(apiSlice.middleware),
   enhancers: (getDefaultEnhancers) =>
     getDefaultEnhancers().concat(
       devToolsEnhancer({

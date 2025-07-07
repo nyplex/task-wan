@@ -44,13 +44,19 @@ const styles = StyleSheet.create({
 const CELL_COUNT = 6;
 
 type Props = {
-  onCodeFilled: (code: string) => void;
+  onValueChange: (value: string) => void;
+  currentValue?: string;
   invalid?: boolean;
   disabled?: boolean;
 };
 
-const CodeInput = ({ onCodeFilled, invalid = false, disabled = false }: Props) => {
-  const [value, setValue] = useState("");
+const CodeInput = ({
+  onValueChange,
+  currentValue = "",
+  invalid = false,
+  disabled = false,
+}: Props) => {
+  const [value, setValue] = useState(currentValue);
   const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
     value,
@@ -58,10 +64,12 @@ const CodeInput = ({ onCodeFilled, invalid = false, disabled = false }: Props) =
   });
 
   React.useEffect(() => {
-    if (value.length === CELL_COUNT) {
-      onCodeFilled(value);
-    }
-  }, [value, onCodeFilled]);
+    onValueChange(value);
+  }, [value, onValueChange]);
+
+  React.useEffect(() => {
+    setValue(currentValue);
+  }, [currentValue]);
 
   return (
     <View>

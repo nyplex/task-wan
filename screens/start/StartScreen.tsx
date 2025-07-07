@@ -1,11 +1,10 @@
-import Button from "@/components/buttons/Button";
-import ThemedText from "@/components/Text";
-import { Box } from "@/components/gluestack/box";
-import { Image } from "expo-image";
-import { useRouter } from "expo-router";
 import { useState } from "react";
+import { useRouter } from "expo-router";
+import { Box } from "@/components/gluestack/box";
 import { Slider } from "./components/Slider";
 import SliderIndicator from "./components/SliderIndicator";
+import SliderChild from "./components/SliderChild";
+import Button from "@/components/buttons/Button";
 
 const StartScreen = () => {
   const router = useRouter();
@@ -20,78 +19,26 @@ const StartScreen = () => {
         />
       </Box>
       <Slider onIndexChange={(i) => setIndex(i)}>
-        <Box className="px-4">
-          <Box>
-            <Image
-              source={require("@/assets/images/start-1.png")}
-              contentFit="contain"
-              style={{ width: "100%", height: 400 }}
-            />
-          </Box>
-          <Box className="w-full h-full px-4">
-            <ThemedText
-              size="body"
-              weight="semi-bold"
-              className="text-center">
-              Easy Time Management
-            </ThemedText>
-            <ThemedText
-              size="bodyS"
-              className="text-center mt-2">
-              With management based on priority and daily tasks, it will give you convenience in
-              managing and determining the tasks that must be done first
-            </ThemedText>
-          </Box>
-        </Box>
-        <Box className="flex-1 px-4">
-          <Box>
-            <Image
-              source={require("@/assets/images/start-2.png")}
-              contentFit="contain"
-              style={{ width: "100%", height: 400 }}
-            />
-          </Box>
-          <Box className="flex-1 w-full h-full px-4">
-            <ThemedText
-              size="body"
-              weight="semi-bold"
-              className="text-center">
-              Increase Work Effectiveness
-            </ThemedText>
-            <ThemedText
-              size="bodyS"
-              className="text-center mt-2">
-              Time management and the determination of more important tasks will give your job
-              statistics better and always improve
-            </ThemedText>
-          </Box>
-        </Box>
-        <Box className="flex-1 px-4">
-          <Box>
-            <Image
-              source={require("@/assets/images/start-3.png")}
-              contentFit="contain"
-              style={{ width: "100%", height: 400 }}
-            />
-          </Box>
-          <Box className="flex-1 w-full h-full px-4">
-            <ThemedText
-              size="body"
-              weight="semi-bold"
-              className="text-center">
-              Reminder Notification
-            </ThemedText>
-            <ThemedText
-              size="bodyS"
-              className="text-center mt-2">
-              The advantage of this application is that it also provides reminders for you so you
-              don't forget to keep doing your assignments well and according to the time you have
-              set
-            </ThemedText>
-          </Box>
-        </Box>
+        <SliderChild
+          imageSource={require("@/assets/images/start-1.png")}
+          title="Easy Time Management"
+          description="With management based on priority and daily tasks, it will give you convenience in
+          managing and determining the tasks that must be done first"
+        />
+        <SliderChild
+          imageSource={require("@/assets/images/start-3.png")}
+          title="Increase Work Effectiveness"
+          description="Time management and the determination of more important tasks will give your job
+          statistics better and always improve"
+        />
+        <SliderChild
+          imageSource={require("@/assets/images/start-2.png")}
+          title="Reminder Notification"
+          description="The advantage of this application is that it also provides reminders for you so you
+          don't forget to keep doing your assignments well and according to the time you have
+          set"
+        />
       </Slider>
-
       <Box className="px-4">
         <Button
           title="Get Started"

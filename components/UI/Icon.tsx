@@ -34,7 +34,7 @@ const Icon = ({ icon, size = "medium", color, disabled, onPress }: Props) => {
     <Feather
       testID="icon"
       name={icon}
-      size={size === "small" ? 12 : size === "medium" ? 16 : size === "large" ? 24 : 24}
+      size={size === "small" ? 20 : size === "medium" ? 24 : size === "large" ? 28 : 24}
       color={color === "primary" ? "#006EE9" : color === "white" ? "#fff" : "#006EE9"}
       disabled={disabled}
       onPress={onPress}

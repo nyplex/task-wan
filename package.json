@@ -15,6 +15,7 @@
     "storybook-generate": "sb-rn-get-stories"
   },
   "dependencies": {
+    "@azure/core-asynciterator-polyfill": "^1.0.2",
     "@expo/fingerprint": "~0.12.4",
     "@expo/vector-icons": "^14.1.0",
     "@gluestack-ui/avatar": "^0.1.18",
@@ -27,14 +28,23 @@
     "@gluestack-ui/overlay": "^0.1.22",
     "@gluestack-ui/pressable": "^0.1.23",
     "@gluestack-ui/toast": "^1.0.9",
-    "@journeyapps/react-native-quick-sqlite": "^2.4.4",
     "@legendapp/motion": "^2.4.0",
-    "@op-engineering/op-sqlite": "^14.0.1",
+    "@op-engineering/op-sqlite": "^14.1.1",
     "@powersync/common": "^1.32.0",
-    "@powersync/react-native": "^1.20.4",
+    "@powersync/op-sqlite": "^0.7.1",
+    "@powersync/react-native": "^1.22.0",
     "@react-native-async-storage/async-storage": "2.1.2",
     "@react-native-community/datetimepicker": "8.3.0",
     "@react-native-community/slider": "4.5.6",
+    "@react-native-firebase/analytics": "^22.2.1",
+    "@react-native-firebase/app": "^22.2.1",
+    "@react-native-firebase/app-check": "^22.2.1",
+    "@react-native-firebase/app-distribution": "^22.2.1",
+    "@react-native-firebase/crashlytics": "^22.2.1",
+    "@react-native-firebase/in-app-messaging": "^22.2.1",
+    "@react-native-firebase/messaging": "^22.2.1",
+    "@react-native-firebase/perf": "^22.2.1",
+    "@react-native-firebase/remote-config": "^22.2.1",
     "@react-native-masked-view/masked-view": "0.3.2",
     "@react-native-picker/picker": "2.11.0",
     "@react-navigation/bottom-tabs": "^7.3.10",
@@ -75,7 +85,6 @@
     "expo-router": "~5.0.6",
     "expo-sharing": "~13.1.5",
     "expo-splash-screen": "~0.30.8",
-    "expo-sqlite": "~15.2.10",
     "expo-status-bar": "~2.2.3",
     "expo-symbols": "~0.4.4",
     "expo-system-ui": "~5.0.7",
@@ -107,6 +116,7 @@
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
+    "@babel/plugin-transform-async-generator-functions": "^7.28.0",
     "@gorhom/bottom-sheet": "^5.1.6",
     "@storybook/addon-ondevice-actions": "^9.0.9",
     "@storybook/addon-ondevice-controls": "^9.0.9",
@@ -126,5 +136,8 @@
     "prettier": "^3.5.3",
     "storybook": "^9.0.12",
     "typescript": "~5.8.3"
+  },
+  "overrides": {
+    "@journeyapps/react-native-quick-sqlite": "0.0.0"
   }
 }

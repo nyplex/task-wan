@@ -1,13 +1,13 @@
 import { User } from "@/types/User";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, isFulfilled, isPending, isRejected, PayloadAction } from "@reduxjs/toolkit";
 import { Session } from "@supabase/supabase-js";
+import { initializeAuthThunk } from "./authThunks";
 
 // ------------------------------
 // Define the State Interface
 // ------------------------------
 export interface AuthStateType {
   session: Session | null;
-  user: User | null;
   isLoading: boolean;
 }
 
@@ -16,8 +16,7 @@ export interface AuthStateType {
 // ------------------------------
 const initialState: AuthStateType = {
   session: null,
-  user: null,
-  isLoading: true,
+  isLoading: false,
 };
 
 // ------------------------------
@@ -31,37 +30,29 @@ export const authSlice = createSlice({
       state.session = action.payload;
       state.isLoading = false;
     },
-    setUser: (state, action: PayloadAction<User | null>) => {
-      state.user = action.payload;
-    },
     clearAuth: (state) => {
       state.session = null;
-      state.user = null;
     },
   },
   extraReducers: (builder) => {
     builder
-      .addMatcher(
-        (action) =>
-          action.type.startsWith("auth/") && action.type.endsWith("/pending"),
-        (state) => {
-          state.isLoading = true;
-        }
-      )
-      .addMatcher(
-        (action) =>
-          action.type.startsWith("auth/") &&
-          (action.type.endsWith("/fulfilled") ||
-            action.type.endsWith("/rejected")),
-        (state) => {
-          state.isLoading = false;
-        }
-      );
+      .addCase(initializeAuthThunk.pending, (state) => {
+        console.log("INITIALIZE AUTH THUNK PENDING");
+        state.isLoading = true;
+      })
+      .addCase(initializeAuthThunk.fulfilled, (state) => {
+        console.log("INITIALIZE AUTH THUNK FULFILLED: ");
+        state.isLoading = false;
+      })
+      .addCase(initializeAuthThunk.rejected, (state) => {
+        console.log("AUTH initialization failed:");
+        state.isLoading = false;
+      });
   },
 });
 
 // ------------------------------
 // Exports
 // ------------------------------
-export const { setSession, setUser, clearAuth } = authSlice.actions;
+export const { setSession, clearAuth } = authSlice.actions;
 export default authSlice.reducer;

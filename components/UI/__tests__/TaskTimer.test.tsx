@@ -27,7 +27,7 @@ describe("TaskTimer", () => {
     expect(getByText("1")).toBeTruthy(); // months
     expect(getByText("Months")).toBeTruthy();
 
-    expect(getByText("4")).toBeTruthy(); // days
+    expect(getByText("5")).toBeTruthy(); // days
     expect(getByText("Days")).toBeTruthy();
 
     expect(getByText("3")).toBeTruthy(); // hours

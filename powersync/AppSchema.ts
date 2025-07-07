@@ -1,19 +1,19 @@
 import { column, Schema, Table } from "@powersync/react-native";
 
-const profiles = new Table({
+const users = new Table({
   id: column.text,
-  created_at: column.text,
-  username: column.text,
-  profession: column.text,
-  dob: column.text,
   avatar: column.text,
+  profession: column.text,
   email: column.text,
+  location: column.text,
+  dob: column.text,
+  username: column.text,
 });
 
 export const AppSchema = new Schema({
-  profiles,
+  users,
 });
 
 // For types
 export type Database = (typeof AppSchema)["types"];
-export type ProfileRecord = Database["profiles"];
+export type UserRecord = Database["users"];

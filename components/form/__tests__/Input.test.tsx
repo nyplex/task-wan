@@ -70,11 +70,11 @@ describe("Input", () => {
   it("renders left icon if provided", () => {
     const { getByTestId } = render(
       <Input
-        leftIcon={<MockIcon />}
+        leftIcon="mail"
         placeholder="With icon"
       />
     );
-
-    expect(getByTestId("icon-wrapper")).toBeTruthy();
+    const icon = getByTestId("icon");
+    expect(icon.props.children).toContain("Feather Icon");
   });
 });

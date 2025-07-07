@@ -1,13 +1,11 @@
 import { useState } from "react";
-import { VStack } from "@/components/gluestack/vstack";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import Button from "@/components/buttons/Button";
-import ThemedInput from "@/components/form/Input";
-import ThemedText from "@/components/Text";
-import useAuth from "@/hooks/useAuth";
-import { isValidEmail } from "@/utils/isValidEmail";
 import { useSelector } from "react-redux";
 import { selectAuthStatus } from "@/redux/slices/authSlice/authSelectors";
+import { isValidEmail } from "@/utils/isValidEmail";
+import { VStack } from "@/components/gluestack/vstack";
+import Button from "@/components/buttons/Button";
+import Input from "@/components/form/Input";
+import useAuth from "@/hooks/useAuth";
 
 const LoginForm = () => {
   const { login } = useAuth();
@@ -26,34 +24,20 @@ const LoginForm = () => {
 
   return (
     <VStack className="mt-8 gap-4">
-      <ThemedInput
+      <Input
         value={email}
         onChangeText={(text) => {
-          setEmail(text);
+          setEmail(text.trim());
           if (!emailTouched) setEmailTouched(true);
         }}
-        leftIcon={
-          <Ionicons
-            name="mail"
-            size={24}
-            color="white"
-          />
-        }
+        leftIcon="mail"
         placeholder="Email"
         keyboardType="email-address"
         autoCapitalize="none"
         autoCorrect={false}
         isInvalid={!!emailError}
+        invalidText={emailError}
       />
-      {emailError && (
-        <ThemedText
-          className="text-red-500 -mt-4 ml-2 text-right"
-          size="bodyXS"
-          weight="medium">
-          {emailError}
-        </ThemedText>
-      )}
-
       <Button
         title="Login"
         onPress={handleLogin}

@@ -16,7 +16,7 @@ describe("Icon component", () => {
         size="small"
       />
     );
-    expect(getByTestId("icon").props.size).toBe(12);
+    expect(getByTestId("icon").props.size).toBe(20);
 
     rerender(
       <Icon
@@ -24,7 +24,7 @@ describe("Icon component", () => {
         size="medium"
       />
     );
-    expect(getByTestId("icon").props.size).toBe(16);
+    expect(getByTestId("icon").props.size).toBe(24);
 
     rerender(
       <Icon
@@ -32,7 +32,7 @@ describe("Icon component", () => {
         size="large"
       />
     );
-    expect(getByTestId("icon").props.size).toBe(24);
+    expect(getByTestId("icon").props.size).toBe(28);
   });
 
   it("applies the correct color", () => {

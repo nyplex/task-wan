@@ -7,14 +7,14 @@ const _layout = () => {
         name="Profile"
         options={{
           title: "profile",
-          headerShown: true,
+          headerShown: false,
         }}
       />
       <Stack.Screen
         name="MyProfile"
         options={{
           title: "my profile",
-          headerShown: true,
+          headerShown: false,
         }}
       />
     </Stack>

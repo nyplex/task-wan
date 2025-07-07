@@ -2,22 +2,8 @@ import { supabase } from "@/lib/supabase";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Session } from "@supabase/supabase-js";
 import { setSession } from "./authSlice";
-import { initializeApp } from "../appSlice/appThunks";
-import { powersync } from "@/powersync/system";
-import { GET_PROFILE_BY_ID } from "@/powersync/sql/profile.queries";
 import { apiSlice } from "../apiSlice/apiSlice";
-
-export const logoutThunk = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
-  try {
-    const { error } = await supabase.auth.signOut();
-    if (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
-    return null; // Return null to signify logout
-  } catch (error) {
-    return thunkAPI.rejectWithValue("Logout failed");
-  }
-});
+import { RootState } from "@/redux/store";
 
 export const loginThunk = createAsyncThunk(
   "auth/login",
@@ -31,9 +17,7 @@ export const loginThunk = createAsyncThunk(
       });
 
       if (error) {
-        console.log("Login error:", error);
-
-        return thunkAPI.rejectWithValue(error);
+        return thunkAPI.rejectWithValue(error.message);
       }
 
       return data.session; // Return the session on successful login
@@ -46,6 +30,18 @@ export const loginThunk = createAsyncThunk(
     }
   }
 );
+
+export const logoutThunk = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
+  try {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+    return null; // Return null to signify logout
+  } catch (error) {
+    return thunkAPI.rejectWithValue("Logout failed");
+  }
+});
 
 export const signupThunk = createAsyncThunk(
   "auth/signup",
@@ -87,10 +83,8 @@ export const verifyOTPThunk = createAsyncThunk(
       });
 
       if (error) {
-        return thunkAPI.rejectWithValue(error);
+        return thunkAPI.rejectWithValue(error.message);
       }
-
-      return true; // Return true on successful OTP verification
     } catch (error) {
       if (error instanceof Error) {
         return thunkAPI.rejectWithValue(error.message);
@@ -106,27 +100,24 @@ export const initializeAuthThunk = createAsyncThunk(
   "auth/initialize",
   async (session: Session | null, thunkAPI) => {
     try {
-      console.log("RUNNING INITIALIZE AUTH THUNK");
-      await thunkAPI.dispatch(initializeApp()).unwrap();
-      // fakse await of 10 sec
-      // await new Promise((resolve) => setTimeout(resolve, 1500));
+      await new Promise((resolve) => setTimeout(resolve, 3000));
 
       thunkAPI.dispatch(setSession(session));
 
-      // const res = await powersync.get(GET_PROFILE_BY_ID, [session?.user.id])
       if (!session) {
         console.log("No session found, skipping profile fetch");
         return;
       }
 
-      await thunkAPI.dispatch(
-        apiSlice.endpoints.getProfile.initiate({
-          userID: session.user.id,
-        })
-      );
-    } catch (error) {
-      console.log("Error in initializeAuthThunk:", error);
+      const state = thunkAPI.getState() as RootState;
+      const cached = apiSlice.endpoints.getProfile.select({ userID: session.user.id })(state);
 
+      if (!cached?.status || cached.status === "uninitialized") {
+        await thunkAPI
+          .dispatch(apiSlice.endpoints.getProfile.initiate({ userID: session.user.id }))
+          .unwrap();
+      }
+    } catch (error) {
       if (error instanceof Error) {
         return thunkAPI.rejectWithValue(error.message);
       } else {

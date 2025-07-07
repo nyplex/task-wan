@@ -1,19 +1,19 @@
+import { RootState } from "@/redux/store";
+import { Error } from "@/types/Error";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 // ------------------------------
 // Define the State Interface
 // ------------------------------
 export interface ErrorsStateType {
-  message: string | null;
-  statusCode?: number; // optional, e.g. HTTP errors
+  errors: Error[];
 }
 
 // ------------------------------
 // Initial State
 // ------------------------------
 const initialState: ErrorsStateType = {
-  message: null,
-  statusCode: undefined,
+  errors: [],
 };
 
 // ------------------------------
@@ -23,22 +23,12 @@ export const errorsSlice = createSlice({
   name: "errors",
   initialState,
   reducers: {
-    setError: (
-      state,
-      action: PayloadAction<{
-        message: string;
-        type?: "network" | "auth" | "form" | "unknown";
-        statusCode?: number;
-        source?: string;
-      }>
-    ) => {
-      const { message, type, statusCode, source } = action.payload;
-      state.message = message;
-      state.statusCode = statusCode;
+    addError: (state, action: PayloadAction<Error>) => {
+      const newError = action.payload;
+      state.errors.push(newError);
     },
-    clearError: (state) => {
-      state.message = null;
-      state.statusCode = undefined;
+    clearErrors: (state) => {
+      state.errors = [];
     },
   },
 });
@@ -46,14 +36,10 @@ export const errorsSlice = createSlice({
 // ------------------------------
 // Exports
 // ------------------------------
-export const { clearError, setError } = errorsSlice.actions;
+export const { clearErrors, addError } = errorsSlice.actions;
 export default errorsSlice.reducer;
 
 // ------------------------------
 // Selectors
 // ------------------------------
-export const selectErrorMessage = (state: { errors: ErrorsStateType }) =>
-  state.errors.message;
-export const selectErrorStatusCode = (state: { errors: ErrorsStateType }) =>
-  state.errors.statusCode;
-export const selectError = (state: { errors: ErrorsStateType }) => state.errors;
+export const selectErrors = (state: RootState) => state.errors.errors;

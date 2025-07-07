@@ -4,13 +4,15 @@ import { Input as InputGS, InputField } from "@/components/gluestack/input";
 import { HStack } from "@/components/gluestack/hstack";
 import Text from "../Text";
 import clsx from "clsx";
+import { VStack } from "../gluestack/vstack";
+import Icon, { IconList } from "../UI/Icon";
 
 type Props = {
   isInvalid?: boolean;
   isDisabled?: boolean;
   value?: string;
   placeholder?: string;
-  leftIcon?: React.ReactNode;
+  leftIcon?: IconList;
   maxLength?: number;
   keyboardType?: KeyboardType;
   autoCapitalize?: "none" | "sentences" | "words" | "characters";
@@ -54,9 +56,18 @@ const Input = ({
   });
 
   return (
-    <>
+    <VStack>
       <HStack>
-        {leftIcon && <Box className={CNIconBox}>{leftIcon}</Box>}
+        {leftIcon && (
+          <Box className={CNIconBox}>
+            <Icon
+              icon={leftIcon}
+              size="medium"
+              color="white"
+              disabled
+            />
+          </Box>
+        )}
         <InputGS
           isInvalid={isInvalid}
           isDisabled={isDisabled}
@@ -81,7 +92,7 @@ const Input = ({
         weight="medium">
         {isInvalid && invalidText ? invalidText : ""}
       </Text>
-    </>
+    </VStack>
   );
 };
 

@@ -95,7 +95,7 @@ export const Interactive: Story = {
     isDisabled: false,
     isInvalid: false,
     keyboardType: "default",
-    leftIcon: false,
+    // leftIcon: false,
     maxLength: 100,
     placeholder: "Type here...",
   },

@@ -10,14 +10,11 @@ const LoginScreen = () => {
   return (
     <Box className="flex-1 bg-backrgound pt-safe-offset-4 px-4">
       <AppTitle />
-
       <Box className="mt-12">
         <ThemedText className="text-center">Login to your account</ThemedText>
       </Box>
       <LoginForm />
-
       <LoginDivider />
-
       <LoginThirdParty />
       <LoginFooter />
     </Box>

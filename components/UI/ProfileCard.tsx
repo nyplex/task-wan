@@ -14,7 +14,7 @@ type Props = {
 
 const ProfileCard = ({ avatarURL, name, profession, location, tasksCompleted }: Props) => {
   return (
-    <Box className="w-full h-[205px] justify-end rounded-[10px]">
+    <Box className="w-full h-[205px] justify-end rounded-[10px] shadow-soft-1">
       <Box className="bg-white w-full h-[180px] rounded-[10px]">
         <Box className="absolute top-[-25px] left-1/2 transform -translate-x-1/2">
           <Avatar

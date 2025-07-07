@@ -1,8 +1,6 @@
-// src/store/slices/appSlice.ts
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import type { RootState } from "../../store";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { initializeApp } from "./appThunks";
 import { initializeAuthThunk } from "../authSlice/authThunks";
-import { apiSlice } from "../apiSlice/apiSlice";
 
 // ------------------------------
 // Define the State Interface
@@ -12,6 +10,8 @@ export interface AppStateType {
   isLoading: boolean;
   appVersion: string;
   theme: "light" | "dark" | "system";
+  appInitDone: boolean;
+  authInitDone: boolean;
 }
 
 // ------------------------------
@@ -19,9 +19,11 @@ export interface AppStateType {
 // ------------------------------
 const initialState: AppStateType = {
   isAppReady: false,
-  isLoading: true,
+  isLoading: false,
   appVersion: "1.0.0",
   theme: "system",
+  appInitDone: false,
+  authInitDone: false,
 };
 
 // ------------------------------
@@ -41,15 +43,6 @@ export const appSlice = createSlice({
     setAppVersion: (state, action: PayloadAction<string>) => {
       state.appVersion = action.payload;
     },
-    // Using `prepare` to automatically add timestamp or metadata
-    // showToast: {
-    //   reducer: (state, action: PayloadAction<string | null>) => {
-    //     state.toastMessage = action.payload;
-    //   },
-    //   prepare: (message: string) => {
-    //     return { payload: message + " 🔔" };
-    //   },
-    // },
     toggleTheme: (state) => {
       state.theme = state.theme === "dark" ? "light" : "dark";
     },
@@ -57,39 +50,45 @@ export const appSlice = createSlice({
   extraReducers: (builder) => {
     // Handling async thunk states
     builder
-      .addCase(initializeAuthThunk.pending, (state) => {
-        console.log("INITIALIZE AUTH THUNK PENDING");
+
+      .addCase(initializeApp.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(
-        initializeAuthThunk.fulfilled,
-        (state, action: PayloadAction<any>) => {
-          console.log("INITIALIZE AUTH THUNK FULFILLED");
+      .addCase(initializeApp.rejected, (state, action: PayloadAction<any>) => {
+        state.isLoading = false;
+        state.appInitDone = true;
+        state.isAppReady = false;
+      })
+      .addCase(initializeApp.fulfilled, (state) => {
+        state.appInitDone = true;
+        if (state.authInitDone) {
+          state.isLoading = false;
           state.isAppReady = true;
+        }
+      })
+      .addCase(initializeAuthThunk.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(initializeAuthThunk.rejected, (state) => {
+        state.isLoading = false;
+        state.authInitDone = true;
+        state.isAppReady = false;
+      })
+      .addCase(initializeAuthThunk.fulfilled, (state) => {
+        console.log("Auth initialization fulfilled");
+
+        state.authInitDone = true;
+        if (state.appInitDone) {
           state.isLoading = false;
+          state.isAppReady = true;
         }
-      )
-      .addCase(
-        initializeAuthThunk.rejected,
-        (state, action: PayloadAction<any>) => {
-          console.log("Auth initialization failed:");
-          state.isLoading = false;
-        }
-      )
-      .addMatcher(
-        apiSlice.endpoints.updateProfile.matchFulfilled,
-        (state, action: PayloadAction<any>) => {
-          console.log("Profile updated successfully:", action.payload);
-          // Handle profile update logic if needed
-        }
-      );
+      });
   },
 });
 
 // ------------------------------
 // Exports
 // ------------------------------
-export const { setAppReady, setIsLoading, setAppVersion, toggleTheme } =
-  appSlice.actions;
+export const { setAppReady, setIsLoading, setAppVersion, toggleTheme } = appSlice.actions;
 
 export default appSlice.reducer;
