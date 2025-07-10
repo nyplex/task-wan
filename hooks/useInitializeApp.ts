@@ -15,7 +15,6 @@ const useInitializeApp = () => {
           addError({
             message: "Failed to initialize app",
             source: "useInitializeApp",
-            statusCode: "500",
             type: "unknown",
           })
         );

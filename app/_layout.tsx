@@ -24,24 +24,24 @@ function InnerLayout() {
   const session = useSelector(selectSession);
   const isAppLoading = useSelector(selectAppState);
 
-  if (isAppLoading.isLoading) {
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator
-          size="large"
-          color="#0000ff"
-        />
-      </View>
-    );
-  }
+  // if (isAppLoading.isLoading) {
+  //   return (
+  //     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+  //       <ActivityIndicator
+  //         size="large"
+  //         color="#0000ff"
+  //       />
+  //     </View>
+  //   );
+  // }
 
-  if (!isAppLoading.isAppReady) {
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text style={{ fontSize: 18, color: "#000" }}>App is not ready. Please restart...</Text>
-      </View>
-    );
-  }
+  // if (!isAppLoading.isAppReady) {
+  //   return (
+  //     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+  //       <Text style={{ fontSize: 18, color: "#000" }}>App is not ready. Please restart...</Text>
+  //     </View>
+  //   );
+  // }
 
   const IS_STORYBOOK = false;
 

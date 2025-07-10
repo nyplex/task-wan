@@ -9,6 +9,8 @@ import {
 import { addError } from "@/redux/slices/errorsSlice/errorsSlice";
 import { useRouter } from "expo-router";
 import { useSelector } from "react-redux";
+import { setIsLoading } from "@/redux/slices/authSlice/authSlice";
+import { GlobalError } from "@/types/errors";
 
 const useAuth = () => {
   const router = useRouter();
@@ -33,7 +35,7 @@ const useAuth = () => {
       dispatch(
         addError({
           message: "Error logging in. Please try again.",
-          statusCode: "LOGIN_ERROR",
+          status: "LOGIN_ERROR",
           source: "useAuth/login",
           type: "auth",
         })
@@ -43,6 +45,7 @@ const useAuth = () => {
 
   const signup = async (email: string, username: string) => {
     try {
+      dispatch(setIsLoading(true));
       await dispatch(signupThunk({ email, username })).unwrap();
       router.push({
         pathname: "/(app)/VerificationCode",
@@ -51,14 +54,26 @@ const useAuth = () => {
         },
       });
     } catch (error) {
-      dispatch(
-        addError({
-          message: "Error signing up. Please try again.",
-          statusCode: "SIGNUP_ERROR",
-          source: "useAuth/signup",
-          type: "auth",
-        })
-      );
+      if (error instanceof Error) {
+        dispatch(
+          addError({
+            message: "An unknown error occurred during signup.",
+            source: "useAuth/signup",
+            type: "auth",
+          })
+        );
+      } else {
+        const typedError = error as GlobalError;
+        dispatch(
+          addError({
+            message: typedError.message,
+            source: typedError.source,
+            type: typedError.type,
+          })
+        );
+      }
+    } finally {
+      dispatch(setIsLoading(false));
     }
   };
 
@@ -69,7 +84,7 @@ const useAuth = () => {
       dispatch(
         addError({
           message: "Error verifying OTP. Please try again.",
-          statusCode: "VERIFY_OTP_ERROR",
+          status: "VERIFY_OTP_ERROR",
           source: "useAuth/verifyOTP",
           type: "auth",
         })
@@ -84,7 +99,7 @@ const useAuth = () => {
       dispatch(
         addError({
           message: "Error logging out. Please try again.",
-          statusCode: "LOGOUT_ERROR",
+          status: "LOGOUT_ERROR",
           source: "useAuth/logout",
           type: "auth",
         })
