@@ -1,5 +1,4 @@
-import { User } from "@/types/User";
-import { createSlice, isFulfilled, isPending, isRejected, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Session } from "@supabase/supabase-js";
 import { initializeAuthThunk } from "./authThunks";
 
@@ -30,6 +29,9 @@ export const authSlice = createSlice({
       state.session = action.payload;
       state.isLoading = false;
     },
+    setIsLoading: (state, action: PayloadAction<boolean>) => {
+      state.isLoading = action.payload;
+    },
     clearAuth: (state) => {
       state.session = null;
     },
@@ -54,5 +56,5 @@ export const authSlice = createSlice({
 // ------------------------------
 // Exports
 // ------------------------------
-export const { setSession, clearAuth } = authSlice.actions;
+export const { setSession, clearAuth, setIsLoading } = authSlice.actions;
 export default authSlice.reducer;

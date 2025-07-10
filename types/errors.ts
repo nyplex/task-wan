@@ -1,6 +1,5 @@
-export type Error = {
+export type GlobalError = {
   message: string;
   type?: "network" | "auth" | "form" | "unknown";
-  statusCode?: string;
   source?: string;
 };

@@ -4,6 +4,7 @@ import { Session } from "@supabase/supabase-js";
 import { setSession } from "./authSlice";
 import { apiSlice } from "../apiSlice/apiSlice";
 import { RootState } from "@/redux/store";
+import { GlobalError } from "@/types/errors";
 
 export const loginThunk = createAsyncThunk(
   "auth/login",
@@ -43,34 +44,39 @@ export const logoutThunk = createAsyncThunk("auth/logout", async (_, thunkAPI) =
   }
 });
 
-export const signupThunk = createAsyncThunk(
-  "auth/signup",
-  async (credentials: { email: string; username: string }, thunkAPI) => {
-    try {
-      const { error, data } = await supabase.auth.signInWithOtp({
-        email: credentials.email,
-        options: {
-          shouldCreateUser: true,
-          data: {
-            username: credentials.username,
-          },
-        },
-      });
-
-      if (error) {
-        return thunkAPI.rejectWithValue(error);
-      }
-
-      return data.user; // Return the user on successful signup
-    } catch (error) {
-      if (error instanceof Error) {
-        return thunkAPI.rejectWithValue(error.message);
-      } else {
-        return thunkAPI.rejectWithValue("An unknown error occurred during signup");
-      }
-    }
+export const signupThunk = createAsyncThunk<
+  void,
+  { email: string; username: string },
+  {
+    rejectValue: GlobalError;
   }
-);
+>("auth/signup", async (credentials: { email: string; username: string }, thunkAPI) => {
+  try {
+    const { error } = await supabase.auth.signInWithOtp({
+      email: credentials.email,
+      options: {
+        shouldCreateUser: true,
+        data: {
+          username: credentials.username,
+        },
+      },
+    });
+
+    if (error) {
+      return thunkAPI.rejectWithValue({
+        message: error.message,
+        source: "signupThunk/supabase",
+        type: "auth",
+      });
+    }
+  } catch (error) {
+    return thunkAPI.rejectWithValue({
+      message: error instanceof Error ? error?.message : "Unknown error",
+      source: "signupThunk",
+      type: "auth",
+    });
+  }
+});
 
 export const verifyOTPThunk = createAsyncThunk(
   "auth/verifyOTP",

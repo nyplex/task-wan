@@ -1,12 +1,12 @@
 import { RootState } from "@/redux/store";
-import { Error } from "@/types/Error";
+import { GlobalError } from "@/types/errors";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 // ------------------------------
 // Define the State Interface
 // ------------------------------
 export interface ErrorsStateType {
-  errors: Error[];
+  errors: GlobalError[];
 }
 
 // ------------------------------
@@ -23,7 +23,7 @@ export const errorsSlice = createSlice({
   name: "errors",
   initialState,
   reducers: {
-    addError: (state, action: PayloadAction<Error>) => {
+    addError: (state, action: PayloadAction<GlobalError>) => {
       const newError = action.payload;
       state.errors.push(newError);
     },
