@@ -39,15 +39,12 @@ export const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(initializeAuthThunk.pending, (state) => {
-        console.log("INITIALIZE AUTH THUNK PENDING");
         state.isLoading = true;
       })
       .addCase(initializeAuthThunk.fulfilled, (state) => {
-        console.log("INITIALIZE AUTH THUNK FULFILLED: ");
         state.isLoading = false;
       })
       .addCase(initializeAuthThunk.rejected, (state) => {
-        console.log("AUTH initialization failed:");
         state.isLoading = false;
       });
   },

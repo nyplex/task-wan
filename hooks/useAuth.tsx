@@ -3,6 +3,7 @@ import { useAppDispatch } from "./redux";
 import {
   loginThunk,
   logoutThunk,
+  resendOTPThunk,
   signupThunk,
   verifyOTPThunk,
 } from "@/redux/slices/authSlice/authThunks";
@@ -13,12 +14,13 @@ import { setIsLoading } from "@/redux/slices/authSlice/authSlice";
 import { GlobalError } from "@/types/errors";
 
 const useAuth = () => {
-  const router = useRouter();
   const dispatch = useAppDispatch();
+  const router = useRouter();
   const user = useSelector(selectSession)?.user;
 
   const login = async (email: string) => {
     try {
+      dispatch(setIsLoading(true));
       await dispatch(
         loginThunk({
           email,
@@ -32,14 +34,26 @@ const useAuth = () => {
         },
       });
     } catch (error) {
-      dispatch(
-        addError({
-          message: "Error logging in. Please try again.",
-          status: "LOGIN_ERROR",
-          source: "useAuth/login",
-          type: "auth",
-        })
-      );
+      if (error instanceof Error) {
+        dispatch(
+          addError({
+            message: "An unknown error occurred during login.",
+            source: "useAuth/login",
+            type: "auth",
+          })
+        );
+      } else {
+        const typedError = error as GlobalError;
+        dispatch(
+          addError({
+            message: typedError.message,
+            source: typedError.source,
+            type: typedError.type,
+          })
+        );
+      }
+    } finally {
+      dispatch(setIsLoading(false));
     }
   };
 
@@ -79,31 +93,85 @@ const useAuth = () => {
 
   const verifyOTP = async (otp: string, email: string) => {
     try {
-      await dispatch(verifyOTPThunk({ email, token: otp })).unwrap();
+      dispatch(setIsLoading(true));
+      await dispatch(verifyOTPThunk({ email: email, token: otp })).unwrap();
     } catch (error) {
-      dispatch(
-        addError({
-          message: "Error verifying OTP. Please try again.",
-          status: "VERIFY_OTP_ERROR",
-          source: "useAuth/verifyOTP",
-          type: "auth",
-        })
-      );
+      if (error instanceof Error) {
+        dispatch(
+          addError({
+            message: "An unknown error occurred during verification.",
+            source: "useAuth/verifyOTP",
+            type: "auth",
+          })
+        );
+      } else {
+        const typedError = error as GlobalError;
+        dispatch(
+          addError({
+            message: typedError.message,
+            source: typedError.source,
+            type: typedError.type,
+          })
+        );
+      }
+    } finally {
+      dispatch(setIsLoading(false));
+    }
+  };
+
+  const resendOTP = async (email: string) => {
+    try {
+      dispatch(setIsLoading(true));
+      await dispatch(resendOTPThunk({ email })).unwrap();
+    } catch (error) {
+      if (error instanceof Error) {
+        dispatch(
+          addError({
+            message: "An unknown error occurred during resending OTP.",
+            source: "useAuth/resendOTP",
+            type: "auth",
+          })
+        );
+      } else {
+        const typedError = error as GlobalError;
+        dispatch(
+          addError({
+            message: typedError.message,
+            source: typedError.source,
+            type: typedError.type,
+          })
+        );
+      }
+    } finally {
+      dispatch(setIsLoading(false));
     }
   };
 
   const logout = async () => {
     try {
+      dispatch(setIsLoading(true));
       await dispatch(logoutThunk()).unwrap();
     } catch (error) {
-      dispatch(
-        addError({
-          message: "Error logging out. Please try again.",
-          status: "LOGOUT_ERROR",
-          source: "useAuth/logout",
-          type: "auth",
-        })
-      );
+      if (error instanceof Error) {
+        dispatch(
+          addError({
+            message: "An unknown error occurred during logout.",
+            source: "useAuth/logout",
+            type: "auth",
+          })
+        );
+      } else {
+        const typedError = error as GlobalError;
+        dispatch(
+          addError({
+            message: typedError.message,
+            source: typedError.source,
+            type: typedError.type,
+          })
+        );
+      }
+    } finally {
+      dispatch(setIsLoading(false));
     }
   };
 
@@ -111,6 +179,7 @@ const useAuth = () => {
     login,
     signup,
     verifyOTP,
+    resendOTP,
     logout,
     user,
   };

@@ -15,7 +15,7 @@ const RegisterForm = () => {
   const {
     control,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isValid },
   } = useForm<{
     email: string;
     username: string;
@@ -29,7 +29,7 @@ const RegisterForm = () => {
   });
 
   const onSubmit = handleSubmit(async (data) => {
-    await signup(data.email, data.username);
+    await signup(data.email.trim().toLowerCase(), data.username.trim().toLowerCase());
   });
 
   return (
@@ -49,7 +49,7 @@ const RegisterForm = () => {
             leftIcon="mail"
             value={value}
             autoCorrect={false}
-            onChangeText={(text) => onChange(text)}
+            onChangeText={(text) => onChange(text.toLowerCase())}
             onBlur={onBlur}
             isInvalid={!!error}
             isDisabled={isLoading}
@@ -96,7 +96,7 @@ const RegisterForm = () => {
           title="Register"
           isLoading={isLoading || isSubmitting}
           onPress={onSubmit}
-          disabled={isLoading || isSubmitting}
+          disabled={isLoading || isSubmitting || !isValid}
         />
       </Box>
     </VStack>

@@ -5,9 +5,12 @@ import { Box } from "@/components/gluestack/box";
 import { VStack } from "@/components/gluestack/vstack";
 import useAuth from "@/hooks/useAuth";
 import { useGetProfileQuery } from "@/redux/slices/apiSlice/apiSlice";
+import { useSelector } from "react-redux";
+import { selectAuthStatus } from "@/redux/slices/authSlice/authSelectors";
 
 const ProfileScreen = () => {
   const { logout, user } = useAuth();
+  const authIsLoading = useSelector(selectAuthStatus);
 
   const { isFetching, isError, isLoading, data } = useGetProfileQuery({ userID: user?.id! });
   // console.log("ProfileScreen data:", data);
@@ -53,6 +56,7 @@ const ProfileScreen = () => {
             icon="log-out"
             title="Logout"
             onPress={logout}
+            disabled={authIsLoading}
           />
         </VStack>
       </Box>
