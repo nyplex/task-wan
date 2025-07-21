@@ -2,6 +2,7 @@ import { Box } from "@/components/gluestack/box";
 import Header from "./components/Header";
 import BodyContent from "./components/BodyContent";
 import CodeForm from "./components/CodeForm";
+import ResendCodeBtn from "./components/ResendCodeBtn";
 
 const VerificationCodeScreen = () => {
   return (
@@ -9,6 +10,9 @@ const VerificationCodeScreen = () => {
       <Header />
       <BodyContent />
       <CodeForm />
+      <Box className="mt-12">
+        <ResendCodeBtn />
+      </Box>
     </Box>
   );
 };

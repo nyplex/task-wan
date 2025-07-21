@@ -8,6 +8,7 @@ import BackButtonIcon from "@/components/buttons/BackButtonIcon";
 const Header = () => {
   const router = useRouter();
   const isLoading = useSelector(selectAuthStatus);
+
   return (
     <Box>
       <BackButtonIcon

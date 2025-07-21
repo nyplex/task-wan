@@ -33,7 +33,6 @@ export const appSlice = createSlice({
   name: "app",
   initialState,
   reducers: {
-    // Example of a simple reducer
     setAppReady: (state, action: PayloadAction<boolean>) => {
       state.isAppReady = action.payload;
     },
@@ -48,9 +47,7 @@ export const appSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    // Handling async thunk states
     builder
-
       .addCase(initializeApp.pending, (state) => {
         state.isLoading = true;
       })
@@ -75,8 +72,6 @@ export const appSlice = createSlice({
         state.isAppReady = false;
       })
       .addCase(initializeAuthThunk.fulfilled, (state) => {
-        console.log("Auth initialization fulfilled");
-
         state.authInitDone = true;
         if (state.appInitDone) {
           state.isLoading = false;
