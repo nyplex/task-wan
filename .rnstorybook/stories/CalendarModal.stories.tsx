@@ -38,7 +38,6 @@ export const Default: StoryObj<typeof meta> = {
           onClose={() => setIsOpen(false)}
           initialDate={new Date().getTime()}
           onSelect={(date) => {
-            console.log("Selected date:", date);
             setIsOpen(false);
           }}
         />

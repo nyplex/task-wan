@@ -1,4 +1,5 @@
-import { useEffect, useRef } from "react";
+import "react-native-url-polyfill/auto";
+import { useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 import { useAppDispatch } from "./redux";
 import { initializeAuthThunk } from "@/redux/slices/authSlice/authThunks";
@@ -7,17 +8,12 @@ const useAuthListener = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session === null) {
-        dispatch(initializeAuthThunk(null));
-        return;
-      }
+    supabase.auth.getSession().then(({ data: { session } }) => {
       dispatch(initializeAuthThunk(session));
     });
-
-    return () => {
-      listener.subscription.unsubscribe();
-    };
+    supabase.auth.onAuthStateChange((_event, session) => {
+      dispatch(initializeAuthThunk(session));
+    });
   }, []);
 
   return null;

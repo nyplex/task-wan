@@ -1,9 +1,9 @@
+import { useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import { useSelector } from "react-redux";
 import { selectAuthStatus } from "@/redux/slices/authSlice/authSelectors";
 import CodeInput from "@/components/form/CodeInput";
 import useAuth from "@/hooks/useAuth";
-import { useState } from "react";
 
 const CodeForm = () => {
   const isLoading = useSelector(selectAuthStatus);

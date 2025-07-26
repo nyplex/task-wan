@@ -1,9 +1,8 @@
-import useToast from "./useToast";
-import { useSelector } from "react-redux";
-
-import { useAppDispatch } from "./redux";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useAppDispatch } from "./redux";
 import { clearErrors, selectErrors } from "@/redux/slices/errorsSlice/errorsSlice";
+import useToast from "./useToast";
 
 const useErrors = () => {
   const errors = useSelector(selectErrors);

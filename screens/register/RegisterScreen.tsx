@@ -13,7 +13,7 @@ const RegisterScreen = () => {
       <Header />
       <Text
         weight="semi-bold"
-        className="text-center mt-12">
+        className="text-center">
         Create your account
       </Text>
       <RegisterForm />
