@@ -1,11 +1,12 @@
-import { Box } from "@/components/gluestack/box";
-import ThemedText from "@/components/Text";
+import { HStack } from "@/components/gluestack/hstack";
+import SocialAuthButton from "@/components/buttons/SocialAuthButton";
 
 const LoginThirdParty = () => {
   return (
-    <Box className="mt-8">
-      <ThemedText className="text-center">Third party Here</ThemedText>
-    </Box>
+    <HStack className="items-center justify-around mt-8 w-full">
+      <SocialAuthButton provider="google" />
+      <SocialAuthButton provider="apple" />
+    </HStack>
   );
 };
 

@@ -11,6 +11,7 @@ import { Provider, useSelector } from "react-redux";
 import { selectSession } from "@/redux/slices/authSlice/authSelectors";
 import { selectAppState } from "@/redux/slices/appSlice/appSelectors";
 import { setupPowerSync } from "@/powersync/system";
+import { KeyboardProvider } from "react-native-keyboard-controller";
 import store from "@/redux/store";
 import useInitializeApp from "@/hooks/useInitializeApp";
 import useAuthListener from "@/hooks/useAuthListener";
@@ -86,20 +87,29 @@ export default function RootLayout() {
   }, []);
   return (
     <Provider store={store}>
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <GluestackUIProvider mode="light">
-          <ThemeProvider value={DefaultTheme}>
-            <BottomSheetProvider>
-              <InnerLayout />
-              <StatusBar
-                style="dark"
-                translucent={true}
-                backgroundColor="transparent"
-              />
-            </BottomSheetProvider>
-          </ThemeProvider>
-        </GluestackUIProvider>
-      </GestureHandlerRootView>
+      <KeyboardProvider>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <GluestackUIProvider mode="light">
+            <ThemeProvider
+              value={{
+                ...DefaultTheme,
+                colors: {
+                  ...DefaultTheme.colors,
+                  background: "#ffffff",
+                },
+              }}>
+              <BottomSheetProvider>
+                <InnerLayout />
+                <StatusBar
+                  style="dark"
+                  translucent={true}
+                  backgroundColor="transparent"
+                />
+              </BottomSheetProvider>
+            </ThemeProvider>
+          </GluestackUIProvider>
+        </GestureHandlerRootView>
+      </KeyboardProvider>
     </Provider>
   );
 }
