@@ -8,12 +8,10 @@ const useAuthListener = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
       dispatch(initializeAuthThunk(session));
     });
-    supabase.auth.onAuthStateChange((_event, session) => {
-      dispatch(initializeAuthThunk(session));
-    });
+    return () => listener.subscription.unsubscribe();
   }, []);
 
   return null;

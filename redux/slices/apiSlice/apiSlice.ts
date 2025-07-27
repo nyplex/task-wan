@@ -42,10 +42,13 @@ export const apiSlice = createApi({
           console.log("Fetched profile:", test);
 
           if (!test) {
+            console.log("Profile not found for userID:", userID);
+
             return { error: { status: 404, data: "Profile not found" } };
           }
           return { data: test };
         } catch (error) {
+          console.error("Error fetching profile:", error);
           return { error: { status: 500, data: "Failed to fetch profile" } };
         }
       },

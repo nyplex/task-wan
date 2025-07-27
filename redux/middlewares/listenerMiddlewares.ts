@@ -5,6 +5,13 @@ const listenerMiddleware = createListenerMiddleware();
 listenerMiddleware.startListening({
   matcher: isRejected,
   effect: async (action, listenerApi) => {
+    if (
+      action.error.name === "ConditionError" &&
+      //@ts-ignore
+      action.meta.arg["endpointName"] === "getProfile"
+    ) {
+      return;
+    }
     console.log("Redux Listner Middleware triggered for rejected action:", action);
 
     const message =
