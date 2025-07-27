@@ -189,22 +189,15 @@ export const initializeAuthThunk = createAsyncThunk(
   "auth/initialize",
   async (session: Session | null, thunkAPI) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-
       thunkAPI.dispatch(setSession(session));
 
       if (!session) {
         return;
       }
 
-      const state = thunkAPI.getState() as RootState;
-      const cached = apiSlice.endpoints.getProfile.select({ userID: session.user.id })(state);
-
-      if (!cached?.status || cached.status === "uninitialized") {
-        await thunkAPI
-          .dispatch(apiSlice.endpoints.getProfile.initiate({ userID: session.user.id }))
-          .unwrap();
-      }
+      await thunkAPI
+        .dispatch(apiSlice.endpoints.getProfile.initiate({ userID: session.user.id }))
+        .unwrap();
     } catch (error) {
       if (error instanceof Error) {
         return thunkAPI.rejectWithValue(error.message);
