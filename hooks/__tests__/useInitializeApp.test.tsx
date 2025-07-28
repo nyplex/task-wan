@@ -1,11 +1,14 @@
 import { renderHook } from "@testing-library/react-native";
 import useInitializeApp from "../useInitializeApp";
 import { useAppDispatch } from "../redux";
-import { initializeApp } from "@/redux/slices/appSlice/appThunks";
+import { initializeAppThunk } from "@/redux/slices/appSlice/thunks/initializeAppThunk";
 import { addError } from "@/redux/slices/errorsSlice/errorsSlice";
 
 jest.mock("../redux", () => ({ useAppDispatch: jest.fn() }));
-jest.mock("@/redux/slices/appSlice/appThunks", () => ({ initializeApp: jest.fn() }));
+
+jest.mock("@/redux/slices/appSlice/thunks/initializeAppThunk", () => ({
+  initializeAppThunk: jest.fn(() => ({ type: "initializeAppThunk" })),
+}));
 jest.mock("@/redux/slices/errorsSlice/errorsSlice", () => ({ addError: jest.fn() }));
 
 const unwrapMock = jest.fn().mockResolvedValue({});
@@ -23,7 +26,7 @@ describe("useInitializeApp", () => {
     renderHook(() => useInitializeApp());
     // Wait for useEffect to run
     await Promise.resolve();
-    expect(mockDispatch).toHaveBeenCalledWith(initializeApp());
+    expect(mockDispatch).toHaveBeenCalledWith(initializeAppThunk());
     expect(unwrapMock).toHaveBeenCalled();
   });
 
@@ -32,7 +35,7 @@ describe("useInitializeApp", () => {
     renderHook(() => useInitializeApp());
     // Wait for useEffect to run
     await Promise.resolve();
-    expect(mockDispatchReject).toHaveBeenCalledWith(initializeApp());
+    expect(mockDispatchReject).toHaveBeenCalledWith(initializeAppThunk());
     expect(unwrapRejectMock).toHaveBeenCalled();
     expect(addError).toHaveBeenCalledWith(
       expect.objectContaining({

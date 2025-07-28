@@ -8,13 +8,26 @@ import { setIsLoading } from "@/redux/slices/authSlice/authSlice";
 jest.mock("expo-router", () => ({ useRouter: jest.fn() }));
 jest.mock("react-redux", () => ({ useSelector: jest.fn() }));
 jest.mock("../redux", () => ({ useAppDispatch: () => jest.fn() }));
-jest.mock("@/redux/slices/authSlice/authThunks", () => ({
+jest.mock("@/redux/slices/authSlice/thunks/loginThunk", () => ({
   loginThunk: jest.fn(() => async () => {}),
+}));
+
+jest.mock("@/redux/slices/authSlice/thunks/signupThunk", () => ({
   signupThunk: jest.fn(() => async () => {}),
+}));
+
+jest.mock("@/redux/slices/authSlice/thunks/verifyOTPThunk", () => ({
   verifyOTPThunk: jest.fn(() => async () => {}),
+}));
+
+jest.mock("@/redux/slices/authSlice/thunks/resendOTPThunk", () => ({
   resendOTPThunk: jest.fn(() => async () => {}),
+}));
+
+jest.mock("@/redux/slices/authSlice/thunks/logoutThunk", () => ({
   logoutThunk: jest.fn(() => async () => {}),
 }));
+
 jest.mock("@/redux/slices/errorsSlice/errorsSlice", () => ({ addError: jest.fn() }));
 jest.mock("@/redux/slices/authSlice/authSlice", () => ({ setIsLoading: jest.fn() }));
 

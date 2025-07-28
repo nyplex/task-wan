@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useAppDispatch } from "./redux";
-import { initializeApp } from "@/redux/slices/appSlice/appThunks";
+import { initializeAppThunk } from "@/redux/slices/appSlice/thunks/initializeAppThunk";
 import { addError } from "@/redux/slices/errorsSlice/errorsSlice";
 
 const useInitializeApp = () => {
@@ -9,7 +9,7 @@ const useInitializeApp = () => {
   useEffect(() => {
     const initialize = async () => {
       try {
-        await dispatch(initializeApp()).unwrap();
+        await dispatch(initializeAppThunk()).unwrap();
       } catch (error) {
         dispatch(
           addError({
