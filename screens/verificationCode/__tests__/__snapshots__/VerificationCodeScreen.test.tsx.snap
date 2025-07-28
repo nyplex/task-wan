@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VerificationCodeScreen matches the rendered output snapshot 1`] = `
+<View
+  className="flex-1 bg-backrgound py-safe-offset-4 px-4"
+>
+  <View
+    className="mt-12"
+  />
+</View>
+`;

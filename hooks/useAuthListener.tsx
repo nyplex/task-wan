@@ -11,7 +11,7 @@ const useAuthListener = () => {
     const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
       dispatch(initializeAuthThunk(session));
     });
-    return () => listener.subscription.unsubscribe();
+    return () => listener.subscription.unsubscribe?.();
   }, []);
 
   return null;

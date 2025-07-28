@@ -19,6 +19,7 @@ const SliderIndicator = ({ length, currentIndex }: Props) => {
       {Array.from({ length }, (_, index) => (
         <Box
           key={index}
+          testID={`slider-indicator-${index}`}
           className={getIndicatorStyle(index)}
         />
       ))}

@@ -1,0 +1,76 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header hides AppTitle when keyboard is open (progress=1) 1`] = `
+<View>
+  <button
+    disabled={false}
+    onPress={[Function]}
+    testID="back-button"
+  />
+  <View
+    className="overflow-hidden"
+    style={
+      {
+        "height": undefined,
+        "marginBottom": undefined,
+        "opacity": undefined,
+        "transform": [
+          {
+            "scale": undefined,
+          },
+        ],
+      }
+    }
+  />
+</View>
+`;
+
+exports[`Header matches the snapshot 1`] = `
+<View>
+  <button
+    disabled={false}
+    onPress={[Function]}
+    testID="back-button"
+  />
+  <View
+    className="overflow-hidden"
+    style={
+      {
+        "height": undefined,
+        "marginBottom": undefined,
+        "opacity": undefined,
+        "transform": [
+          {
+            "scale": undefined,
+          },
+        ],
+      }
+    }
+  />
+</View>
+`;
+
+exports[`Header shows AppTitle when keyboard is closed (progress=0) 1`] = `
+<View>
+  <button
+    disabled={false}
+    onPress={[Function]}
+    testID="back-button"
+  />
+  <View
+    className="overflow-hidden"
+    style={
+      {
+        "height": undefined,
+        "marginBottom": undefined,
+        "opacity": undefined,
+        "transform": [
+          {
+            "scale": undefined,
+          },
+        ],
+      }
+    }
+  />
+</View>
+`;

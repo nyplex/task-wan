@@ -57,7 +57,7 @@ const LoginForm = () => {
         name="email"
       />
       <Button
-        title="Register"
+        title="Login"
         isLoading={isLoading || isSubmitting}
         onPress={onSubmit}
         disabled={isLoading || isSubmitting || !isValid}

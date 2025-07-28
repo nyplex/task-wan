@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useRouter } from "expo-router";
 import { Box } from "@/components/gluestack/box";
-import { Slider } from "./components/Slider";
+import Slider from "./components/Slider";
 import SliderIndicator from "./components/SliderIndicator";
 import SliderChild from "./components/SliderChild";
 import Button from "@/components/buttons/Button";

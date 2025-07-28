@@ -26,7 +26,9 @@ const LoginScreen = () => {
   });
 
   return (
-    <Box className="flex-1 bg-backrgound pt-safe-offset-4 px-4">
+    <Box
+      className="flex-1 bg-backrgound pt-safe-offset-4 px-4"
+      testID="login-screen-root">
       <Animated.View
         style={animatedStyles}
         className="overflow-hidden">

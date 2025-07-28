@@ -11,15 +11,20 @@ import Animated, {
 import { PanGestureHandler } from "react-native-gesture-handler";
 import { Pressable } from "@/components/gluestack/pressable";
 import LogoutBottomSheet from "@/components/bottomSheets/LogoutBottomSheet";
+// --- Added new InfoBottomSheet ---
+import InfoBottomSheet, { InfoBottomSheetProps } from "@/components/bottomSheets/InfoBottomSheet";
 
 // -----------------
 // Type Definitions
 // -----------------
+
+// --- Added InfoBottomSheet to the props map ---
 type BottomSheetPropsMap = {
   LogoutBottomSheet: {
     onPressLogout: () => void;
     onPressCancel: () => void;
   };
+  InfoBottomSheet: InfoBottomSheetProps;
 };
 
 type SheetName = keyof BottomSheetPropsMap;
@@ -32,10 +37,13 @@ type BottomSheetContextType = {
 // -------------------
 // Sheet Registry
 // -------------------
+
+// --- Added InfoBottomSheet to the registry ---
 const sheetRegistry: {
   [K in SheetName]: React.FC<BottomSheetPropsMap[K]>;
 } = {
   LogoutBottomSheet: LogoutBottomSheet,
+  InfoBottomSheet: InfoBottomSheet,
 };
 
 // ------------------

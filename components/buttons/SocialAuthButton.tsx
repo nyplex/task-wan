@@ -13,6 +13,7 @@ type Props = {
 const SocialAuthButton = ({ provider, disabled, isLoading, onPress }: Props) => {
   return (
     <Pressable
+      testID="social-auth-button"
       className="w-[50px] h-[50px] items-center justify-center rounded-[15px]"
       style={{
         backgroundColor: "#EEE",
@@ -29,6 +30,7 @@ const SocialAuthButton = ({ provider, disabled, isLoading, onPress }: Props) => 
           {provider === "google" ? (
             <Box className="w-[25px] h-[25px]">
               <Image
+                testID="social-auth-image"
                 source={require("@assets/images/google-logo-light.png")}
                 style={{
                   width: "100%",
@@ -40,6 +42,7 @@ const SocialAuthButton = ({ provider, disabled, isLoading, onPress }: Props) => 
           ) : (
             <Box className="w-[25px] h-[31px]">
               <Image
+                testID="social-auth-image"
                 source={require("@assets/images/apple-logo-light.png")}
                 style={{
                   width: "100%",
