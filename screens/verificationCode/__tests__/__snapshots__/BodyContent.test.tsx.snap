@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BodyContent renders correctly and matches snapshot 1`] = `
+<View>
+  <Text
+    className="font-body based-styles font-semibold text-typography-primary text-[16px] tracking-[0px] text-center mt-12"
+  >
+    Verify Account
+  </Text>
+  <View
+    style={
+      [
+        {
+          "height": undefined,
+          "opacity": undefined,
+          "transform": [
+            {
+              "scale": undefined,
+            },
+          ],
+        },
+        {
+          "alignSelf": "center",
+          "height": 200,
+          "marginTop": 40,
+          "width": 250,
+        },
+      ]
+    }
+  >
+    <Image
+      source="verifyEmail.png"
+      style={
+        [
+          {
+            "height": "100%",
+            "width": 250,
+          },
+          {
+            "height": undefined,
+            "opacity": undefined,
+            "transform": [
+              {
+                "scale": undefined,
+              },
+            ],
+          },
+        ]
+      }
+    />
+  </View>
+  <Text
+    className="based-styles font-regular text-typography-primary text-[14px] tracking-[0px] text-center mt-8 mb-4"
+  >
+    Please enter the verification number we sent to your email
+  </Text>
+</View>
+`;

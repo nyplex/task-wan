@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoginScreen matches the rendered output snapshot 1`] = `
+<View
+  className="flex-1 bg-backrgound pt-safe-offset-4 px-4"
+  testID="login-screen-root"
+>
+  <View
+    className="overflow-hidden"
+    style={
+      {
+        "height": undefined,
+        "marginBottom": undefined,
+        "opacity": undefined,
+        "transform": [
+          {
+            "scale": undefined,
+          },
+        ],
+      }
+    }
+  />
+  <View
+    className="mt-12"
+  >
+    <Text
+      className="font-body based-styles font-semibold text-typography-primary text-[16px] tracking-[0px] text-center"
+    >
+      Login to your account
+    </Text>
+  </View>
+</View>
+`;

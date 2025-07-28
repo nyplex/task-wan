@@ -1,0 +1,256 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RegisterForm matches the snapshot 1`] = `
+<View
+  className="flex-col gap-2 mt-4"
+>
+  <View
+    className="flex-col"
+  >
+    <View
+      className="flex-row"
+    >
+      <View
+        className="h-[48px] w-[50px] justify-center items-center bg-primary-0 rounded-l-[10px]"
+      >
+        <Text
+          color="#fff"
+          disabled={true}
+          name="mail"
+          size={24}
+          testID="icon"
+        >
+          Feather Icon
+        </Text>
+      </View>
+      <View
+        className="flex-row overflow-hidden content-center data-[hover=true]:border-outline-400 data-[focus=true]:hover:border-primary-700 data-[disabled=true]:opacity-40 data-[disabled=true]:hover:border-background-300 items-center rounded border data-[invalid=true]:border-error-700 data-[invalid=true]:hover:border-error-700 data-[invalid=true]:data-[focus=true]:border-error-700 data-[invalid=true]:data-[focus=true]:hover:border-error-700 data-[invalid=true]:data-[disabled=true]:hover:border-error-700 data-[focus=true]:web:ring-1 data-[focus=true]:web:ring-inset data-[focus=true]:web:ring-indicator-primary data-[invalid=true]:web:ring-1 data-[invalid=true]:web:ring-inset data-[invalid=true]:web:ring-indicator-error data-[invalid=true]:data-[focus=true]:hover:web:ring-1 data-[invalid=true]:data-[focus=true]:hover:web:ring-inset data-[invalid=true]:data-[focus=true]:hover:web:ring-indicator-error data-[invalid=true]:data-[disabled=true]:hover:web:ring-1 data-[invalid=true]:data-[disabled=true]:hover:web:ring-inset data-[invalid=true]:data-[disabled=true]:hover:web:ring-indicator-error text-buttons-text flex-1 h-[48px] rounded-r-[10px] border-primary-700 data-[focus=true]:border-primary-0 rounded-l-none border-r-1 border-l-0"
+        dataSet={
+          {
+            "disabled": "false",
+            "focus": "false",
+            "focusVisible": "false",
+            "hover": "false",
+            "invalid": "false",
+            "readonly": "false",
+            "required": "false",
+          }
+        }
+        states={
+          {
+            "disabled": undefined,
+            "focus": false,
+            "focusVisible": false,
+            "hover": undefined,
+            "invalid": undefined,
+            "readonly": undefined,
+            "required": undefined,
+          }
+        }
+        testID="input-field"
+      >
+        <TextInput
+          accessible={true}
+          aria-label="Input Field"
+          aria-selected={false}
+          autoCorrect={false}
+          className="flex-1 text-typography-900 py-0 px-3 placeholder:text-typography-500 h-full ios:leading-[0px] web:cursor-text web:data-[disabled=true]:cursor-not-allowed web:outline-0 web:outline-none text-base"
+          dataSet={
+            {
+              "disabled": "false",
+              "focus": "false",
+              "focusVisible": "false",
+              "hover": "false",
+              "invalid": "false",
+              "readonly": "false",
+              "required": "false",
+            }
+          }
+          keyboardType="email-address"
+          onBlur={[Function]}
+          onChangeText={[Function]}
+          onFocus={[Function]}
+          onKeyPress={[Function]}
+          placeholder="Email"
+          placeholderTextColor="#9A9A9A"
+          readOnly={false}
+          secureTextEntry={false}
+          states={
+            {
+              "disabled": undefined,
+              "focus": false,
+              "focusVisible": false,
+              "hover": undefined,
+              "invalid": undefined,
+              "readonly": undefined,
+              "required": undefined,
+            }
+          }
+          type="text"
+          value=""
+        />
+      </View>
+    </View>
+    <Text
+      className="font-body based-styles font-medium text-[12px] tracking-[0px] text-right px-2 text-red-500 line-clamp-1"
+    />
+  </View>
+  <View
+    className="flex-col"
+  >
+    <View
+      className="flex-row"
+    >
+      <View
+        className="h-[48px] w-[50px] justify-center items-center bg-primary-0 rounded-l-[10px]"
+      >
+        <Text
+          color="#fff"
+          disabled={true}
+          name="user"
+          size={24}
+          testID="icon"
+        >
+          Feather Icon
+        </Text>
+      </View>
+      <View
+        className="flex-row overflow-hidden content-center data-[hover=true]:border-outline-400 data-[focus=true]:hover:border-primary-700 data-[disabled=true]:opacity-40 data-[disabled=true]:hover:border-background-300 items-center rounded border data-[invalid=true]:border-error-700 data-[invalid=true]:hover:border-error-700 data-[invalid=true]:data-[focus=true]:border-error-700 data-[invalid=true]:data-[focus=true]:hover:border-error-700 data-[invalid=true]:data-[disabled=true]:hover:border-error-700 data-[focus=true]:web:ring-1 data-[focus=true]:web:ring-inset data-[focus=true]:web:ring-indicator-primary data-[invalid=true]:web:ring-1 data-[invalid=true]:web:ring-inset data-[invalid=true]:web:ring-indicator-error data-[invalid=true]:data-[focus=true]:hover:web:ring-1 data-[invalid=true]:data-[focus=true]:hover:web:ring-inset data-[invalid=true]:data-[focus=true]:hover:web:ring-indicator-error data-[invalid=true]:data-[disabled=true]:hover:web:ring-1 data-[invalid=true]:data-[disabled=true]:hover:web:ring-inset data-[invalid=true]:data-[disabled=true]:hover:web:ring-indicator-error text-buttons-text flex-1 h-[48px] rounded-r-[10px] border-primary-700 data-[focus=true]:border-primary-0 rounded-l-none border-r-1 border-l-0"
+        dataSet={
+          {
+            "disabled": "false",
+            "focus": "false",
+            "focusVisible": "false",
+            "hover": "false",
+            "invalid": "false",
+            "readonly": "false",
+            "required": "false",
+          }
+        }
+        states={
+          {
+            "disabled": undefined,
+            "focus": false,
+            "focusVisible": false,
+            "hover": undefined,
+            "invalid": undefined,
+            "readonly": undefined,
+            "required": undefined,
+          }
+        }
+        testID="input-field"
+      >
+        <TextInput
+          accessible={true}
+          aria-label="Input Field"
+          aria-selected={false}
+          autoCorrect={false}
+          className="flex-1 text-typography-900 py-0 px-3 placeholder:text-typography-500 h-full ios:leading-[0px] web:cursor-text web:data-[disabled=true]:cursor-not-allowed web:outline-0 web:outline-none text-base"
+          dataSet={
+            {
+              "disabled": "false",
+              "focus": "false",
+              "focusVisible": "false",
+              "hover": "false",
+              "invalid": "false",
+              "readonly": "false",
+              "required": "false",
+            }
+          }
+          keyboardType="default"
+          onBlur={[Function]}
+          onChangeText={[Function]}
+          onFocus={[Function]}
+          onKeyPress={[Function]}
+          placeholder="Username"
+          placeholderTextColor="#9A9A9A"
+          readOnly={false}
+          secureTextEntry={false}
+          states={
+            {
+              "disabled": undefined,
+              "focus": false,
+              "focusVisible": false,
+              "hover": undefined,
+              "invalid": undefined,
+              "readonly": undefined,
+              "required": undefined,
+            }
+          }
+          type="text"
+          value=""
+        />
+      </View>
+    </View>
+    <Text
+      className="font-body based-styles font-medium text-[12px] tracking-[0px] text-right px-2 text-red-500 line-clamp-1"
+    />
+  </View>
+  <View
+    className="mt-8"
+  >
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": true,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      className="group/button flex-row items-center justify-center data-[focus-visible=true]:web:outline-none data-[focus-visible=true]:web:ring-2 data-[disabled=true]:opacity-40 gap-2 data-[hover=true]:bg-primary-600 border-primary-300 data-[hover=true]:border-primary-400 data-[active=true]:border-primary-500 data-[focus-visible=true]:web:ring-indicator-info px-5 based-styles w-full h-[48px] rounded-[10px] data-[active=true]:bg-primary-50 bg-[#C6C2C2]"
+      collapsable={false}
+      dataSet={
+        {
+          "active": "false",
+          "disabled": "false",
+          "focus": "false",
+          "focusVisible": "false",
+          "hover": "false",
+        }
+      }
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      role="button"
+      states={
+        {
+          "active": false,
+          "disabled": undefined,
+          "focus": false,
+          "focusVisible": false,
+          "hover": false,
+        }
+      }
+      testID="Button"
+    >
+      <View
+        className="flex-row items-center justify-center gap-2 flex-1"
+      >
+        <Text
+          className="based-styles font-regular text-[16px] tracking-[0px] text-typography-secondary"
+        >
+          Register
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;

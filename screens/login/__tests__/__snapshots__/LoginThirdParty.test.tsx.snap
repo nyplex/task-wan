@@ -1,0 +1,198 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoginThirdParty matches the snapshot 1`] = `
+<View
+  className="flex-row items-center justify-around mt-8 w-full"
+>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    className="data-[focus-visible=true]:outline-none data-[focus-visible=true]:ring-indicator-info data-[focus-visible=true]:ring-2 data-[disabled=true]:opacity-40 w-[50px] h-[50px] items-center justify-center rounded-[15px]"
+    collapsable={false}
+    dataSet={
+      {
+        "active": "false",
+        "disabled": "false",
+        "focus": "false",
+        "focusVisible": "false",
+        "hover": "false",
+      }
+    }
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    states={
+      {
+        "active": false,
+        "disabled": undefined,
+        "focus": false,
+        "focusVisible": false,
+        "hover": false,
+      }
+    }
+    style={
+      {
+        "backgroundColor": "#EEE",
+      }
+    }
+    testID="social-auth-button"
+  >
+    <View
+      className="w-[25px] h-[25px]"
+    >
+      <ViewManagerAdapter_ExpoImage
+        accessibilityLabel="googleIcon"
+        containerViewRef={"[React.ref]"}
+        contentFit="cover"
+        contentPosition={
+          {
+            "left": "50%",
+            "top": "50%",
+          }
+        }
+        height="100%"
+        nativeViewRef={"[React.ref]"}
+        onError={[Function]}
+        onLoad={[Function]}
+        onLoadStart={[Function]}
+        onProgress={[Function]}
+        placeholder={[]}
+        source={
+          [
+            {
+              "testUri": "../../../assets/images/google-logo-light.png",
+            },
+          ]
+        }
+        style={
+          {
+            "height": "100%",
+            "width": "100%",
+          }
+        }
+        testID="social-auth-image"
+        transition={null}
+        width="100%"
+      />
+    </View>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    className="data-[focus-visible=true]:outline-none data-[focus-visible=true]:ring-indicator-info data-[focus-visible=true]:ring-2 data-[disabled=true]:opacity-40 w-[50px] h-[50px] items-center justify-center rounded-[15px]"
+    collapsable={false}
+    dataSet={
+      {
+        "active": "false",
+        "disabled": "false",
+        "focus": "false",
+        "focusVisible": "false",
+        "hover": "false",
+      }
+    }
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    states={
+      {
+        "active": false,
+        "disabled": undefined,
+        "focus": false,
+        "focusVisible": false,
+        "hover": false,
+      }
+    }
+    style={
+      {
+        "backgroundColor": "#EEE",
+      }
+    }
+    testID="social-auth-button"
+  >
+    <View
+      className="w-[25px] h-[31px]"
+    >
+      <ViewManagerAdapter_ExpoImage
+        accessibilityLabel="appleIcon"
+        containerViewRef={"[React.ref]"}
+        contentFit="cover"
+        contentPosition={
+          {
+            "left": "50%",
+            "top": "50%",
+          }
+        }
+        height="100%"
+        nativeViewRef={"[React.ref]"}
+        onError={[Function]}
+        onLoad={[Function]}
+        onLoadStart={[Function]}
+        onProgress={[Function]}
+        placeholder={[]}
+        source={
+          [
+            {
+              "testUri": "../../../assets/images/apple-logo-light.png",
+            },
+          ]
+        }
+        style={
+          {
+            "height": "100%",
+            "width": "100%",
+          }
+        }
+        testID="social-auth-image"
+        transition={null}
+        width="100%"
+      />
+    </View>
+  </View>
+</View>
+`;

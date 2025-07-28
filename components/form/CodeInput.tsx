@@ -70,6 +70,7 @@ const CodeInput = ({
   return (
     <View>
       <CodeField
+        testID="code-input-field"
         ref={ref}
         {...props}
         value={currentValue}
@@ -83,6 +84,7 @@ const CodeInput = ({
         textContentType="oneTimeCode"
         renderCell={({ index, symbol, isFocused }) => (
           <View
+            testID={`code-input-cell-${index}`}
             onLayout={getCellOnLayoutHandler(index)}
             key={index}
             style={[
