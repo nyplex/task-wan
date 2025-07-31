@@ -1,0 +1,22 @@
+appId: com.nyplex.taskwan
+tags:
+  - auth
+---
+# - launchApp:
+#     clearState: true
+- assertVisible: Get Started
+- tapOn: Get Started
+- tapOn: Email
+- inputText: nypelsa@gmail.com
+# - hideKeyboard
+- tapOn: Login
+- assertVisible: Verify Account
+- tapOn:
+    id: code-input-field
+- inputText: '1'
+- inputText: '2'
+- inputText: '3'
+- inputText: '4'
+- inputText: '5'
+- inputText: '6'
+- assertVisible: Token has expired or is invalid

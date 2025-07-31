@@ -1,26 +1,17 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Session } from "@supabase/supabase-js";
-import { initializeAuthThunk } from "./authThunks";
+import { initializeAuthThunk } from "./thunks/initializeAuthThunk";
 
-// ------------------------------
-// Define the State Interface
-// ------------------------------
 export interface AuthStateType {
   session: Session | null;
   isLoading: boolean;
 }
 
-// ------------------------------
-// Initial State
-// ------------------------------
 const initialState: AuthStateType = {
   session: null,
   isLoading: false,
 };
 
-// ------------------------------
-// Slice Definition
-// ------------------------------
 export const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -50,8 +41,5 @@ export const authSlice = createSlice({
   },
 });
 
-// ------------------------------
-// Exports
-// ------------------------------
 export const { setSession, clearAuth, setIsLoading } = authSlice.actions;
 export default authSlice.reducer;

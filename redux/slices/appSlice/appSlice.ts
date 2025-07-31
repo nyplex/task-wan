@@ -1,10 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { initializeApp } from "./appThunks";
-import { initializeAuthThunk } from "../authSlice/authThunks";
+import { initializeAuthThunk } from "../authSlice/thunks/initializeAuthThunk";
+import { initializeAppThunk } from "./thunks/initializeAppThunk";
 
-// ------------------------------
-// Define the State Interface
-// ------------------------------
 export interface AppStateType {
   isAppReady: boolean;
   isLoading: boolean;
@@ -14,9 +11,6 @@ export interface AppStateType {
   authInitDone: boolean;
 }
 
-// ------------------------------
-// Initial State
-// ------------------------------
 const initialState: AppStateType = {
   isAppReady: false,
   isLoading: false,
@@ -26,9 +20,6 @@ const initialState: AppStateType = {
   authInitDone: false,
 };
 
-// ------------------------------
-// Slice Definition
-// ------------------------------
 export const appSlice = createSlice({
   name: "app",
   initialState,
@@ -48,15 +39,15 @@ export const appSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(initializeApp.pending, (state) => {
+      .addCase(initializeAppThunk.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(initializeApp.rejected, (state, action: PayloadAction<any>) => {
+      .addCase(initializeAppThunk.rejected, (state, action: PayloadAction<any>) => {
         state.isLoading = false;
         state.appInitDone = true;
         state.isAppReady = false;
       })
-      .addCase(initializeApp.fulfilled, (state) => {
+      .addCase(initializeAppThunk.fulfilled, (state) => {
         state.appInitDone = true;
         if (state.authInitDone) {
           state.isLoading = false;
@@ -81,9 +72,6 @@ export const appSlice = createSlice({
   },
 });
 
-// ------------------------------
-// Exports
-// ------------------------------
 export const { setAppReady, setIsLoading, setAppVersion, toggleTheme } = appSlice.actions;
 
 export default appSlice.reducer;

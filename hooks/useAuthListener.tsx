@@ -2,7 +2,7 @@ import "react-native-url-polyfill/auto";
 import { useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 import { useAppDispatch } from "./redux";
-import { initializeAuthThunk } from "@/redux/slices/authSlice/authThunks";
+import { initializeAuthThunk } from "@/redux/slices/authSlice/thunks/initializeAuthThunk";
 
 const useAuthListener = () => {
   const dispatch = useAppDispatch();

@@ -1,9 +1,10 @@
 import { PowerSyncDatabase } from "@powersync/react-native";
-import { AppSchema } from "./AppSchema";
+import { AppSchema, drizzleSchema } from "./AppSchema";
 import { Connector } from "./Connector";
 import { OPSqliteOpenFactory } from "@powersync/op-sqlite";
+import { wrapPowerSyncWithDrizzle } from "@powersync/drizzle-driver";
 
-const factory = new OPSqliteOpenFactory({
+export const factory = new OPSqliteOpenFactory({
   dbFilename: "sqlite.db",
 });
 
@@ -13,6 +14,10 @@ export const powersync = new PowerSyncDatabase({
   // For other options see,
   // https://powersync-ja.github.io/powersync-js/web-sdk/globals#powersyncopenfactoryoptions
   database: factory,
+});
+
+export const db = wrapPowerSyncWithDrizzle(powersync, {
+  schema: drizzleSchema,
 });
 
 export const setupPowerSync = async () => {

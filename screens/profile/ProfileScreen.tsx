@@ -4,7 +4,7 @@ import ProfileItem from "@/components/UI/ProfileItem";
 import { Box } from "@/components/gluestack/box";
 import { VStack } from "@/components/gluestack/vstack";
 import useAuth from "@/hooks/useAuth";
-import { useGetProfileQuery } from "@/redux/slices/apiSlice/apiSlice";
+import { useGetProfileQuery, useUpdateProfileMutation } from "@/redux/slices/apiSlice/apiSlice";
 import { useSelector } from "react-redux";
 import { selectAuthStatus } from "@/redux/slices/authSlice/authSelectors";
 
@@ -12,8 +12,34 @@ const ProfileScreen = () => {
   const { logout, user } = useAuth();
   const authIsLoading = useSelector(selectAuthStatus);
 
-  const { isFetching, isError, isLoading, data } = useGetProfileQuery({ userID: user?.id! });
+  const {
+    isFetching,
+    isError,
+    isLoading,
+    data: rawData,
+  } = useGetProfileQuery({ userID: user?.id! });
   // console.log("ProfileScreen data:", data);
+  const [updateProfile] = useUpdateProfileMutation();
+
+  const onPressEdit = async () => {
+    try {
+      const { data, error } = await updateProfile({
+        id: user?.id!,
+        username: "Alexandre",
+        email: "test@gmail.com",
+        location: "London",
+        profession: "Software Engineer",
+        avatar: "https://example.com/avatar.jpg",
+        dob: "07-07-1990",
+      });
+      console.log("Profile updated:", data);
+      if (error) {
+        console.error("Error updating profile:", error);
+      }
+    } catch (error) {
+      console.error("Error updating profile:", error);
+    }
+  };
 
   return (
     <Box className="flex-1 bg-white">
@@ -29,7 +55,7 @@ const ProfileScreen = () => {
         <Box className="h-[80px]">
           <Box className="absolute top-[-125px] left-0 right-0 justify-center items-center">
             <ProfileCard
-              name={data?.username!}
+              name={rawData?.username!}
               location="London"
               profession="Software"
             />
@@ -39,6 +65,7 @@ const ProfileScreen = () => {
           <ProfileItem
             icon="user"
             title="My Profile"
+            onPress={onPressEdit}
           />
           <ProfileItem
             icon="bar-chart-2"
