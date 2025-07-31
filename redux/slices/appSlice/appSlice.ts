@@ -1,11 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
 import { initializeAuthThunk } from "../authSlice/thunks/initializeAuthThunk";
 import { initializeAppThunk } from "./thunks/initializeAppThunk";
 
-// ------------------------------
-// Define the State Interface
-// ------------------------------
 export interface AppStateType {
   isAppReady: boolean;
   isLoading: boolean;
@@ -15,9 +11,6 @@ export interface AppStateType {
   authInitDone: boolean;
 }
 
-// ------------------------------
-// Initial State
-// ------------------------------
 const initialState: AppStateType = {
   isAppReady: false,
   isLoading: false,
@@ -27,9 +20,6 @@ const initialState: AppStateType = {
   authInitDone: false,
 };
 
-// ------------------------------
-// Slice Definition
-// ------------------------------
 export const appSlice = createSlice({
   name: "app",
   initialState,
@@ -82,9 +72,6 @@ export const appSlice = createSlice({
   },
 });
 
-// ------------------------------
-// Exports
-// ------------------------------
 export const { setAppReady, setIsLoading, setAppVersion, toggleTheme } = appSlice.actions;
 
 export default appSlice.reducer;
