@@ -5,23 +5,12 @@ import {
 } from "@powersync/react-native";
 
 export class Connector implements PowerSyncBackendConnector {
-  /**
-   * Implement fetchCredentials to obtain a JWT from your authentication service.
-   * See https://docs.powersync.com/installation/authentication-setup
-   * If you're using Supabase or Firebase, you can re-use the JWT from those clients, see:
-   * https://docs.powersync.com/installation/authentication-setup/supabase-auth
-   * https://docs.powersync.com/installation/authentication-setup/firebase-auth
-   */
+  constructor(private token: string) {}
+
   async fetchCredentials() {
     return {
-      // The PowerSync instance URL or self-hosted endpoint
       endpoint: process.env.EXPO_PUBLIC_POWERSYNC_URL!,
-      /**
-       * To get started quickly, use a development token, see:
-       * Authentication Setup https://docs.powersync.com/installation/authentication-setup/development-tokens) to get up and running quickly
-       */
-      token:
-        "eyJhbGciOiJSUzI1NiIsImtpZCI6InBvd2Vyc3luYy1kZXYtMzIyM2Q0ZTMifQ.eyJzdWIiOiI2Y2ZkZTQyYS1mM2Q0LTRiZWItYmNkMS0zMjk1ZTViM2M5N2UiLCJpYXQiOjE3NTM4MTk0OTYsImlzcyI6Imh0dHBzOi8vcG93ZXJzeW5jLWFwaS5qb3VybmV5YXBwcy5jb20iLCJhdWQiOiJodHRwczovLzY4MmExMzliNjgyMTVkODZlZGVjZThlMi5wb3dlcnN5bmMuam91cm5leWFwcHMuY29tIiwiZXhwIjoxNzUzODYyNjk2fQ.tTmVKuI30j1hyPG1aG7Dtc6GyA7ARzN8Gmmv7mV6r6Uh12VbnyajEqxdi1JNmmN7aEBndrP3IODbH0RwpJPwyv9Ws_ypCPgiWHZaHymuWSIhMM6aB7XVOFLz-yCAPFZaPv5f1yDylogQ0wBTapD64upNsdE1ZWcnfMysVvfMBM4chPGfP8G12NQLmGnXAUg17gzrdeiwillLtTq5Wf2_SxJZjWqTQM6dJ8ZHuyFK6Tl5s6dMIfwhhACp4a2DMstFtfdfS06iOlVJ0fsewnXq9QvAiaqxuqebdlpLlJbWK2XiUF4Bdb9tFO4J44LU-CjEhOIOdLJmr5qMxE94y6GkIg",
+      token: this.token,
     };
   }
 

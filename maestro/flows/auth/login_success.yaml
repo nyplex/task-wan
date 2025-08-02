@@ -1,0 +1,27 @@
+appId: com.nyplex.taskwan.preview
+tags:
+  - auth
+---
+- launchApp:
+    clearState: true
+- assertVisible: Get Started
+- tapOn: Get Started
+- tapOn: Email
+- assertVisible:
+    text: Login
+    enabled: false
+- inputText: maestro@e2e.com
+- hideKeyboard
+- assertVisible:
+    text: Login
+    enabled: true
+- tapOn: Login
+- assertVisible: Verify Account
+- tapOn:
+    id: code-input-field
+- inputText: '12345'
+- inputText: '6'
+- extendedWaitUntil:
+    visible: Welcome Jon Smith
+    timeout: 60000
+- stopApp

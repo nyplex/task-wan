@@ -1,7 +1,6 @@
 import "@azure/core-asynciterator-polyfill";
 import "@/global.css";
-import { useEffect } from "react";
-import { ActivityIndicator, Text, View } from "react-native";
+import { ActivityIndicator, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { ThemeProvider, DefaultTheme } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
@@ -10,7 +9,6 @@ import { GluestackUIProvider } from "@/components/gluestack/gluestack-ui-provide
 import { Provider, useSelector } from "react-redux";
 import { selectSession } from "@/redux/slices/authSlice/authSelectors";
 import { selectAppState } from "@/redux/slices/appSlice/appSelectors";
-import { setupPowerSync } from "@/powersync/system";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 import store from "@/redux/store";
 import useInitializeApp from "@/hooks/useInitializeApp";
@@ -82,9 +80,6 @@ function InnerLayout() {
 }
 
 export default function RootLayout() {
-  useEffect(() => {
-    setupPowerSync();
-  }, []);
   return (
     <Provider store={store}>
       <KeyboardProvider>

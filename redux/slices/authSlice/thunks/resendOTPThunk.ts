@@ -17,6 +17,16 @@ export const resendOTPThunk = createAsyncThunk<
         type: "auth",
       });
     }
+
+    // ---- Skip OTP resend for Maestro ----
+    if (
+      ["development", "preview"].includes(process.env.EXPO_PUBLIC_APP_VARIANT!) &&
+      params.email === "maestro@e2e.com"
+    ) {
+      return;
+    }
+    // -------------------------------------
+
     const { error } = await supabase.auth.signInWithOtp({
       email: params.email,
       options: {

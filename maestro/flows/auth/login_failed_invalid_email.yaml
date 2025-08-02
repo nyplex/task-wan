@@ -1,0 +1,20 @@
+appId: com.nyplex.taskwan.preview
+tags:
+  - auth
+---
+- launchApp:
+    clearState: true
+- assertVisible: Get Started
+- tapOn: Get Started
+- tapOn: Email
+- assertVisible:
+    text: Login
+    enabled: false
+- inputRandomEmail
+- hideKeyboard
+- assertVisible:
+    text: Login
+    enabled: true
+- tapOn: Login
+- assertVisible: Signups not allowed for otp
+- stopApp

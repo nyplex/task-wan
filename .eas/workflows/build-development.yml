@@ -1,0 +1,63 @@
+name: Build
+
+jobs:
+  fingerprint:
+    type: fingerprint
+    environment: development
+
+  get_android_build:
+    needs: [fingerprint]
+    type: get-build
+    params:
+      fingerprint_hash: ${{ needs.fingerprint.outputs.android_fingerprint_hash }}
+      profile: development-simulator
+
+  build_android_app:
+    type: build
+    needs: [get_android_build]
+    if: ${{ !needs.get_android_build.outputs.build_id }}
+    params:
+      platform: android
+      profile: development-simulator
+
+  get_ios_build:
+    needs: [fingerprint]
+    type: get-build
+    params:
+      fingerprint_hash: ${{ needs.fingerprint.outputs.ios_fingerprint_hash }}
+      profile: development-simulator
+
+  build_ios_simulator_app:
+    type: build
+    needs: [get_ios_build]
+    if: ${{ !needs.get_ios_build.outputs.build_id }}
+    params:
+      platform: ios
+      profile: development-simulator
+
+  # build_ios_app:
+  #   type: build
+  #   needs: [get_ios_build]
+  #   if: ${{ needs.get_ios_build.outputs.build_id }}
+  #   params:
+  #     platform: ios
+  #     profile: development
+
+  send_notification:
+    # after: [build_android_app, build_ios_simulator_app, build_ios_app]
+    after: [build_android_app, build_ios_simulator_app]
+    steps:
+      - name: Notify Android Build
+        run: |
+          if [ "${{ needs.get_android_build.outputs.build_id }}" ]; then
+            curl -X POST -H 'Content-type: application/json' --data '{"text":"Android Development build was skipped: existing build with same fingerprints found.", "channel":"task-wan"}' "$SLACK_WEBHOOK_URL"
+          else
+            curl -X POST -H 'Content-type: application/json' --data '{"text":"Android Development build was successful!", "channel":"task-wan"}' "$SLACK_WEBHOOK_URL"
+          fi
+      - name: Notify iOS Build
+        run: |
+          if [ "${{ needs.get_ios_build.outputs.build_id }}" ]; then
+            curl -X POST -H 'Content-type: application/json' --data '{"text":"iOS Development build was skipped: existing build with same fingerprints found.", "channel":"task-wan"}' "$SLACK_WEBHOOK_URL" 
+          else
+            curl -X POST -H 'Content-type: application/json' --data '{"text":"iOS Development build was successful!", "channel":"task-wan"}' "$SLACK_WEBHOOK_URL"
+          fi

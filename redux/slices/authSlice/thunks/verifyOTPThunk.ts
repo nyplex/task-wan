@@ -17,6 +17,28 @@ export const verifyOTPThunk = createAsyncThunk<
         type: "auth",
       });
     }
+
+    // ---- Skip OTP verification for Maestro ----
+    if (
+      ["development", "preview"].includes(process.env.EXPO_PUBLIC_APP_VARIANT!) &&
+      otp.email === "maestro@e2e.com" &&
+      otp.token === "123456"
+    ) {
+      const { error } = await supabase.auth.signInWithPassword({
+        email: otp.email,
+        password: process.env.EXPO_PUBLIC_MAESTRO_USER_PASSWORD!,
+      });
+      if (error) {
+        return thunkAPI.rejectWithValue({
+          message: error.message,
+          source: "verifyOTPThunk/supabase",
+          type: "auth",
+        });
+      }
+      return;
+    }
+    // -------------------------------------
+
     const { error } = await supabase.auth.verifyOtp({
       email: otp.email,
       token: otp.token,
