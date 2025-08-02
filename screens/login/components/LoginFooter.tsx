@@ -9,16 +9,19 @@ const LoginFooter = () => {
   const isLoading = useSelector(selectAuthStatus);
 
   return (
-    <Box>
-      <Text className="text-center mt-8">
+    <Box className="flex-row justify-center items-center gap-1">
+      <Text
+        className="text-center mt-8"
+        testID="login-footer">
         Don't have an account?{" "}
-        <Text
-          weight="bold"
-          onPress={() => router.navigate("/(app)/Register")}
-          disabled={isLoading}
-          className="underline">
-          Sign Up
-        </Text>
+      </Text>
+      <Text
+        testID="login-footer-signup"
+        weight="bold"
+        onPress={() => router.navigate("/(app)/Register")}
+        disabled={isLoading}
+        className="underline mt-8">
+        Sign Up
       </Text>
     </Box>
   );

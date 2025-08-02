@@ -24,7 +24,7 @@
     "preview": {
       "environment": "preview",
       "distribution": "internal",
-      "channel": "main",
+      "channel": "preview",
       "android": {
         "image": "latest"
       },
@@ -32,7 +32,14 @@
         "image": "latest"
       }
     },
+    "preview-simulator": {
+      "extends": "preview",
+      "ios": {
+        "simulator": true
+      }
+    },
     "production": {
+      "distribution": "store",
       "environment": "production",
       "channel": "production",
       "autoIncrement": true,

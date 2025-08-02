@@ -8,7 +8,8 @@ jest.mock("react-redux", () => ({ useSelector: () => false }));
 describe("LoginFooter", () => {
   it("renders correctly and matches snapshot", () => {
     const { toJSON, getByText } = render(<LoginFooter />);
-    expect(getByText("Don't have an account? Sign Up")).toBeTruthy();
+    expect(getByText("Don't have an account?")).toBeTruthy();
+    expect(getByText("Sign Up")).toBeTruthy();
     expect(toJSON()).toMatchSnapshot();
   });
 

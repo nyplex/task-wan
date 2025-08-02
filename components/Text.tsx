@@ -8,6 +8,7 @@ type TextProps = {
   color?: "primary" | "secondary" | "disabled";
   disabled?: boolean;
   className?: string;
+  testID?: string;
   onPress?: () => void;
 };
 
@@ -18,6 +19,7 @@ const Text = ({
   color = "primary",
   disabled,
   className,
+  testID,
   onPress,
 }: TextProps) => {
   const CN = clsx("based-styles", {
@@ -59,6 +61,7 @@ const Text = ({
 
   return (
     <TextGS
+      testID={testID}
       onPress={onPress}
       className={clsx(CN, className)}
       disabled={disabled}>

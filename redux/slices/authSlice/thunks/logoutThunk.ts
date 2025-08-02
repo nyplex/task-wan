@@ -1,6 +1,7 @@
 import { supabase } from "@/lib/supabase";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { GlobalError } from "@/types/errors";
+import { apiSlice } from "../../apiSlice/apiSlice";
 
 export const logoutThunk = createAsyncThunk<
   void,
@@ -11,6 +12,7 @@ export const logoutThunk = createAsyncThunk<
 >("auth/logout", async (_, thunkAPI) => {
   try {
     const { error } = await supabase.auth.signOut();
+    thunkAPI.dispatch(apiSlice.util.resetApiState());
     if (error) {
       return thunkAPI.rejectWithValue({
         message: error.message,
