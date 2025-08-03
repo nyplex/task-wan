@@ -1,4 +1,3 @@
-import React from "react";
 import { View } from "react-native";
 import type { Meta, StoryObj } from "@storybook/react";
 import { action } from "storybook/actions";
@@ -16,7 +15,8 @@ const meta = {
           padding: 16,
           backgroundColor: "#fff",
           flex: 1,
-        }}>
+        }}
+      >
         <Story />
       </View>
     ),
@@ -32,29 +32,28 @@ export const Interactive: Story = {
   args: {
     title: "Logout",
   },
-  render: () => {
-    const { openBottomSheet, closeBottomSheet } = useBottomSheet();
+  render: () => <LogoutStory />,
+};
 
-    const handleOpenLogoutSheet = () => {
-      openBottomSheet("LogoutBottomSheet", {
-        onPressLogout: () => {
-          action("Logout Pressed")();
-          closeBottomSheet();
-        },
-        onPressCancel: () => {
-          action("Cancel Pressed")();
-          closeBottomSheet();
-        },
-      });
-    };
+const LogoutStory = () => {
+  const { openBottomSheet, closeBottomSheet } = useBottomSheet();
 
-    return (
-      <Box>
-        <Button
-          title="Open Logout BottomSheet"
-          onPress={handleOpenLogoutSheet}
-        />
-      </Box>
-    );
-  },
+  const handleOpenLogoutSheet = () => {
+    openBottomSheet("LogoutBottomSheet", {
+      onPressLogout: () => {
+        action("Logout Pressed")();
+        closeBottomSheet();
+      },
+      onPressCancel: () => {
+        action("Cancel Pressed")();
+        closeBottomSheet();
+      },
+    });
+  };
+
+  return (
+    <Box>
+      <Button title="Open Logout BottomSheet" onPress={handleOpenLogoutSheet} />
+    </Box>
+  );
 };

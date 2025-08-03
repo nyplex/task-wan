@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { View } from "react-native";
 import type { Meta, StoryObj } from "@storybook/react";
 import { action } from "storybook/actions";
@@ -34,30 +34,32 @@ type Story = StoryObj<typeof meta>;
 export const Interactive: Story = {
   args: {
     tabs: ["Tab 1", "Tab 2", "Tab 3"],
-    onTabSelect: (index: number) => {
+    onTabSelect: () => {
       return;
     },
     selectedTab: 2,
     disabled: false,
   },
-  render: (args: any) => {
-    const [selectedTab, setSelectedTab] = React.useState(args.selectedTab ?? 0);
+  render: (args) => <InteractiveTabsSelector {...args} />,
+};
 
-    useEffect(() => {
-      setSelectedTab(args.selectedTab);
-    }, [args.selectedTab]);
+const InteractiveTabsSelector = (args) => {
+  const [selectedTab, setSelectedTab] = useState(args.selectedTab ?? 0);
 
-    return (
-      <TabsSelector
-        selectedTab={selectedTab}
-        tabs={args.tabs}
-        disabled={args.disabled}
-        onTabSelect={(index: number) => {
-          action("onTabSelect")({ args: index });
-          setSelectedTab(index);
-          args.onTabSelect(index);
-        }}
-      />
-    );
-  },
+  useEffect(() => {
+    setSelectedTab(args.selectedTab);
+  }, [args.selectedTab]);
+
+  return (
+    <TabsSelector
+      selectedTab={selectedTab}
+      tabs={args.tabs}
+      disabled={args.disabled}
+      onTabSelect={(index: number) => {
+        action("onTabSelect")({ args: index });
+        setSelectedTab(index);
+        args.onTabSelect(index);
+      }}
+    />
+  );
 };

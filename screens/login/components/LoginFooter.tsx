@@ -10,9 +10,7 @@ const LoginFooter = () => {
 
   return (
     <Box className="flex-row justify-center items-center gap-1">
-      <Text
-        className="text-center mt-8"
-        testID="login-footer">
+      <Text className="text-center mt-8" testID="login-footer">
         Don't have an account?{" "}
       </Text>
       <Text
@@ -20,7 +18,8 @@ const LoginFooter = () => {
         weight="bold"
         onPress={() => router.navigate("/(app)/Register")}
         disabled={isLoading}
-        className="underline mt-8">
+        className="underline mt-8"
+      >
         Sign Up
       </Text>
     </Box>

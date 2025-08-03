@@ -49,7 +49,10 @@ describe("appSlice", () => {
   });
 
   it("should handle toggleTheme", () => {
-    const state = appReducer({ ...getInitialState, theme: "light" }, toggleTheme());
+    const state = appReducer(
+      { ...getInitialState, theme: "light" },
+      toggleTheme(),
+    );
     expect(state.theme).toBe("dark");
   });
 

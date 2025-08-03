@@ -2,7 +2,9 @@ import React from "react";
 import { render, fireEvent } from "@testing-library/react-native";
 import LoginFooter from "../components/LoginFooter";
 
-jest.mock("expo-router", () => ({ useRouter: () => ({ navigate: jest.fn() }) }));
+jest.mock("expo-router", () => ({
+  useRouter: () => ({ navigate: jest.fn() }),
+}));
 jest.mock("react-redux", () => ({ useSelector: () => false }));
 
 describe("LoginFooter", () => {
@@ -22,7 +24,9 @@ describe("LoginFooter", () => {
 
   it("calls router.navigate when Sign Up is pressed", () => {
     const mockNavigate = jest.fn();
-    jest.spyOn(require("expo-router"), "useRouter").mockReturnValue({ navigate: mockNavigate });
+    jest
+      .spyOn(require("expo-router"), "useRouter")
+      .mockReturnValue({ navigate: mockNavigate });
     const { getByText } = render(<LoginFooter />);
     fireEvent.press(getByText("Sign Up"));
     expect(mockNavigate).toHaveBeenCalledWith("/(app)/Register");

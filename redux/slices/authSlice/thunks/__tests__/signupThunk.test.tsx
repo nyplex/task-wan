@@ -20,7 +20,11 @@ describe("signupThunk", () => {
   });
 
   it("rejects if email or username is missing", async () => {
-    const result = await signupThunk({ email: "", username: "" })(dispatch, getState, thunkAPI);
+    const result = await signupThunk({ email: "", username: "" })(
+      dispatch,
+      getState,
+      thunkAPI,
+    );
     expect(result.payload).toEqual({
       message: "Email and username are required for signup",
       source: "signupThunk",
@@ -32,11 +36,10 @@ describe("signupThunk", () => {
     (supabase.auth.signInWithOtp as jest.Mock).mockResolvedValue({
       error: { message: "Signup error" },
     });
-    const result = await signupThunk({ email: "test@example.com", username: "alex" })(
-      dispatch,
-      getState,
-      thunkAPI
-    );
+    const result = await signupThunk({
+      email: "test@example.com",
+      username: "alex",
+    })(dispatch, getState, thunkAPI);
     expect(result.payload).toEqual({
       message: "Signup error",
       source: "signupThunk/supabase",
@@ -45,12 +48,13 @@ describe("signupThunk", () => {
   });
 
   it("resolves if signup is successful", async () => {
-    (supabase.auth.signInWithOtp as jest.Mock).mockResolvedValue({ error: null });
-    const result = await signupThunk({ email: "test@example.com", username: "alex" })(
-      dispatch,
-      getState,
-      thunkAPI
-    );
+    (supabase.auth.signInWithOtp as jest.Mock).mockResolvedValue({
+      error: null,
+    });
+    const result = await signupThunk({
+      email: "test@example.com",
+      username: "alex",
+    })(dispatch, getState, thunkAPI);
     expect(result.payload).toBeUndefined();
   });
 
@@ -58,11 +62,10 @@ describe("signupThunk", () => {
     (supabase.auth.signInWithOtp as jest.Mock).mockImplementation(() => {
       throw new Error("Network error");
     });
-    const result = await signupThunk({ email: "test@example.com", username: "alex" })(
-      dispatch,
-      getState,
-      thunkAPI
-    );
+    const result = await signupThunk({
+      email: "test@example.com",
+      username: "alex",
+    })(dispatch, getState, thunkAPI);
     expect(result.payload).toEqual({
       message: "Network error",
       source: "signupThunk",

@@ -28,8 +28,12 @@ jest.mock("@/redux/slices/authSlice/thunks/logoutThunk", () => ({
   logoutThunk: jest.fn(() => async () => {}),
 }));
 
-jest.mock("@/redux/slices/errorsSlice/errorsSlice", () => ({ addError: jest.fn() }));
-jest.mock("@/redux/slices/authSlice/authSlice", () => ({ setIsLoading: jest.fn() }));
+jest.mock("@/redux/slices/errorsSlice/errorsSlice", () => ({
+  addError: jest.fn(),
+}));
+jest.mock("@/redux/slices/authSlice/authSlice", () => ({
+  setIsLoading: jest.fn(),
+}));
 
 const unwrapMock = jest.fn().mockResolvedValue({});
 const unwrapRejectMock = jest.fn().mockRejectedValue(new Error("fail"));
@@ -122,13 +126,23 @@ describe("useAuth", () => {
   });
   it("login dispatches addError on error", async () => {
     jest.resetModules();
-    jest.doMock("../redux", () => ({ useAppDispatch: () => mockDispatchReject }));
-    jest.doMock("@/redux/slices/errorsSlice/errorsSlice", () => ({ addError: jest.fn() }));
-    jest.doMock("@/redux/slices/authSlice/authSlice", () => ({ setIsLoading: jest.fn() }));
+    jest.doMock("../redux", () => ({
+      useAppDispatch: () => mockDispatchReject,
+    }));
+    jest.doMock("@/redux/slices/errorsSlice/errorsSlice", () => ({
+      addError: jest.fn(),
+    }));
+    jest.doMock("@/redux/slices/authSlice/authSlice", () => ({
+      setIsLoading: jest.fn(),
+    }));
 
     const { default: useAuthError } = require("../useAuth");
-    const { addError: addErrorMock } = require("@/redux/slices/errorsSlice/errorsSlice");
-    const { setIsLoading: setIsLoadingMock } = require("@/redux/slices/authSlice/authSlice");
+    const {
+      addError: addErrorMock,
+    } = require("@/redux/slices/errorsSlice/errorsSlice");
+    const {
+      setIsLoading: setIsLoadingMock,
+    } = require("@/redux/slices/authSlice/authSlice");
 
     const { result } = renderHook(() => useAuthError());
     await act(async () => {
@@ -140,7 +154,7 @@ describe("useAuth", () => {
         message: expect.any(String),
         source: "useAuth/login",
         type: "auth",
-      })
+      }),
     );
     expect(setIsLoadingMock).toHaveBeenCalledWith(false);
   });

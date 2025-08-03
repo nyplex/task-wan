@@ -1,10 +1,8 @@
 // Import RTK Query methods
-import { createApi, fakeBaseQuery, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi, fakeBaseQuery } from "@reduxjs/toolkit/query/react";
 
 // Import your type
 import type { User } from "../../../types/User";
-import { RootState } from "@/redux/store";
-import { supabaseAnonKey, supabaseRESTUrl } from "@/lib/supabase";
 import { powersync } from "@/powersync/system";
 import { GET_PROFILE_BY_ID } from "@/powersync/sql/profile.queries";
 import { UserRecord } from "@/powersync/AppSchema";
@@ -36,7 +34,9 @@ export const apiSlice = createApi({
     getProfile: builder.query<UserRecord, { userID: string }>({
       queryFn: async ({ userID }) => {
         try {
-          const test = (await powersync.get(GET_PROFILE_BY_ID, [userID])) as UserRecord;
+          const test = (await powersync.get(GET_PROFILE_BY_ID, [
+            userID,
+          ])) as UserRecord;
           console.log("Fetched profile:", test);
 
           if (!test) {
@@ -59,7 +59,7 @@ export const apiSlice = createApi({
           // update username and remove column "id:1" from the profile
           const updateProfile = await powersync.execute(
             "UPDATE users SET username = ? WHERE id = ?",
-            [profile.username, profile.id]
+            [profile.username, profile.id],
           );
           // delete the user from the table
           // const removeColumn = await powersync.execute("DELETE FROM users WHERE id = ?", [

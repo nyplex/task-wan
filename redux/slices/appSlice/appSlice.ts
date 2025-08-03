@@ -42,7 +42,7 @@ export const appSlice = createSlice({
       .addCase(initializeAppThunk.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(initializeAppThunk.rejected, (state, action: PayloadAction<any>) => {
+      .addCase(initializeAppThunk.rejected, (state) => {
         state.isLoading = false;
         state.appInitDone = true;
         state.isAppReady = false;
@@ -72,6 +72,7 @@ export const appSlice = createSlice({
   },
 });
 
-export const { setAppReady, setIsLoading, setAppVersion, toggleTheme } = appSlice.actions;
+export const { setAppReady, setIsLoading, setAppVersion, toggleTheme } =
+  appSlice.actions;
 
 export default appSlice.reducer;

@@ -13,10 +13,7 @@ describe("DateInput", () => {
   it("calls onPress when pressed", () => {
     const onPressMock = jest.fn();
     const { getByRole } = render(
-      <DateInput
-        timestamp={testTimestamp}
-        onPress={onPressMock}
-      />
+      <DateInput timestamp={testTimestamp} onPress={onPressMock} />,
     );
 
     fireEvent.press(getByRole("button"));
@@ -26,11 +23,7 @@ describe("DateInput", () => {
   it("does not call onPress when disabled", () => {
     const onPressMock = jest.fn();
     const { getByRole } = render(
-      <DateInput
-        timestamp={testTimestamp}
-        onPress={onPressMock}
-        disabled
-      />
+      <DateInput timestamp={testTimestamp} onPress={onPressMock} disabled />,
     );
 
     fireEvent.press(getByRole("button"));
@@ -39,10 +32,7 @@ describe("DateInput", () => {
 
   it("renders with correct background color when disabled", () => {
     const { getByRole } = render(
-      <DateInput
-        timestamp={testTimestamp}
-        disabled
-      />
+      <DateInput timestamp={testTimestamp} disabled />,
     );
 
     const pressable = getByRole("button");

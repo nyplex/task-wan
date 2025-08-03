@@ -1,7 +1,10 @@
 import { useRouter } from "expo-router";
 import { useSelector } from "react-redux";
 import { selectAuthStatus } from "@/redux/slices/authSlice/authSelectors";
-import Animated, { useAnimatedStyle, interpolate } from "react-native-reanimated";
+import Animated, {
+  useAnimatedStyle,
+  interpolate,
+} from "react-native-reanimated";
 import { useReanimatedKeyboardAnimation } from "react-native-keyboard-controller";
 import { Box } from "@/components/gluestack/box";
 import AppTitle from "@/components/UI/AppTitle";
@@ -29,13 +32,8 @@ const Header = () => {
 
   return (
     <Box>
-      <BackButtonIcon
-        onPress={() => router.back()}
-        disabled={isLoading}
-      />
-      <Animated.View
-        style={animatedStyles}
-        className="overflow-hidden">
+      <BackButtonIcon onPress={() => router.back()} disabled={isLoading} />
+      <Animated.View style={animatedStyles} className="overflow-hidden">
         <AppTitle />
       </Animated.View>
     </Box>

@@ -1,4 +1,3 @@
-import React from "react";
 import { View } from "react-native";
 import type { Meta, StoryObj } from "@storybook/react";
 import { action } from "storybook/actions";
@@ -35,6 +34,12 @@ export const Interactive: Story = {
   args: {
     invalid: false,
     disabled: false,
-    onCodeFilled: action("onCodeFilled"),
+    onValueChange: (value: string) => {
+      action("onValueChange")({
+        args: value,
+        formattedValue: value,
+      });
+    },
+    currentValue: "",
   },
 };

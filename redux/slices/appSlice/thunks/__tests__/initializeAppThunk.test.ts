@@ -18,7 +18,7 @@ describe("initializeAppThunk", () => {
   it("returns error message when an error is thrown", async () => {
     // Mock setTimeout to throw an error
     const originalSetTimeout = global.setTimeout;
-    global.setTimeout = ((fn: Function) => {
+    global.setTimeout = (() => {
       throw new Error("Simulated error during app initialization");
     }) as any;
     const result = await initializeAppThunk()(dispatch, getState, thunkAPI);

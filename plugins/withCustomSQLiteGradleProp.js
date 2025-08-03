@@ -11,7 +11,7 @@ const withCustomSQLiteGradleProp = (config) => {
       const gradlePropsPath = path.join(
         config.modRequest.projectRoot,
         "android",
-        "gradle.properties"
+        "gradle.properties",
       );
 
       if (!fs.existsSync(gradlePropsPath)) {
@@ -22,7 +22,9 @@ const withCustomSQLiteGradleProp = (config) => {
       const contents = fs.readFileSync(gradlePropsPath, "utf8");
 
       if (contents.includes(LINE_TO_ADD)) {
-        console.log("ℹ️ [withCustomSQLiteGradleProp] Line already exists. Skipping.");
+        console.log(
+          "ℹ️ [withCustomSQLiteGradleProp] Line already exists. Skipping.",
+        );
         return config;
       }
 

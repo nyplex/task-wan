@@ -5,9 +5,19 @@ import IconButton from "../IconButton"; // Adjust the path
 // Mock the Icon component
 jest.mock("../../UI/Icon", () => {
   const { Text } = require("react-native");
-  return ({ icon, size, color }: { icon: string; size: string; color: string }) => (
+  const component = ({
+    icon,
+    size,
+    color,
+  }: {
+    icon: string;
+    size: string;
+    color: string;
+  }) => (
     <Text testID="icon">{`Icon: ${icon}, Size: ${size}, Color: ${color}`}</Text>
   );
+  component.displayName = "Icon";
+  return component;
 });
 
 describe("IconButton", () => {
@@ -19,11 +29,7 @@ describe("IconButton", () => {
 
   it("renders with default props (color=primary, size=medium)", () => {
     const { getByTestId } = render(
-      <IconButton
-        icon="calendar"
-        onPress={onPressMock}
-        size="medium"
-      />
+      <IconButton icon="calendar" onPress={onPressMock} size="medium" />,
     );
 
     const icon = getByTestId("icon");
@@ -34,11 +40,7 @@ describe("IconButton", () => {
 
   it("calls onPress when pressed", () => {
     const { getByRole } = render(
-      <IconButton
-        icon="bell"
-        onPress={onPressMock}
-        size="small"
-      />
+      <IconButton icon="bell" onPress={onPressMock} size="small" />,
     );
 
     fireEvent.press(getByRole("button"));
@@ -47,12 +49,7 @@ describe("IconButton", () => {
 
   it("does not call onPress when disabled", () => {
     const { getByRole } = render(
-      <IconButton
-        icon="bell"
-        onPress={onPressMock}
-        size="large"
-        isDisabled
-      />
+      <IconButton icon="bell" onPress={onPressMock} size="large" isDisabled />,
     );
 
     fireEvent.press(getByRole("button"));
@@ -66,7 +63,7 @@ describe("IconButton", () => {
         onPress={onPressMock}
         size="medium"
         isDestructive
-      />
+      />,
     );
 
     const icon = getByTestId("icon");
@@ -80,7 +77,7 @@ describe("IconButton", () => {
         onPress={onPressMock}
         size="medium"
         color="white"
-      />
+      />,
     );
 
     const icon = getByTestId("icon");
@@ -88,15 +85,15 @@ describe("IconButton", () => {
   });
 
   it("renders correct sizes", () => {
-    const sizes: Array<"small" | "medium" | "large"> = ["small", "medium", "large"];
+    const sizes: ("small" | "medium" | "large")[] = [
+      "small",
+      "medium",
+      "large",
+    ];
 
     sizes.forEach((size) => {
       const { getByTestId, unmount } = render(
-        <IconButton
-          icon="bell"
-          onPress={onPressMock}
-          size={size}
-        />
+        <IconButton icon="bell" onPress={onPressMock} size={size} />,
       );
       const icon = getByTestId("icon");
       expect(icon.props.children).toContain(`Size: ${size}`);

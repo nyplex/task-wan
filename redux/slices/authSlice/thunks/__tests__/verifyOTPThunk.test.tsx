@@ -21,7 +21,11 @@ describe("verifyOTPThunk", () => {
   });
 
   it("rejects if email or token is missing", async () => {
-    const result = await verifyOTPThunk({ email: "", token: "" })(dispatch, getState, thunkAPI);
+    const result = await verifyOTPThunk({ email: "", token: "" })(
+      dispatch,
+      getState,
+      thunkAPI,
+    );
     expect(result.payload).toEqual({
       message: "Email and token are required for verification",
       source: "verifyOTPThunk",
@@ -30,12 +34,13 @@ describe("verifyOTPThunk", () => {
   });
 
   it("rejects if supabase returns error", async () => {
-    (supabase.auth.verifyOtp as jest.Mock).mockResolvedValue({ error: { message: "Invalid OTP" } });
-    const result = await verifyOTPThunk({ email: "test@example.com", token: "123456" })(
-      dispatch,
-      getState,
-      thunkAPI
-    );
+    (supabase.auth.verifyOtp as jest.Mock).mockResolvedValue({
+      error: { message: "Invalid OTP" },
+    });
+    const result = await verifyOTPThunk({
+      email: "test@example.com",
+      token: "123456",
+    })(dispatch, getState, thunkAPI);
     expect(result.payload).toEqual({
       message: "Invalid OTP",
       source: "verifyOTPThunk/supabase",
@@ -45,11 +50,10 @@ describe("verifyOTPThunk", () => {
 
   it("resolves if OTP is valid", async () => {
     (supabase.auth.verifyOtp as jest.Mock).mockResolvedValue({ error: null });
-    const result = await verifyOTPThunk({ email: "test@example.com", token: "123456" })(
-      dispatch,
-      getState,
-      thunkAPI
-    );
+    const result = await verifyOTPThunk({
+      email: "test@example.com",
+      token: "123456",
+    })(dispatch, getState, thunkAPI);
     expect(result.payload).toBeUndefined();
   });
 
@@ -57,11 +61,10 @@ describe("verifyOTPThunk", () => {
     (supabase.auth.verifyOtp as jest.Mock).mockImplementation(() => {
       throw new Error("Network error");
     });
-    const result = await verifyOTPThunk({ email: "test@example.com", token: "123456" })(
-      dispatch,
-      getState,
-      thunkAPI
-    );
+    const result = await verifyOTPThunk({
+      email: "test@example.com",
+      token: "123456",
+    })(dispatch, getState, thunkAPI);
     expect(result.payload).toEqual({
       message: "Network error",
       source: "verifyOTPThunk",

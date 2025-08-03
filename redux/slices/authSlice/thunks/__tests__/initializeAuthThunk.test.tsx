@@ -1,7 +1,6 @@
 import { apiSlice } from "@/redux/slices/apiSlice/apiSlice";
 import { setSession } from "../../authSlice";
 import { initializeAuthThunk } from "../initializeAuthThunk";
-import { Session } from "@supabase/supabase-js";
 
 jest.mock("../../authSlice", () => ({ setSession: jest.fn() }));
 jest.mock("@/redux/slices/apiSlice/apiSlice", () => ({
@@ -38,32 +37,58 @@ describe("initializeAuthThunk", () => {
   });
 
   it("dispatches setSession with null session and returns undefined", async () => {
-    const result = await initializeAuthThunk(null)(dispatch, getState, thunkAPI);
+    const result = await initializeAuthThunk(null)(
+      dispatch,
+      getState,
+      thunkAPI,
+    );
     expect(setSession).toHaveBeenCalledWith(null);
     expect(result.payload).toBeUndefined();
   });
 
   it("dispatches setSession and getProfile with valid session", async () => {
     const unwrap = jest.fn().mockResolvedValue({ profile: "data" });
-    (apiSlice.endpoints.getProfile.initiate as jest.Mock).mockReturnValue({ unwrap });
-    const result = await initializeAuthThunk(session)(dispatch, getState, thunkAPI);
+    (apiSlice.endpoints.getProfile.initiate as jest.Mock).mockReturnValue({
+      unwrap,
+    });
+    const result = await initializeAuthThunk(session)(
+      dispatch,
+      getState,
+      thunkAPI,
+    );
     expect(setSession).toHaveBeenCalledWith(session);
-    expect(apiSlice.endpoints.getProfile.initiate).toHaveBeenCalledWith({ userID: "user123" });
+    expect(apiSlice.endpoints.getProfile.initiate).toHaveBeenCalledWith({
+      userID: "user123",
+    });
     expect(unwrap).toHaveBeenCalled();
     expect(result.payload).toBeUndefined();
   });
 
   it("rejects with error if getProfile throws", async () => {
     const unwrap = jest.fn().mockRejectedValue(new Error("Profile error"));
-    (apiSlice.endpoints.getProfile.initiate as jest.Mock).mockReturnValue({ unwrap });
-    const result = await initializeAuthThunk(session)(dispatch, getState, thunkAPI);
+    (apiSlice.endpoints.getProfile.initiate as jest.Mock).mockReturnValue({
+      unwrap,
+    });
+    const result = await initializeAuthThunk(session)(
+      dispatch,
+      getState,
+      thunkAPI,
+    );
     expect(result.payload).toBe("Profile error");
   });
 
   it("rejects with unknown error if getProfile throws non-Error", async () => {
     const unwrap = jest.fn().mockRejectedValue("Unknown");
-    (apiSlice.endpoints.getProfile.initiate as jest.Mock).mockReturnValue({ unwrap });
-    const result = await initializeAuthThunk(session)(dispatch, getState, thunkAPI);
-    expect(result.payload).toBe("An unknown error occurred during initialization");
+    (apiSlice.endpoints.getProfile.initiate as jest.Mock).mockReturnValue({
+      unwrap,
+    });
+    const result = await initializeAuthThunk(session)(
+      dispatch,
+      getState,
+      thunkAPI,
+    );
+    expect(result.payload).toBe(
+      "An unknown error occurred during initialization",
+    );
   });
 });

@@ -5,7 +5,8 @@ const _layout = () => {
     <Stack
       screenOptions={{
         headerShown: false,
-      }}>
+      }}
+    >
       <Stack.Screen name="(tabs)" />
     </Stack>
   );

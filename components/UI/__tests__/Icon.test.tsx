@@ -10,46 +10,23 @@ describe("Icon component", () => {
     expect(icon.props.name).toBe("mail");
   });
   it("applies the correct size", () => {
-    const { getByTestId, rerender } = render(
-      <Icon
-        icon="mail"
-        size="small"
-      />
-    );
+    const { getByTestId, rerender } = render(<Icon icon="mail" size="small" />);
     expect(getByTestId("icon").props.size).toBe(20);
 
-    rerender(
-      <Icon
-        icon="mail"
-        size="medium"
-      />
-    );
+    rerender(<Icon icon="mail" size="medium" />);
     expect(getByTestId("icon").props.size).toBe(24);
 
-    rerender(
-      <Icon
-        icon="mail"
-        size="large"
-      />
-    );
+    rerender(<Icon icon="mail" size="large" />);
     expect(getByTestId("icon").props.size).toBe(28);
   });
 
   it("applies the correct color", () => {
     const { getByTestId, rerender } = render(
-      <Icon
-        icon="mail"
-        color="primary"
-      />
+      <Icon icon="mail" color="primary" />,
     );
     expect(getByTestId("icon").props.color).toBe("#006EE9");
 
-    rerender(
-      <Icon
-        icon="mail"
-        color="white"
-      />
-    );
+    rerender(<Icon icon="mail" color="white" />);
     expect(getByTestId("icon").props.color).toBe("#fff");
 
     rerender(<Icon icon="mail" />);
@@ -58,12 +35,7 @@ describe("Icon component", () => {
 
   it("calls onPress when pressed", () => {
     const onPress = jest.fn();
-    const { getByTestId } = render(
-      <Icon
-        icon="mail"
-        onPress={onPress}
-      />
-    );
+    const { getByTestId } = render(<Icon icon="mail" onPress={onPress} />);
     fireEvent.press(getByTestId("icon"));
     expect(onPress).toHaveBeenCalledTimes(1);
   });
@@ -72,11 +44,7 @@ describe("Icon component", () => {
     const user = userEvent.setup();
     const onPress = jest.fn();
     const { getByTestId } = render(
-      <Icon
-        icon="mail"
-        onPress={onPress}
-        disabled
-      />
+      <Icon icon="mail" onPress={onPress} disabled />,
     );
     const icon = getByTestId("icon");
 

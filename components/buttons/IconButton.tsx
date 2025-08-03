@@ -1,7 +1,7 @@
 import React from "react";
 import { Pressable } from "../gluestack/pressable";
 import Icon, { IconList } from "../UI/Icon";
-import clsx from "clsx";
+import { clsx } from "clsx";
 
 type Props = {
   icon: IconList;
@@ -35,12 +35,19 @@ const IconButton = ({
       role="button"
       className={CNButton}
       disabled={isDisabled}
-      onPress={onPress}>
+      onPress={onPress}
+    >
       <Icon
         icon={icon}
         size={size}
         color={
-          isDisabled ? "white" : isDestructive ? "white" : color === "primary" ? "white" : "primary"
+          isDisabled
+            ? "white"
+            : isDestructive
+              ? "white"
+              : color === "primary"
+                ? "white"
+                : "primary"
         }
       />
     </Pressable>

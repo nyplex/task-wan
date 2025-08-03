@@ -12,10 +12,7 @@ describe("Button component", () => {
   it("fires onPress when pressed", () => {
     const onPressMock = jest.fn();
     const { getByTestId } = render(
-      <Button
-        title="Click"
-        onPress={onPressMock}
-      />
+      <Button title="Click" onPress={onPressMock} />,
     );
     fireEvent.press(getByTestId("Button"));
     expect(onPressMock).toHaveBeenCalled();
@@ -24,11 +21,7 @@ describe("Button component", () => {
   it("does not call onPress when disabled", () => {
     const onPressMock = jest.fn();
     const { getByTestId } = render(
-      <Button
-        title="Click"
-        disabled
-        onPress={onPressMock}
-      />
+      <Button title="Click" disabled onPress={onPressMock} />,
     );
     fireEvent.press(getByTestId("Button"));
     expect(onPressMock).not.toHaveBeenCalled();
@@ -36,10 +29,7 @@ describe("Button component", () => {
 
   it("shows spinner when loading", () => {
     const { queryByText, getByTestId } = render(
-      <Button
-        title="Submit"
-        isLoading
-      />
+      <Button title="Submit" isLoading />,
     );
     expect(queryByText("Submit")).toBeNull();
     expect(getByTestId("Button")).toBeTruthy();
@@ -50,11 +40,7 @@ describe("Button component", () => {
     const right = <Text testID="right-icon">👉</Text>;
 
     const { getByTestId } = render(
-      <Button
-        title="Icons"
-        leftIcon={left}
-        rightIcon={right}
-      />
+      <Button title="Icons" leftIcon={left} rightIcon={right} />,
     );
 
     expect(getByTestId("left-icon")).toBeTruthy();
@@ -63,31 +49,21 @@ describe("Button component", () => {
 
   it("applies correct styles for primary variant", () => {
     const { getByTestId } = render(
-      <Button
-        title="Primary"
-        variant="primary"
-      />
+      <Button title="Primary" variant="primary" />,
     );
     expect(getByTestId("Button").props.className).toContain("bg-primary-0");
   });
 
   it("applies correct styles for secondary variant", () => {
     const { getByTestId } = render(
-      <Button
-        title="Secondary"
-        variant="secondary"
-      />
+      <Button title="Secondary" variant="secondary" />,
     );
     expect(getByTestId("Button").props.className).toContain("bg-transparent");
   });
 
   it("applies correct styles when destructive", () => {
     const { getByTestId } = render(
-      <Button
-        title="Delete"
-        variant="primary"
-        destructive
-      />
+      <Button title="Delete" variant="primary" destructive />,
     );
     expect(getByTestId("Button").props.className).toContain("bg-error");
   });
@@ -95,10 +71,7 @@ describe("Button component", () => {
   it("handles onTouchEnd event", () => {
     const onTouchEndMock = jest.fn();
     const { getByTestId } = render(
-      <Button
-        title="Touch"
-        onTouchEnd={onTouchEndMock}
-      />
+      <Button title="Touch" onTouchEnd={onTouchEndMock} />,
     );
     fireEvent(getByTestId("Button"), "onTouchEnd");
     expect(onTouchEndMock).toHaveBeenCalled();
@@ -106,49 +79,30 @@ describe("Button component", () => {
   it("does not call onTouchEnd when disabled", () => {
     const onTouchEndMock = jest.fn();
     const { getByTestId } = render(
-      <Button
-        title="Touch"
-        disabled
-        onTouchEnd={onTouchEndMock}
-      />
+      <Button title="Touch" disabled onTouchEnd={onTouchEndMock} />,
     );
     fireEvent(getByTestId("Button"), "onTouchEnd");
     expect(onTouchEndMock).not.toHaveBeenCalled();
   });
   it("applies correct styles for small size", () => {
     const { getByTestId } = render(
-      <Button
-        title="Small Button"
-        size="small"
-      />
+      <Button title="Small Button" size="small" />,
     );
     expect(getByTestId("Button").props.className).toContain("h-[36px]");
   });
   it("applies correct styles for large size", () => {
     const { getByTestId } = render(
-      <Button
-        title="Large Button"
-        size="large"
-      />
+      <Button title="Large Button" size="large" />,
     );
     expect(getByTestId("Button").props.className).toContain("h-[48px]");
   });
   it("applies correct styles when disabled", () => {
-    const { getByTestId } = render(
-      <Button
-        title="Disabled Button"
-        disabled
-      />
-    );
+    const { getByTestId } = render(<Button title="Disabled Button" disabled />);
     expect(getByTestId("Button").props.className).toContain("bg-[#C6C2C2]");
   });
   it("applies correct styles when loading", () => {
     const { getByTestId } = render(
-      <Button
-        title="Loading Button"
-        isLoading
-        variant="secondary"
-      />
+      <Button title="Loading Button" isLoading variant="secondary" />,
     );
     expect(getByTestId("Button").props.className).toContain("border-[#C6C2C2]");
   });
@@ -159,7 +113,7 @@ describe("Button component", () => {
         variant="secondary"
         destructive
         disabled
-      />
+      />,
     );
     expect(getByTestId("Button").props.className).toContain("border-[#C6C2C2]");
   });
@@ -170,7 +124,7 @@ describe("Button component", () => {
         variant="secondary"
         destructive
         onPress={() => {}}
-      />
+      />,
     );
     fireEvent.press(getByTestId("Button"));
     expect(getByTestId("Button").props.className).toContain("border-error");
@@ -181,18 +135,14 @@ describe("Button component", () => {
         title="Secondary Active"
         variant="secondary"
         onPress={() => {}}
-      />
+      />,
     );
     fireEvent.press(getByTestId("Button"));
     expect(getByTestId("Button").props.className).toContain("border-primary-0");
   });
   it("applies correct styles when primary and active", () => {
     const { getByTestId } = render(
-      <Button
-        title="Primary Active"
-        variant="primary"
-        onPress={() => {}}
-      />
+      <Button title="Primary Active" variant="primary" onPress={() => {}} />,
     );
     fireEvent.press(getByTestId("Button"));
     expect(getByTestId("Button").props.className).toContain("bg-primary-50");

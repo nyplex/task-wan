@@ -23,10 +23,7 @@ describe("TaskDetailCard", () => {
   it("calls onPress with taskId when pressed", () => {
     const onPress = jest.fn();
     const { getByRole } = render(
-      <TaskDetailCard
-        {...props}
-        onPress={onPress}
-      />
+      <TaskDetailCard {...props} onPress={onPress} />,
     );
     fireEvent.press(getByRole("button"));
     expect(onPress).toHaveBeenCalledWith(props.taskId);
@@ -35,11 +32,7 @@ describe("TaskDetailCard", () => {
   it("does not call onPress when disabled", () => {
     const onPress = jest.fn();
     const { getByRole } = render(
-      <TaskDetailCard
-        {...props}
-        onPress={onPress}
-        disabled
-      />
+      <TaskDetailCard {...props} onPress={onPress} disabled />,
     );
     fireEvent.press(getByRole("button"));
     expect(onPress).not.toHaveBeenCalled();
@@ -48,10 +41,7 @@ describe("TaskDetailCard", () => {
   it("calls onPressMore with taskId when more icon pressed", () => {
     const onPressMore = jest.fn();
     const { getByTestId } = render(
-      <TaskDetailCard
-        {...props}
-        onPressMore={onPressMore}
-      />
+      <TaskDetailCard {...props} onPressMore={onPressMore} />,
     );
 
     fireEvent.press(getByTestId("icon"));
@@ -65,7 +55,7 @@ describe("TaskDetailCard", () => {
         {...props}
         taskId={undefined}
         onPressMore={onPressMore}
-      />
+      />,
     );
 
     fireEvent.press(getByTestId("icon"));

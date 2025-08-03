@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { View } from "react-native";
 import type { Meta, StoryObj } from "@storybook/react";
 import { action } from "storybook/actions";
@@ -45,13 +45,7 @@ const meta = {
     leftIcon: {
       options: [false, true],
       mapping: {
-        true: (
-          <Ionicons
-            name="arrow-back"
-            size={18}
-            color="white"
-          />
-        ),
+        true: <Ionicons name="arrow-back" size={18} color="white" />,
         false: undefined,
       },
       control: {
@@ -75,20 +69,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Interactive: Story = {
-  render: (args) => {
-    const [value, setValue] = React.useState(args.value);
-
-    return (
-      <Input
-        {...args}
-        value={value}
-        onChangeText={(text) => {
-          setValue(text);
-          args.onChangeText?.(text);
-        }}
-      />
-    );
-  },
+  render: (args) => <InteractiveInput {...args} />,
   args: {
     autoCapitalize: "none",
     autoCorrect: false,
@@ -99,4 +80,19 @@ export const Interactive: Story = {
     maxLength: 100,
     placeholder: "Type here...",
   },
+};
+
+const InteractiveInput = (args) => {
+  const [value, setValue] = useState(args.value);
+
+  return (
+    <Input
+      {...args}
+      value={value}
+      onChangeText={(text) => {
+        setValue(text);
+        args.onChangeText?.(text);
+      }}
+    />
+  );
 };

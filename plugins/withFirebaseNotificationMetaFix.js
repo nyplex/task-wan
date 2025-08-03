@@ -25,21 +25,25 @@ const withFirebaseNotificationMetaFix = (config) => {
     application["meta-data"].push(
       {
         $: {
-          "android:name": "com.google.firebase.messaging.default_notification_channel_id",
+          "android:name":
+            "com.google.firebase.messaging.default_notification_channel_id",
           "android:value": "default",
           "tools:replace": "android:value",
         },
       },
       {
         $: {
-          "android:name": "com.google.firebase.messaging.default_notification_color",
+          "android:name":
+            "com.google.firebase.messaging.default_notification_color",
           "android:resource": "@color/notification_icon_color",
           "tools:replace": "android:resource",
         },
-      }
+      },
     );
 
-    console.log("✅ Replaced Firebase notification <meta-data> entries in AndroidManifest.xml");
+    console.log(
+      "✅ Replaced Firebase notification <meta-data> entries in AndroidManifest.xml",
+    );
     return config;
   });
 };

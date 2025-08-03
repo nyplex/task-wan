@@ -22,22 +22,24 @@ type Props = {
   onPress?: () => void;
 };
 
-const ProfileItem = ({ icon, title, badgeCounter = 0, disabled, onPress }: Props) => {
+const ProfileItem = ({
+  icon,
+  title,
+  badgeCounter = 0,
+  disabled,
+  onPress,
+}: Props) => {
   return (
     <Pressable
       role="button"
       className="py-2 px-4 active:bg-primary-700 h-[54px] items-center justify-center"
       disabled={disabled}
-      onPress={onPress}>
+      onPress={onPress}
+    >
       <HStack className="items-center">
         <HStack className="items-center gap-8 flex-1">
-          <Icon
-            icon={icon}
-            size="large"
-          />
-          <Text
-            size="body"
-            weight="medium">
+          <Icon icon={icon} size="large" />
+          <Text size="body" weight="medium">
             {title}
           </Text>
         </HStack>
@@ -46,7 +48,8 @@ const ProfileItem = ({ icon, title, badgeCounter = 0, disabled, onPress }: Props
             <Text
               className="text-center text-white"
               size="bodyXS"
-              weight="semi-bold">
+              weight="semi-bold"
+            >
               {badgeCounter > 99 ? "99+" : badgeCounter}
             </Text>
           </Box>

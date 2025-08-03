@@ -13,10 +13,22 @@ CodeForm.displayName = "CodeForm";
 const ResendCodeBtn = () => <></>;
 ResendCodeBtn.displayName = "ResendCodeBtn";
 
-jest.mock("../components/Header", () => ({ __esModule: true, default: Header }));
-jest.mock("../components/BodyContent", () => ({ __esModule: true, default: BodyContent }));
-jest.mock("../components/CodeForm", () => ({ __esModule: true, default: CodeForm }));
-jest.mock("../components/ResendCodeBtn", () => ({ __esModule: true, default: ResendCodeBtn }));
+jest.mock("../components/Header", () => ({
+  __esModule: true,
+  default: Header,
+}));
+jest.mock("../components/BodyContent", () => ({
+  __esModule: true,
+  default: BodyContent,
+}));
+jest.mock("../components/CodeForm", () => ({
+  __esModule: true,
+  default: CodeForm,
+}));
+jest.mock("../components/ResendCodeBtn", () => ({
+  __esModule: true,
+  default: ResendCodeBtn,
+}));
 
 describe("VerificationCodeScreen", () => {
   it("renders without crashing", () => {

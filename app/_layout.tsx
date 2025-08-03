@@ -14,7 +14,7 @@ import store from "@/redux/store";
 import useInitializeApp from "@/hooks/useInitializeApp";
 import useAuthListener from "@/hooks/useAuthListener";
 import useErrors from "@/hooks/useErrors";
-import BottomSheetProvider from "@/context/BottomSheetProvider";
+import { BottomSheetProvider } from "@/context/BottomSheetProvider";
 
 function InnerLayout() {
   useErrors();
@@ -26,10 +26,7 @@ function InnerLayout() {
   if (isAppLoading.isLoading) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator
-          size="large"
-          color="#0000ff"
-        />
+        <ActivityIndicator size="large" color="#0000ff" />
       </View>
     );
   }
@@ -92,7 +89,8 @@ export default function RootLayout() {
                   ...DefaultTheme.colors,
                   background: "#ffffff",
                 },
-              }}>
+              }}
+            >
               <BottomSheetProvider>
                 <InnerLayout />
                 <StatusBar

@@ -10,7 +10,12 @@ type Props = {
   onPress?: () => void;
 };
 
-const SocialAuthButton = ({ provider, disabled, isLoading, onPress }: Props) => {
+const SocialAuthButton = ({
+  provider,
+  disabled,
+  isLoading,
+  onPress,
+}: Props) => {
   return (
     <Pressable
       testID="social-auth-button"
@@ -19,7 +24,8 @@ const SocialAuthButton = ({ provider, disabled, isLoading, onPress }: Props) => 
         backgroundColor: "#EEE",
       }}
       onPress={onPress}
-      disabled={disabled || isLoading}>
+      disabled={disabled || isLoading}
+    >
       {isLoading && (
         <Box>
           <ButtonSpinner />

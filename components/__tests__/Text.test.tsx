@@ -19,12 +19,9 @@ describe("Text component", () => {
 
   it("applies correct size, weight, and color classes", () => {
     const { getByText } = render(
-      <Text
-        size="heading"
-        weight="bold"
-        color="secondary">
+      <Text size="heading" weight="bold" color="secondary">
         Styled Text
-      </Text>
+      </Text>,
     );
     const element = getByText("Styled Text");
     expect(element.props.className).toContain("text-[24px]"); // heading
@@ -33,7 +30,9 @@ describe("Text component", () => {
   });
 
   it("includes additional className prop", () => {
-    const { getByText } = render(<Text className="custom-class">With Extra Class</Text>);
+    const { getByText } = render(
+      <Text className="custom-class">With Extra Class</Text>,
+    );
     const element = getByText("With Extra Class");
     expect(element.props.className).toContain("custom-class");
   });
@@ -46,7 +45,9 @@ describe("Text component", () => {
 
   it("calls onPress handler when pressed", () => {
     const onPressMock = jest.fn();
-    const { getByText } = render(<Text onPress={onPressMock}>Clickable Text</Text>);
+    const { getByText } = render(
+      <Text onPress={onPressMock}>Clickable Text</Text>,
+    );
     fireEvent.press(getByText("Clickable Text"));
     expect(onPressMock).toHaveBeenCalled();
   });

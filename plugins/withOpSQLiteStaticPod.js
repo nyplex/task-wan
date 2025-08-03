@@ -20,20 +20,30 @@ const withOpSQLiteStaticPod = (config) => {
   return withDangerousMod(config, [
     "ios",
     async (config) => {
-      const podfilePath = path.join(config.modRequest.projectRoot, "ios", "Podfile");
+      const podfilePath = path.join(
+        config.modRequest.projectRoot,
+        "ios",
+        "Podfile",
+      );
       let contents = fs.readFileSync(podfilePath, "utf-8");
 
       if (!contents.includes("if pod.name.eql?('op-sqlite')")) {
         const lines = contents.split("\n");
-        const targetLineIndex = lines.findIndex((line) => line.includes(TARGET_LINE.trim()));
+        const targetLineIndex = lines.findIndex((line) =>
+          line.includes(TARGET_LINE.trim()),
+        );
 
         if (targetLineIndex !== -1) {
           lines.splice(targetLineIndex + 1, 0, PATCH.trim());
           fs.writeFileSync(podfilePath, lines.join("\n"));
-          console.log("✅ [withOpSQLiteStaticPod] Patched Podfile successfully.");
+          console.log(
+            "✅ [withOpSQLiteStaticPod] Patched Podfile successfully.",
+          );
         }
       } else {
-        console.log("ℹ️ [withOpSQLiteStaticPod] Podfile already contains patch. Skipping.");
+        console.log(
+          "ℹ️ [withOpSQLiteStaticPod] Podfile already contains patch. Skipping.",
+        );
       }
 
       return config;

@@ -36,16 +36,31 @@ export class Connector implements PowerSyncBackendConnector {
       switch (op.op) {
         case UpdateType.PUT:
           // TODO: Instruct your backend API to CREATE a record
-          console.log("Creating record to table:", op.table, "with data:", record);
+          console.log(
+            "Creating record to table:",
+            op.table,
+            "with data:",
+            record,
+          );
 
           break;
         case UpdateType.PATCH:
           // TODO: Instruct your backend API to PATCH a record
-          console.log("Patching record in table:", op.table, "with data:", record);
+          console.log(
+            "Patching record in table:",
+            op.table,
+            "with data:",
+            record,
+          );
           break;
         case UpdateType.DELETE:
           //TODO: Instruct your backend API to DELETE a record
-          console.log("Deleting record from table:", op.table, "with id:", op.id);
+          console.log(
+            "Deleting record from table:",
+            op.table,
+            "with id:",
+            op.id,
+          );
           break;
       }
     }

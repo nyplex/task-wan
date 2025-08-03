@@ -5,7 +5,10 @@ import { initializeAuthThunk } from "@/redux/slices/authSlice/thunks/initializeA
 
 jest.mock("../redux", () => ({ useAppDispatch: jest.fn() }));
 jest.mock("@/redux/slices/authSlice/thunks/initializeAuthThunk", () => ({
-  initializeAuthThunk: jest.fn((session) => ({ type: "INIT", payload: session })),
+  initializeAuthThunk: jest.fn((session) => ({
+    type: "INIT",
+    payload: session,
+  })),
 }));
 
 const mockDispatch = jest.fn();
@@ -49,11 +52,16 @@ describe("useAuthListener", () => {
     const fakeSession = { user: { id: "123" } };
     callback("SIGNED_IN", fakeSession);
     expect(initializeAuthThunk).toHaveBeenCalledWith(fakeSession);
-    expect(mockDispatch).toHaveBeenCalledWith({ type: "INIT", payload: fakeSession });
+    expect(mockDispatch).toHaveBeenCalledWith({
+      type: "INIT",
+      payload: fakeSession,
+    });
   });
 
   it("does not break if unsubscribe is missing", () => {
-    mockOnAuthStateChange.mockReturnValueOnce({ data: { subscription: {} } } as any);
+    mockOnAuthStateChange.mockReturnValueOnce({
+      data: { subscription: {} },
+    } as any);
     expect(() => {
       const { unmount } = renderHook(() => useAuthListener());
       unmount();

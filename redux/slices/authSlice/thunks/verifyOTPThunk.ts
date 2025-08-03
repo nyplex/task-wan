@@ -20,7 +20,9 @@ export const verifyOTPThunk = createAsyncThunk<
 
     // ---- Skip OTP verification for Maestro ----
     if (
-      ["development", "preview"].includes(process.env.EXPO_PUBLIC_APP_VARIANT!) &&
+      ["development", "preview"].includes(
+        process.env.EXPO_PUBLIC_APP_VARIANT!,
+      ) &&
       otp.email === "maestro@e2e.com" &&
       otp.token === "123456"
     ) {

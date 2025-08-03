@@ -16,7 +16,9 @@ describe("logoutThunk", () => {
   const thunkAPI = { dispatch, getState, rejectWithValue };
 
   it("rejects if supabase returns error", async () => {
-    (supabase.auth.signOut as jest.Mock).mockResolvedValue({ error: { message: "Logout error" } });
+    (supabase.auth.signOut as jest.Mock).mockResolvedValue({
+      error: { message: "Logout error" },
+    });
     const result = await logoutThunk()(dispatch, getState, thunkAPI);
     expect(result.payload).toEqual({
       message: "Logout error",

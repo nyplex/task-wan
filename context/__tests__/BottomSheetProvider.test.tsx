@@ -1,15 +1,26 @@
 import React from "react";
 import { render, act, fireEvent } from "@testing-library/react-native";
-import { BottomSheetProvider, BottomSheetContext } from "../BottomSheetProvider";
+import {
+  BottomSheetProvider,
+  BottomSheetContext,
+} from "../BottomSheetProvider";
 import { Pressable } from "@/components/gluestack/pressable";
 import LogoutBottomSheet from "@/components/bottomSheets/LogoutBottomSheet";
 
-// Use official reanimated mock for reliability
-jest.mock("react-native-reanimated", () => require("react-native-reanimated/mock"));
+import InfoBottomSheet from "@/components/bottomSheets/InfoBottomSheet";
 
-jest.mock("@/components/bottomSheets/LogoutBottomSheet", () => jest.fn(() => null));
+// Use official reanimated mock for reliability
+jest.mock("react-native-reanimated", () =>
+  require("react-native-reanimated/mock"),
+);
+
+jest.mock("@/components/bottomSheets/LogoutBottomSheet", () =>
+  jest.fn(() => null),
+);
 // --- Mock InfoBottomSheet for testing ---
-jest.mock("@/components/bottomSheets/InfoBottomSheet", () => jest.fn(() => null));
+jest.mock("@/components/bottomSheets/InfoBottomSheet", () =>
+  jest.fn(() => null),
+);
 jest.mock("@/components/gluestack/pressable", () => {
   const { Pressable } = jest.requireActual("react-native");
   return { Pressable };
@@ -23,8 +34,6 @@ jest.mock("react-native-gesture-handler", () => {
   };
 });
 
-import InfoBottomSheet from "@/components/bottomSheets/InfoBottomSheet";
-
 describe("BottomSheetProvider", () => {
   // --- Added test for InfoBottomSheet ---
   it("openBottomSheet renders InfoBottomSheet with correct props", () => {
@@ -35,7 +44,9 @@ describe("BottomSheetProvider", () => {
         {(ctx) => (
           <Pressable
             testID="open-info"
-            onPress={() => ctx?.openBottomSheet("InfoBottomSheet", { message, onPressOk })}
+            onPress={() =>
+              ctx?.openBottomSheet("InfoBottomSheet", { message, onPressOk })
+            }
           />
         )}
       </BottomSheetContext.Consumer>
@@ -43,7 +54,7 @@ describe("BottomSheetProvider", () => {
     const { getByTestId } = render(
       <BottomSheetProvider>
         <ConsumerInfo />
-      </BottomSheetProvider>
+      </BottomSheetProvider>,
     );
     act(() => {
       fireEvent.press(getByTestId("open-info"));
@@ -62,13 +73,13 @@ describe("BottomSheetProvider", () => {
           <Pressable
             testID="open"
             onPress={() =>
-              ctx?.openBottomSheet("LogoutBottomSheet", { onPressLogout, onPressCancel })
+              ctx?.openBottomSheet("LogoutBottomSheet", {
+                onPressLogout,
+                onPressCancel,
+              })
             }
           />
-          <Pressable
-            testID="close"
-            onPress={() => ctx?.closeBottomSheet()}
-          />
+          <Pressable testID="close" onPress={() => ctx?.closeBottomSheet()} />
         </>
       )}
     </BottomSheetContext.Consumer>
@@ -93,7 +104,7 @@ describe("BottomSheetProvider", () => {
             return null;
           }}
         </BottomSheetContext.Consumer>
-      </BottomSheetProvider>
+      </BottomSheetProvider>,
     );
     expect(typeof contextValue.openBottomSheet).toBe("function");
     expect(typeof contextValue.closeBottomSheet).toBe("function");
@@ -103,7 +114,7 @@ describe("BottomSheetProvider", () => {
     const { getByTestId, queryByTestId } = render(
       <BottomSheetProvider>
         <Consumer />
-      </BottomSheetProvider>
+      </BottomSheetProvider>,
     );
     expect(queryByTestId("logout-bottom-sheet")).toBeNull();
     act(() => {
@@ -111,14 +122,16 @@ describe("BottomSheetProvider", () => {
     });
     expect(LogoutBottomSheet).toHaveBeenCalled();
     const call = (LogoutBottomSheet as jest.Mock).mock.calls[0][0];
-    expect(call).toEqual(expect.objectContaining({ onPressLogout, onPressCancel }));
+    expect(call).toEqual(
+      expect.objectContaining({ onPressLogout, onPressCancel }),
+    );
   });
 
   it("closeBottomSheet resets state after timeout", () => {
     const { getByTestId } = render(
       <BottomSheetProvider>
         <Consumer />
-      </BottomSheetProvider>
+      </BottomSheetProvider>,
     );
     act(() => {
       fireEvent.press(getByTestId("open"));
@@ -137,14 +150,16 @@ describe("BottomSheetProvider", () => {
     const { getByTestId } = render(
       <BottomSheetProvider>
         <Consumer />
-      </BottomSheetProvider>
+      </BottomSheetProvider>,
     );
     act(() => {
       fireEvent.press(getByTestId("open"));
     });
     expect(LogoutBottomSheet).toHaveBeenCalled();
     const call = (LogoutBottomSheet as jest.Mock).mock.calls[0][0];
-    expect(call).toEqual(expect.objectContaining({ onPressLogout, onPressCancel }));
+    expect(call).toEqual(
+      expect.objectContaining({ onPressLogout, onPressCancel }),
+    );
   });
 
   it("calls closeBottomSheet on gesture swipe down", () => {
@@ -152,7 +167,7 @@ describe("BottomSheetProvider", () => {
     const { getByTestId } = render(
       <BottomSheetProvider>
         <Consumer />
-      </BottomSheetProvider>
+      </BottomSheetProvider>,
     );
     act(() => {
       fireEvent.press(getByTestId("open"));

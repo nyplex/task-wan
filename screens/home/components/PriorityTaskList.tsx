@@ -19,10 +19,7 @@ const bg = [
 const PriorityTaskList = () => {
   return (
     <Box className="mt-8">
-      <Text
-        className="px-4"
-        size="bodyL"
-        weight="bold">
+      <Text className="px-4" size="bodyL" weight="bold">
         My Priority Task
       </Text>
       <Box className="h-[188px] mt-4">

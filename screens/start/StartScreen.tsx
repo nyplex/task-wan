@@ -13,10 +13,7 @@ const StartScreen = () => {
   return (
     <Box className="flex-1 py-safe-offset-4 bg-backrgound">
       <Box className="mb-4 px-4">
-        <SliderIndicator
-          length={3}
-          currentIndex={index}
-        />
+        <SliderIndicator length={3} currentIndex={index} />
       </Box>
       <Slider onIndexChange={(i) => setIndex(i)}>
         <SliderChild

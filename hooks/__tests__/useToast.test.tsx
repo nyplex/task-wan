@@ -32,7 +32,7 @@ describe("useToast", () => {
         duration: 5000,
         render: expect.any(Function),
         onCloseComplete: expect.any(Function),
-      })
+      }),
     );
   });
 

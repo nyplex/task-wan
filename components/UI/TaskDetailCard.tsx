@@ -35,14 +35,16 @@ const TaskDetailCard = ({
         if (onPress && taskId) {
           onPress(taskId);
         }
-      }}>
+      }}
+    >
       <Box className="absolute h-1/2 w-[3px] bg-primary-50 -left-[2px] top-1/2 translate-y-[-50%] rounded-full" />
       <VStack className="px-4 pt-4 pb-2 justify-between flex-1">
         <HStack className="items-center justify-between">
           <Text
             className="text-primary-50 flex-1 line-clamp-1"
             size="body"
-            weight="semi-bold">
+            weight="semi-bold"
+          >
             {title}
           </Text>
           <Icon
@@ -55,15 +57,14 @@ const TaskDetailCard = ({
             }}
           />
         </HStack>
-        <Text
-          size="bodyXS"
-          className="mt-2 line-clamp-6">
+        <Text size="bodyXS" className="mt-2 line-clamp-6">
           {description}
         </Text>
         <Text
           className="text-primary-50 mt-2 text-right"
           size="caption"
-          weight="medium">
+          weight="medium"
+        >
           {new Date(startDate).toLocaleDateString("en-GB", {
             day: "2-digit",
             month: "short",

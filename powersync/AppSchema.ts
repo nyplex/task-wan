@@ -1,5 +1,7 @@
-import { column, Schema, Table } from "@powersync/react-native";
-import { DrizzleAppSchema, type DrizzleTableWithPowerSyncOptions } from "@powersync/drizzle-driver";
+import {
+  DrizzleAppSchema,
+  type DrizzleTableWithPowerSyncOptions,
+} from "@powersync/drizzle-driver";
 import { sqliteTable, text } from "drizzle-orm/sqlite-core";
 
 // const users = new Table({

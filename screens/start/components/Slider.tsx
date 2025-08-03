@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
 import { useWindowDimensions } from "react-native";
-import { PanGestureHandler, PanGestureHandlerGestureEvent } from "react-native-gesture-handler";
+import {
+  PanGestureHandler,
+  PanGestureHandlerGestureEvent,
+} from "react-native-gesture-handler";
 import Animated, {
   runOnJS,
   useAnimatedGestureHandler,
@@ -21,34 +24,41 @@ const Slider: React.FC<SliderProps> = ({ children, onIndexChange }) => {
   const translateX = useSharedValue(0);
   const currentIndex = useSharedValue(0);
 
-  const onGestureEvent = useAnimatedGestureHandler<PanGestureHandlerGestureEvent>({
-    onStart: (_, ctx: any) => {
-      ctx.startX = translateX.value;
-    },
-    onActive: (event, ctx: any) => {
-      translateX.value = ctx.startX + event.translationX;
-    },
-    onEnd: (event) => {
-      if (event.translationX < -SWIPE_THRESHOLD && currentIndex.value < children.length - 1) {
-        currentIndex.value += 1;
-      } else if (event.translationX > SWIPE_THRESHOLD && currentIndex.value > 0) {
-        currentIndex.value -= 1;
-      }
-      if (onIndexChange) {
-        runOnJS(onIndexChange)(currentIndex.value);
-      }
+  const onGestureEvent =
+    useAnimatedGestureHandler<PanGestureHandlerGestureEvent>({
+      onStart: (_, ctx: any) => {
+        ctx.startX = translateX.value;
+      },
+      onActive: (event, ctx: any) => {
+        translateX.value = ctx.startX + event.translationX;
+      },
+      onEnd: (event) => {
+        if (
+          event.translationX < -SWIPE_THRESHOLD &&
+          currentIndex.value < children.length - 1
+        ) {
+          currentIndex.value += 1;
+        } else if (
+          event.translationX > SWIPE_THRESHOLD &&
+          currentIndex.value > 0
+        ) {
+          currentIndex.value -= 1;
+        }
+        if (onIndexChange) {
+          runOnJS(onIndexChange)(currentIndex.value);
+        }
 
-      translateX.value = withSpring(-currentIndex.value * width, {
-        damping: 15,
-        stiffness: 150,
-      });
-    },
-  });
+        translateX.value = withSpring(-currentIndex.value * width, {
+          damping: 15,
+          stiffness: 150,
+        });
+      },
+    });
 
   // reset on width change (e.g. rotation)
   useEffect(() => {
     translateX.value = -currentIndex.value * width;
-  }, [width]);
+  }, [width, currentIndex.value, translateX]);
 
   const slidingStyle = useAnimatedStyle(() => ({
     flexDirection: "row",
@@ -60,9 +70,7 @@ const Slider: React.FC<SliderProps> = ({ children, onIndexChange }) => {
       <Animated.View style={{ flex: 1, width, overflow: "hidden" }}>
         <Animated.View style={slidingStyle}>
           {children.map((child, i) => (
-            <Animated.View
-              key={i}
-              style={{ width }}>
+            <Animated.View key={i} style={{ width }}>
               {child}
             </Animated.View>
           ))}

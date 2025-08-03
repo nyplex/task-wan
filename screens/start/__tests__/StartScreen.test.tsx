@@ -12,7 +12,9 @@ SliderChild.displayName = "SliderChild";
 jest.mock("../components/Slider", () => Slider);
 jest.mock("../components/SliderIndicator", () => SliderIndicator);
 jest.mock("../components/SliderChild", () => SliderChild);
-jest.mock("expo-router", () => ({ useRouter: () => ({ navigate: jest.fn() }) }));
+jest.mock("expo-router", () => ({
+  useRouter: () => ({ navigate: jest.fn() }),
+}));
 
 describe("StartScreen", () => {
   it("renders without crashing", () => {
@@ -28,7 +30,9 @@ describe("StartScreen", () => {
 
   it("calls router.navigate when Get Started is pressed", () => {
     const mockNavigate = jest.fn();
-    jest.spyOn(require("expo-router"), "useRouter").mockReturnValue({ navigate: mockNavigate });
+    jest
+      .spyOn(require("expo-router"), "useRouter")
+      .mockReturnValue({ navigate: mockNavigate });
     const { getByText } = render(<StartScreen />);
     fireEvent.press(getByText("Get Started"));
     expect(mockNavigate).toHaveBeenCalledWith("/(app)/Login");

@@ -3,7 +3,7 @@ import { Box } from "../gluestack/box";
 import { HStack } from "../gluestack/hstack";
 import { Divider as GSDivider } from "../gluestack/divider";
 import Text from "../Text";
-import clsx from "clsx";
+import { clsx } from "clsx";
 
 type Props = {
   width?: StyleProp<any>;
@@ -25,28 +25,18 @@ const Divider = ({ width = "100%", title }: Props) => {
       testID="divider-container"
       style={{
         width: width ? width : "100%",
-      }}>
+      }}
+    >
       {title ? (
         <HStack className="items-center w-full gap-[5px]">
-          <GSDivider
-            testID="divider-with-title"
-            className={CN1}
-          />
-          <Text
-            size="bodyXS"
-            className="text-typography-secondary -mt-[2px]">
+          <GSDivider testID="divider-with-title" className={CN1} />
+          <Text size="bodyXS" className="text-typography-secondary -mt-[2px]">
             {title}
           </Text>
-          <GSDivider
-            testID="divider-with-title"
-            className={CN1}
-          />
+          <GSDivider testID="divider-with-title" className={CN1} />
         </HStack>
       ) : (
-        <GSDivider
-          testID="simple-divider"
-          className={CN2}
-        />
+        <GSDivider testID="simple-divider" className={CN2} />
       )}
     </Box>
   );
