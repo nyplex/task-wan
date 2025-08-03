@@ -19,7 +19,6 @@ jobs:
           step: start
           token: ${{ secrets.GITHUB_TOKEN }}
           env: preview
-          ref: develop
       # Add your actual deployment step here (e.g., upload to server, call EAS, etc.)
       - name: Mark Deployment as successful
         uses: bobheadxi/deployments@v1
@@ -27,7 +26,6 @@ jobs:
         with:
           step: finish
           token: ${{ secrets.GITHUB_TOKEN }}
-          env: preview
           status: ${{ job.status }}
-          ref: develop
+          env: ${{ steps.deployment.outputs.env }}
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
