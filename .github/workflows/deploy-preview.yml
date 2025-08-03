@@ -16,7 +16,7 @@ jobs:
         id: deployment
         with:
           token: '${{ github.token }}'
-          environment: preview
+          environment: staging
       - name: Update deployment status (success)
         if: success()
         uses: chrnorm/deployment-status@v2
