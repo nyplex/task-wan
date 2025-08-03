@@ -7,25 +7,21 @@ on:
 
 jobs:
   deploy:
+    name: Deploy my app
+
     runs-on: ubuntu-latest
+
+    permissions:
+      deployments: write
+
     steps:
-    - name: start deployment
-      uses: bobheadxi/deployments@v1
-      id: deployment
-      with:
-        step: start
-        token: ${{ secrets.GITHUB_TOKEN }}
-        env: preview
+      - uses: actions/checkout@v4
 
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - uses: chrnorm/deployment-action@v2
+        name: Create GitHub deployment (preview)
+        id: deployment
+        with:
+          token: '${{ github.token }}'
+          environment: preview
+        # more steps below where you run your deployment scripts inside the same action
 
-    - name: update deployment status
-      uses: bobheadxi/deployments@v1
-      if: always()
-      with:
-        step: finish
-        token: ${{ secrets.GITHUB_TOKEN }}
-        status: ${{ job.status }}
-        env: ${{ steps.deployment.outputs.env }}
-        deployment_id: ${{ steps.deployment.outputs.deployment_id }}
