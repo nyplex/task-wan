@@ -1,27 +1,32 @@
 name: Deploy to Preview
-
 on:
   push:
     branches:
       - develop
-
 jobs:
   deploy:
-    name: Deploy my app
-
+    name: Deploy to Preview
     runs-on: ubuntu-latest
-
-    permissions:
-      deployments: write
-
     steps:
-      - uses: actions/checkout@v4
-
+      - uses: actions/checkout@v1
       - uses: chrnorm/deployment-action@v2
-        name: Create GitHub deployment (preview)
+        name: Create GitHub deployment
         id: deployment
         with:
           token: '${{ github.token }}'
           environment: preview
-        # more steps below where you run your deployment scripts inside the same action
+      - name: Update deployment status (success)
+        if: success()
+        uses: chrnorm/deployment-status@v2
+        with:
+          token: '${{ github.token }}'
+          deployment-id: ${{ steps.deployment.outputs.deployment_id }}
+          state: 'success'
+      - name: Update deployment status (failure)
+        if: failure()
+        uses: chrnorm/deployment-status@v2
+        with:
+          token: '${{ github.token }}'
+          deployment-id: ${{ steps.deployment.outputs.deployment_id }}
+          state: 'failure'
 
