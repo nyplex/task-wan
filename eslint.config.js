@@ -24,6 +24,7 @@ module.exports = defineConfig([
 
       // optional: disable the base rule if needed
       "no-unused-vars": "off",
+      "react/no-unescaped-entities": "off",
     },
     ignores: ["dist/*"],
   },

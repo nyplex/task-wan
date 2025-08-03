@@ -11,7 +11,7 @@ const LoginFooter = () => {
   return (
     <Box className="flex-row justify-center items-center gap-1">
       <Text className="text-center mt-8" testID="login-footer">
-        Don&apos;t have an account?{" "}
+        Don't have an account?{" "}
       </Text>
       <Text
         testID="login-footer-signup"

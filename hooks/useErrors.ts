@@ -10,18 +10,18 @@ import useToast from "./useToast";
 const useErrors = () => {
   const errors = useSelector(selectErrors);
 
-  const disptach = useAppDispatch();
+  const dispatch = useAppDispatch();
   const { handleToast } = useToast();
 
   useEffect(() => {
     if (errors.length > 0) {
       errors.forEach((error) => {
         handleToast("Oops! An error occurred", "" + error.message, () => {
-          disptach(clearErrors());
+          dispatch(clearErrors());
         });
       });
     }
-  }, [errors, disptach, handleToast]);
+  }, [errors, dispatch, handleToast]);
 };
 
 export default useErrors;
