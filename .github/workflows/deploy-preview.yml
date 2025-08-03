@@ -14,6 +14,7 @@ jobs:
       # Add your build or setup steps here if needed
       - name: Create GitHub Deployment (Preview)
         uses: bobheadxi/deployments@v1
+        id: deployment
         with:
           step: start
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -29,3 +30,4 @@ jobs:
           env: preview
           status: ${{ job.status }}
           ref: develop
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
