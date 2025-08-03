@@ -1,0 +1,31 @@
+name: Deploy to Preview
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  deploy-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      # Add your build or setup steps here if needed
+      - name: Create GitHub Deployment (Preview)
+        uses: bobheadxi/deployments@v1
+        with:
+          step: start
+          token: ${{ secrets.GITHUB_TOKEN }}
+          env: preview
+          ref: develop
+      # Add your actual deployment step here (e.g., upload to server, call EAS, etc.)
+      - name: Mark Deployment as successful
+        uses: bobheadxi/deployments@v1
+        if: always()
+        with:
+          step: finish
+          token: ${{ secrets.GITHUB_TOKEN }}
+          env: preview
+          status: ${{ job.status }}
+          ref: develop
