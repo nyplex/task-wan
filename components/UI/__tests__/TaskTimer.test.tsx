@@ -20,7 +20,12 @@ describe("TaskTimer", () => {
 
   it("renders months, days, hours, and minutes correctly when timestamp is in the future with months left", () => {
     const now = dayjs(fixedDate);
-    const future = now.add(1, "month").add(5, "days").add(3, "hour").add(10, "minute").valueOf();
+    const future = now
+      .add(1, "month")
+      .add(5, "days")
+      .add(3, "hour")
+      .add(10, "minute")
+      .valueOf();
 
     const { getByText, queryByText } = render(<TaskTimer timestamp={future} />);
 
@@ -38,7 +43,11 @@ describe("TaskTimer", () => {
 
   it("renders days, hours, and minutes correctly when less than one month left", () => {
     const now = dayjs(fixedDate);
-    const future = now.add(10, "day").add(2, "hour").add(15, "minute").valueOf();
+    const future = now
+      .add(10, "day")
+      .add(2, "hour")
+      .add(15, "minute")
+      .valueOf();
 
     const { getByText, queryByText } = render(<TaskTimer timestamp={future} />);
 
@@ -58,7 +67,9 @@ describe("TaskTimer", () => {
     const now = dayjs(fixedDate);
     const past = now.subtract(1, "day").valueOf();
 
-    const { getByText, queryByText, getAllByText } = render(<TaskTimer timestamp={past} />);
+    const { getByText, queryByText, getAllByText } = render(
+      <TaskTimer timestamp={past} />,
+    );
 
     expect(queryByText("Months")).toBeNull();
 

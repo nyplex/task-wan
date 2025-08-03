@@ -9,7 +9,9 @@ jest.mock("../redux", () => ({ useAppDispatch: jest.fn() }));
 jest.mock("@/redux/slices/appSlice/thunks/initializeAppThunk", () => ({
   initializeAppThunk: jest.fn(() => ({ type: "initializeAppThunk" })),
 }));
-jest.mock("@/redux/slices/errorsSlice/errorsSlice", () => ({ addError: jest.fn() }));
+jest.mock("@/redux/slices/errorsSlice/errorsSlice", () => ({
+  addError: jest.fn(),
+}));
 
 const unwrapMock = jest.fn().mockResolvedValue({});
 const unwrapRejectMock = jest.fn().mockRejectedValue(new Error("fail"));
@@ -31,7 +33,9 @@ describe("useInitializeApp", () => {
   });
 
   it("should dispatch addError if initializeApp fails", async () => {
-    (useAppDispatch as unknown as jest.Mock).mockReturnValue(mockDispatchReject);
+    (useAppDispatch as unknown as jest.Mock).mockReturnValue(
+      mockDispatchReject,
+    );
     renderHook(() => useInitializeApp());
     // Wait for useEffect to run
     await Promise.resolve();
@@ -42,7 +46,7 @@ describe("useInitializeApp", () => {
         message: "Failed to initialize app",
         source: "useInitializeApp",
         type: "unknown",
-      })
+      }),
     );
   });
 });

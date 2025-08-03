@@ -21,7 +21,7 @@ jest.mock("@/hooks/useAuth", () => ({
 
 jest.mock("@/components/form/CodeInput", () => {
   const { TextInput } = require("react-native");
-  return ({ onValueChange, currentValue, disabled }: any) => (
+  const MockCodeInput = ({ onValueChange, currentValue, disabled }: any) => (
     <TextInput
       testID="CodeInput"
       value={currentValue}
@@ -29,6 +29,8 @@ jest.mock("@/components/form/CodeInput", () => {
       onChangeText={onValueChange}
     />
   );
+  MockCodeInput.displayName = "MockCodeInput";
+  return MockCodeInput;
 });
 
 describe("CodeForm", () => {
@@ -36,7 +38,9 @@ describe("CodeForm", () => {
 
   beforeEach(() => {
     (useSelector as unknown as jest.Mock).mockReturnValue(false); // isLoading
-    (useLocalSearchParams as jest.Mock).mockReturnValue({ email: "test@example.com" });
+    (useLocalSearchParams as jest.Mock).mockReturnValue({
+      email: "test@example.com",
+    });
     (useAuth as jest.Mock).mockReturnValue({ verifyOTP: mockVerifyOTP });
     jest.clearAllMocks();
   });

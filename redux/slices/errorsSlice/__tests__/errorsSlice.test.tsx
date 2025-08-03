@@ -1,4 +1,8 @@
-import errorsReducer, { addError, clearErrors, ErrorsStateType } from "../errorsSlice";
+import errorsReducer, {
+  addError,
+  clearErrors,
+  ErrorsStateType,
+} from "../errorsSlice";
 import { GlobalError } from "@/types/errors";
 
 describe("errorsSlice reducer", () => {
@@ -11,7 +15,11 @@ describe("errorsSlice reducer", () => {
   });
 
   it("should handle addError", () => {
-    const error: GlobalError = { message: "Network error", type: "network", source: "api" };
+    const error: GlobalError = {
+      message: "Network error",
+      type: "network",
+      source: "api",
+    };
     const nextState = errorsReducer(initialState, addError(error));
     expect(nextState.errors).toEqual([error]);
   });

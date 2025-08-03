@@ -91,7 +91,8 @@ const CodeInput = ({
               styles.cellRoot,
               isFocused && styles.focusCell,
               invalid && styles.invalidCellRoot,
-            ]}>
+            ]}
+          >
             <Text style={!invalid ? styles.cellText : styles.invalidCellText}>
               {symbol || (isFocused ? <Cursor /> : null)}
             </Text>

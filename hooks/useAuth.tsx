@@ -22,7 +22,7 @@ const useAuth = () => {
       await dispatch(
         loginThunk({
           email,
-        })
+        }),
       ).unwrap();
 
       router.push({
@@ -38,7 +38,7 @@ const useAuth = () => {
             message: "An unknown error occurred during login.",
             source: "useAuth/login",
             type: "auth",
-          })
+          }),
         );
       } else {
         const typedError = error as GlobalError;
@@ -47,7 +47,7 @@ const useAuth = () => {
             message: typedError.message,
             source: typedError.source,
             type: typedError.type,
-          })
+          }),
         );
       }
     } finally {
@@ -72,7 +72,7 @@ const useAuth = () => {
             message: "An unknown error occurred during signup.",
             source: "useAuth/signup",
             type: "auth",
-          })
+          }),
         );
       } else {
         const typedError = error as GlobalError;
@@ -81,7 +81,7 @@ const useAuth = () => {
             message: typedError.message,
             source: typedError.source,
             type: typedError.type,
-          })
+          }),
         );
       }
     } finally {
@@ -100,7 +100,7 @@ const useAuth = () => {
             message: "An unknown error occurred during verification.",
             source: "useAuth/verifyOTP",
             type: "auth",
-          })
+          }),
         );
       } else {
         const typedError = error as GlobalError;
@@ -109,7 +109,7 @@ const useAuth = () => {
             message: typedError.message,
             source: typedError.source,
             type: typedError.type,
-          })
+          }),
         );
       }
     } finally {
@@ -128,7 +128,7 @@ const useAuth = () => {
             message: "An unknown error occurred during resending OTP.",
             source: "useAuth/resendOTP",
             type: "auth",
-          })
+          }),
         );
       } else {
         const typedError = error as GlobalError;
@@ -137,7 +137,7 @@ const useAuth = () => {
             message: typedError.message,
             source: typedError.source,
             type: typedError.type,
-          })
+          }),
         );
       }
     } finally {
@@ -156,7 +156,7 @@ const useAuth = () => {
             message: "An unknown error occurred during logout.",
             source: "useAuth/logout",
             type: "auth",
-          })
+          }),
         );
       } else {
         const typedError = error as GlobalError;
@@ -165,7 +165,7 @@ const useAuth = () => {
             message: typedError.message,
             source: typedError.source,
             type: typedError.type,
-          })
+          }),
         );
       }
     } finally {

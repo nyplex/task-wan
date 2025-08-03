@@ -1,4 +1,3 @@
-import React from "react";
 import { View } from "react-native";
 import type { Meta, StoryObj } from "@storybook/react";
 import { action } from "storybook/actions";
@@ -37,13 +36,7 @@ const meta = {
     leftIcon: {
       options: [false, true],
       mapping: {
-        true: (
-          <Ionicons
-            name="arrow-back"
-            size={18}
-            color="white"
-          />
-        ),
+        true: <Ionicons name="arrow-back" size={18} color="white" />,
         false: undefined,
       },
       control: {
@@ -53,13 +46,7 @@ const meta = {
     rightIcon: {
       options: [false, true],
       mapping: {
-        true: (
-          <Ionicons
-            name="arrow-forward"
-            size={18}
-            color="white"
-          />
-        ),
+        true: <Ionicons name="arrow-forward" size={18} color="white" />,
         false: undefined,
       },
       control: {

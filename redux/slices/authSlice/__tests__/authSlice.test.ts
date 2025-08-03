@@ -1,4 +1,9 @@
-import authReducer, { setSession, setIsLoading, clearAuth, AuthStateType } from "../authSlice";
+import authReducer, {
+  setSession,
+  setIsLoading,
+  clearAuth,
+  AuthStateType,
+} from "../authSlice";
 import { initializeAuthThunk } from "../thunks/initializeAuthThunk";
 import { Session } from "@supabase/supabase-js";
 

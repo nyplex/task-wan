@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { View } from "react-native";
 import type { Meta, StoryObj } from "@storybook/react";
 import { action } from "storybook/actions";
@@ -14,7 +14,8 @@ const meta = {
           padding: 16,
           backgroundColor: "#fff",
           flex: 1,
-        }}>
+        }}
+      >
         <Story />
       </View>
     ),
@@ -44,20 +45,24 @@ export const Interactive: Story = {
     value: false,
     disabled: false,
   },
-  render: (args) => {
-    const [value, setValue] = React.useState(args.value);
-    useEffect(() => {
-      setValue(args.value);
-    }, [args.value]);
-    return (
-      <Switch
-        {...args}
-        value={value}
-        onValueChange={(newValue) => {
-          setValue(newValue);
-          args.onValueChange(newValue);
-        }}
-      />
-    );
-  },
+  render: (args) => <InteractiveSwitch {...args} />,
+};
+
+const InteractiveSwitch = (args) => {
+  const [value, setValue] = useState(args.value);
+
+  useEffect(() => {
+    setValue(args.value);
+  }, [args.value]);
+
+  return (
+    <Switch
+      {...args}
+      value={value}
+      onValueChange={(newValue) => {
+        setValue(newValue);
+        args.onValueChange(newValue);
+      }}
+    />
+  );
 };

@@ -11,10 +11,7 @@ const Header = () => {
 
   return (
     <Box>
-      <BackButtonIcon
-        onPress={() => router.back()}
-        disabled={isLoading}
-      />
+      <BackButtonIcon onPress={() => router.back()} disabled={isLoading} />
       <Box className="mt-4">
         <AppTitle />
       </Box>

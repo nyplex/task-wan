@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { View } from "react-native";
 import type { Meta, StoryObj } from "@storybook/react";
 import { action } from "storybook/actions";
@@ -14,7 +14,8 @@ const meta = {
           padding: 16,
           backgroundColor: "#fff",
           flex: 1,
-        }}>
+        }}
+      >
         <Story />
       </View>
     ),
@@ -49,23 +50,24 @@ export const Interactive: Story = {
       action("onValueChange")(value);
     },
   },
-  render: (args) => {
-    const [value, setValue] = React.useState(args.isToggled);
-    useEffect(() => {
-      setValue(args.isToggled);
-    }, [args.isToggled]);
+  render: (args) => <InteractiveToggleButton {...args} />,
+};
 
-    return (
-      <ToggleButton
-        {...args}
-        isToggled={value}
-        onPress={(newValue) => {
-          setValue(newValue);
-          if (args.onPress) {
-            args.onPress(newValue);
-          }
-        }}
-      />
-    );
-  },
+const InteractiveToggleButton = (args) => {
+  const [value, setValue] = useState(args.isToggled);
+
+  useEffect(() => {
+    setValue(args.isToggled);
+  }, [args.isToggled]);
+
+  return (
+    <ToggleButton
+      {...args}
+      isToggled={value}
+      onPress={(newValue) => {
+        setValue(newValue);
+        args.onPress?.(newValue);
+      }}
+    />
+  );
 };

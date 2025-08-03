@@ -9,7 +9,11 @@ const withSQLiteThirdPartyPod = (config) => {
   return withDangerousMod(config, [
     "ios",
     async (config) => {
-      const filePath = path.join(config.modRequest.projectRoot, "ios", "Podfile.properties.json");
+      const filePath = path.join(
+        config.modRequest.projectRoot,
+        "ios",
+        "Podfile.properties.json",
+      );
 
       if (!fs.existsSync(filePath)) {
         console.warn("⚠️ Podfile.properties.json not found.");
@@ -19,7 +23,9 @@ const withSQLiteThirdPartyPod = (config) => {
       const json = JSON.parse(fs.readFileSync(filePath, "utf8"));
 
       if (json[NEW_KEY] === NEW_VALUE) {
-        console.log("ℹ️ [withSQLiteThirdPartyPod] Key already exists. Skipping.");
+        console.log(
+          "ℹ️ [withSQLiteThirdPartyPod] Key already exists. Skipping.",
+        );
         return config;
       }
 
@@ -27,7 +33,7 @@ const withSQLiteThirdPartyPod = (config) => {
 
       fs.writeFileSync(filePath, JSON.stringify(json, null, 2));
       console.log(
-        "✅ [withSQLiteThirdPartyPod] Added expo.updates.useThirdPartySQLitePod to Podfile.properties.json"
+        "✅ [withSQLiteThirdPartyPod] Added expo.updates.useThirdPartySQLitePod to Podfile.properties.json",
       );
 
       return config;

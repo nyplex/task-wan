@@ -5,7 +5,7 @@ import { Input as InputGS, InputField } from "@/components/gluestack/input";
 import { HStack } from "@/components/gluestack/hstack";
 import Icon, { IconList } from "../UI/Icon";
 import Text from "../Text";
-import clsx from "clsx";
+import { clsx } from "clsx";
 
 type Props = {
   isInvalid?: boolean;
@@ -64,19 +64,15 @@ const Input = ({
       <HStack>
         {leftIcon && (
           <Box className={CNIconBox}>
-            <Icon
-              icon={leftIcon}
-              size="medium"
-              color="white"
-              disabled
-            />
+            <Icon icon={leftIcon} size="medium" color="white" disabled />
           </Box>
         )}
         <InputGS
           isInvalid={isInvalid}
           isDisabled={isDisabled}
           testID="input-field"
-          className={CNInput}>
+          className={CNInput}
+        >
           <InputField
             placeholder={placeholder}
             placeholderTextColor="#9A9A9A"
@@ -95,7 +91,8 @@ const Input = ({
       <Text
         className="text-right px-2 text-red-500 line-clamp-1"
         size="bodyXS"
-        weight="medium">
+        weight="medium"
+      >
         {isInvalid && invalidText ? invalidText : ""}
       </Text>
     </VStack>

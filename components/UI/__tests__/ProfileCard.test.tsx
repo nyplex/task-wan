@@ -30,10 +30,7 @@ describe("ProfileCard", () => {
 
   it("does not render location if not provided", () => {
     const { queryByText } = render(
-      <ProfileCard
-        {...defaultProps}
-        location={undefined}
-      />
+      <ProfileCard {...defaultProps} location={undefined} />,
     );
     expect(queryByText("London")).toBeNull();
   });
@@ -45,20 +42,14 @@ describe("ProfileCard", () => {
 
   it("renders tasks completed as 0 if not provided", () => {
     const { getByText } = render(
-      <ProfileCard
-        {...defaultProps}
-        tasksCompleted={0}
-      />
+      <ProfileCard {...defaultProps} tasksCompleted={0} />,
     );
     expect(getByText("0 Task completed")).toBeTruthy();
   });
 
   it("renders profession as empty if not provided", () => {
     const { getByText } = render(
-      <ProfileCard
-        {...defaultProps}
-        profession={undefined}
-      />
+      <ProfileCard {...defaultProps} profession={undefined} />,
     );
     // Text component renders empty string if profession undefined
     expect(getByText("")).toBeTruthy();

@@ -10,18 +10,19 @@ const useInitializeApp = () => {
     const initialize = async () => {
       try {
         await dispatch(initializeAppThunk()).unwrap();
-      } catch (error) {
+      } catch (e) {
+        console.log("Error during app initialization:", e);
         dispatch(
           addError({
             message: "Failed to initialize app",
             source: "useInitializeApp",
             type: "unknown",
-          })
+          }),
         );
       }
     };
     initialize();
-  }, []);
+  }, [dispatch]);
 };
 
 export default useInitializeApp;

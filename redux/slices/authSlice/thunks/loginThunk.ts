@@ -20,7 +20,9 @@ export const loginThunk = createAsyncThunk<
 
     // ---- Skip OTP resend for Maestro ----
     if (
-      ["development", "preview"].includes(process.env.EXPO_PUBLIC_APP_VARIANT!) &&
+      ["development", "preview"].includes(
+        process.env.EXPO_PUBLIC_APP_VARIANT!,
+      ) &&
       credentials.email === "maestro@e2e.com"
     ) {
       return;

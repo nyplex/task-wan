@@ -11,17 +11,12 @@ const RegisterScreen = () => {
   return (
     <Box className={CLASS_NAMES.DEFAULT_SCREEN_WRAPPER}>
       <Header />
-      <Text
-        weight="semi-bold"
-        className="text-center">
+      <Text weight="semi-bold" className="text-center">
         Create your account
       </Text>
       <RegisterForm />
       <Box className="mt-12 items-center">
-        <Divider
-          title="Or register with"
-          width="80%"
-        />
+        <Divider title="Or register with" width="80%" />
         <HStack className="items-center justify-around mt-12 w-full">
           <SocialAuthButton provider="google" />
           <SocialAuthButton provider="apple" />

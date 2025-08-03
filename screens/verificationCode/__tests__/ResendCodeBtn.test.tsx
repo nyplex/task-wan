@@ -70,7 +70,7 @@ describe("ResendCodeBtn", () => {
       () =>
         new Promise((resolve) => {
           setTimeout(resolve, 1000); // simulate network delay
-        })
+        }),
     );
 
     const { getByText } = render(<ResendCodeBtn />);
@@ -93,7 +93,7 @@ describe("ResendCodeBtn", () => {
       () =>
         new Promise((resolve) => {
           setTimeout(resolve, 1000); // simulate network delay
-        })
+        }),
     );
 
     const { getByText } = render(<ResendCodeBtn />);

@@ -16,7 +16,11 @@ describe("resendOTPThunk", () => {
   const thunkAPI = { dispatch, getState, rejectWithValue };
 
   it("rejects if email is missing", async () => {
-    const result = await resendOTPThunk({ email: "" })(dispatch, getState, thunkAPI);
+    const result = await resendOTPThunk({ email: "" })(
+      dispatch,
+      getState,
+      thunkAPI,
+    );
     expect(result.payload).toEqual({
       message: "Email is required to resend OTP",
       source: "resendOTPThunk",
@@ -31,7 +35,7 @@ describe("resendOTPThunk", () => {
     const result = await resendOTPThunk({ email: "test@example.com" })(
       dispatch,
       getState,
-      thunkAPI
+      thunkAPI,
     );
     expect(result.payload).toEqual({
       message: "Resend error",
@@ -41,11 +45,13 @@ describe("resendOTPThunk", () => {
   });
 
   it("resolves if resend is successful", async () => {
-    (supabase.auth.signInWithOtp as jest.Mock).mockResolvedValue({ error: null });
+    (supabase.auth.signInWithOtp as jest.Mock).mockResolvedValue({
+      error: null,
+    });
     const result = await resendOTPThunk({ email: "test@example.com" })(
       dispatch,
       getState,
-      thunkAPI
+      thunkAPI,
     );
     expect(result.payload).toBeUndefined();
   });
@@ -57,7 +63,7 @@ describe("resendOTPThunk", () => {
     const result = await resendOTPThunk({ email: "test@example.com" })(
       dispatch,
       getState,
-      thunkAPI
+      thunkAPI,
     );
     expect(result.payload).toEqual({
       message: "Network error",

@@ -14,7 +14,9 @@ jest.mock("react-redux", () => ({
 
 jest.mock("@/components/UI/AppTitle", () => {
   const { Text } = require("react-native");
-  return () => <Text testID="AppTitle">App Title</Text>;
+  const MockAppTitle = () => <Text testID="AppTitle">App Title</Text>;
+  MockAppTitle.displayName = "MockAppTitle";
+  return MockAppTitle;
 });
 
 describe("Header", () => {

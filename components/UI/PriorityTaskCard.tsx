@@ -9,28 +9,11 @@ export const LightCircles = () => (
     width="100%"
     height="100%"
     viewBox="0 0 129 188"
-    style={{ position: "absolute" }}>
-    <Circle
-      cx="40"
-      cy="40"
-      r="60"
-      fill="white"
-      opacity="0.06"
-    />
-    <Circle
-      cx="100"
-      cy="140"
-      r="30"
-      fill="white"
-      opacity="0.08"
-    />
-    <Circle
-      cx="0"
-      cy="150"
-      r="40"
-      fill="white"
-      opacity="0.06"
-    />
+    style={{ position: "absolute" }}
+  >
+    <Circle cx="40" cy="40" r="60" fill="white" opacity="0.06" />
+    <Circle cx="100" cy="140" r="30" fill="white" opacity="0.08" />
+    <Circle cx="0" cy="150" r="40" fill="white" opacity="0.06" />
   </Svg>
 );
 
@@ -39,7 +22,8 @@ export const LightTriangles = () => (
     width="100%"
     height="100%"
     viewBox="0 0 129 188"
-    style={{ position: "absolute" }}>
+    style={{ position: "absolute" }}
+  >
     {[
       [10, 40],
       [100, -20],
@@ -60,7 +44,8 @@ export const LightDots = () => (
     width="100%"
     height="100%"
     viewBox="0 0 129 188"
-    style={{ position: "absolute" }}>
+    style={{ position: "absolute" }}
+  >
     {Array.from({ length: 10 }).map((_, i) =>
       Array.from({ length: 20 }).map((_, j) => (
         <Circle
@@ -71,7 +56,7 @@ export const LightDots = () => (
           fill="white"
           opacity="0.1"
         />
-      ))
+      )),
     )}
   </Svg>
 );
@@ -95,7 +80,14 @@ type Props = {
   onPress?: () => void;
 };
 
-const PriorityTaskCard = ({ title, timeLeft, progress, bgColor, disabled, onPress }: Props) => {
+const PriorityTaskCard = ({
+  title,
+  timeLeft,
+  progress,
+  bgColor,
+  disabled,
+  onPress,
+}: Props) => {
   const bgColors: Record<string, string> = {
     "Sky Blue": "#60A5FA",
     Green: "#34D399",
@@ -109,11 +101,10 @@ const PriorityTaskCard = ({ title, timeLeft, progress, bgColor, disabled, onPres
     Violet: "#8B5CF6",
   };
 
-  const backgroundOverlays = [LightDots, LightCircles, LightTriangles];
-
   const backgroundColor = bgColors[bgColor] || "#FBBF24"; // Default to Yellow if not found
 
   const Overlay = useMemo(() => {
+    const backgroundOverlays = [LightDots, LightCircles, LightTriangles];
     const index = Math.floor(Math.random() * backgroundOverlays.length);
     return backgroundOverlays[index];
   }, []);
@@ -123,13 +114,12 @@ const PriorityTaskCard = ({ title, timeLeft, progress, bgColor, disabled, onPres
       onPress={onPress}
       disabled={disabled}
       className="h-[188px] w-[129px] rounded-[20px]"
-      style={{ backgroundColor }}>
+      style={{ backgroundColor }}
+    >
       <Overlay />
       <Box className="p-2 flex-1">
         <Box className="bg-white self-end px-2 py-1 rounded-full">
-          <ThemedText
-            size="bodyXS"
-            className="self-start">
+          <ThemedText size="bodyXS" className="self-start">
             {timeLeft}
           </ThemedText>
         </Box>
@@ -137,14 +127,13 @@ const PriorityTaskCard = ({ title, timeLeft, progress, bgColor, disabled, onPres
           <ThemedText
             size="bodyL"
             weight="semi-bold"
-            className="text-white line-clamp-4">
+            className="text-white line-clamp-4"
+          >
             {title}
           </ThemedText>
         </Box>
         <Box className="px-1">
-          <ThemedText
-            size="caption"
-            className="text-white">
+          <ThemedText size="caption" className="text-white">
             Progress
           </ThemedText>
           <Box className="bg-white h-1 w-full rounded-full mt-1">
@@ -153,9 +142,7 @@ const PriorityTaskCard = ({ title, timeLeft, progress, bgColor, disabled, onPres
               style={{ width: `${progress}%` }} // Example progress, can be dynamic
             />
           </Box>
-          <ThemedText
-            size="caption"
-            className="text-white text-right">
+          <ThemedText size="caption" className="text-white text-right">
             {progress}%
           </ThemedText>
         </Box>

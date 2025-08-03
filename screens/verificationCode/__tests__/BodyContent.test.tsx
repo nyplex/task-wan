@@ -6,7 +6,9 @@ import BodyContent from "../components/BodyContent";
 jest.mock("@/assets/images/verifyEmail.png", () => "verifyEmail.png");
 
 // Mock Animated and interpolation logic
-jest.mock("react-native-reanimated", () => require("react-native-reanimated/mock"));
+jest.mock("react-native-reanimated", () =>
+  require("react-native-reanimated/mock"),
+);
 
 // Mock keyboard animation hook
 jest.mock("react-native-keyboard-controller", () => ({
@@ -21,7 +23,9 @@ describe("BodyContent", () => {
 
     // Check essential content
     expect(getByText("Verify Account")).toBeTruthy();
-    expect(getByText("Please enter the verification number we sent to your email")).toBeTruthy();
+    expect(
+      getByText("Please enter the verification number we sent to your email"),
+    ).toBeTruthy();
 
     // Snapshot
     expect(toJSON()).toMatchSnapshot();

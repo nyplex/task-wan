@@ -11,10 +11,7 @@ describe("Switch component", () => {
 
   it("renders with correct colors when ON and enabled", () => {
     const { getByTestId } = render(
-      <Switch
-        value={true}
-        onValueChange={onValueChangeMock}
-      />
+      <Switch value={true} onValueChange={onValueChangeMock} />,
     );
 
     const track = getByTestId("switch-track");
@@ -26,10 +23,7 @@ describe("Switch component", () => {
 
   it("renders with correct colors when OFF and enabled", () => {
     const { getByTestId } = render(
-      <Switch
-        value={false}
-        onValueChange={onValueChangeMock}
-      />
+      <Switch value={false} onValueChange={onValueChangeMock} />,
     );
 
     const track = getByTestId("switch-track");
@@ -41,11 +35,7 @@ describe("Switch component", () => {
 
   it("renders with disabled colors", () => {
     const { getByTestId } = render(
-      <Switch
-        value={true}
-        disabled
-        onValueChange={onValueChangeMock}
-      />
+      <Switch value={true} disabled onValueChange={onValueChangeMock} />,
     );
 
     const track = getByTestId("switch-track");
@@ -57,10 +47,7 @@ describe("Switch component", () => {
 
   it("calls onValueChange with toggled value when pressed", () => {
     const { getByTestId } = render(
-      <Switch
-        value={false}
-        onValueChange={onValueChangeMock}
-      />
+      <Switch value={false} onValueChange={onValueChangeMock} />,
     );
 
     fireEvent.press(getByTestId("switch-pressable"));
@@ -69,11 +56,7 @@ describe("Switch component", () => {
 
   it("does NOT call onValueChange when pressed if disabled", () => {
     const { getByTestId } = render(
-      <Switch
-        value={false}
-        disabled
-        onValueChange={onValueChangeMock}
-      />
+      <Switch value={false} disabled onValueChange={onValueChangeMock} />,
     );
 
     fireEvent.press(getByTestId("switch-pressable"));

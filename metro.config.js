@@ -9,7 +9,7 @@ config.transformer.getTransformOptions = async () => ({
   transform: {
     inlineRequires: {
       blockList: {
-        [require.resolve('@powersync/react-native')]: true,
+        [require.resolve("@powersync/react-native")]: true,
       },
     },
   },

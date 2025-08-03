@@ -9,7 +9,7 @@ describe("SliderChild", () => {
         title="Test Title"
         description="Test Description"
         imageSource="test.png"
-      />
+      />,
     );
     expect(getByText("Test Title")).toBeTruthy();
     expect(getByText("Test Description")).toBeTruthy();
@@ -21,7 +21,7 @@ describe("SliderChild", () => {
         title="Snapshot Title"
         description="Snapshot Description"
         imageSource="snapshot.png"
-      />
+      />,
     );
     expect(toJSON()).toMatchSnapshot();
   });

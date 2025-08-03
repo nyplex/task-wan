@@ -18,7 +18,9 @@ jest.mock("../components/LoginDivider", () => LoginDivider);
 jest.mock("../components/LoginThirdParty", () => LoginThirdParty);
 jest.mock("../components/LoginFooter", () => LoginFooter);
 jest.mock("@/components/UI/AppTitle", () => AppTitle);
-jest.mock("react-native-reanimated", () => require("react-native-reanimated/mock"));
+jest.mock("react-native-reanimated", () =>
+  require("react-native-reanimated/mock"),
+);
 jest.mock("react-native-keyboard-controller", () => ({
   useReanimatedKeyboardAnimation: () => ({ progress: { value: 0 } }),
 }));

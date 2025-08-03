@@ -4,7 +4,10 @@ import ProfileItem from "@/components/UI/ProfileItem";
 import { Box } from "@/components/gluestack/box";
 import { VStack } from "@/components/gluestack/vstack";
 import useAuth from "@/hooks/useAuth";
-import { useGetProfileQuery, useUpdateProfileMutation } from "@/redux/slices/apiSlice/apiSlice";
+import {
+  useGetProfileQuery,
+  useUpdateProfileMutation,
+} from "@/redux/slices/apiSlice/apiSlice";
 import { useSelector } from "react-redux";
 import { selectAuthStatus } from "@/redux/slices/authSlice/authSelectors";
 
@@ -13,9 +16,9 @@ const ProfileScreen = () => {
   const authIsLoading = useSelector(selectAuthStatus);
 
   const {
-    isFetching,
-    isError,
-    isLoading,
+    // isFetching,
+    // isError,
+    // isLoading,
     data: rawData,
   } = useGetProfileQuery({ userID: user?.id! });
   // console.log("ProfileScreen data:", data);
@@ -44,10 +47,7 @@ const ProfileScreen = () => {
   return (
     <Box className="flex-1 bg-white">
       <Box className="h-[250px] bg-primary-50 rounded-b-[20%] px-4 pt-safe-offset-4">
-        <Text
-          className="text-white"
-          size="bodyL"
-          weight="semi-bold">
+        <Text className="text-white" size="bodyL" weight="semi-bold">
           Profile
         </Text>
       </Box>
@@ -62,23 +62,10 @@ const ProfileScreen = () => {
           </Box>
         </Box>
         <VStack className="mt-4">
-          <ProfileItem
-            icon="user"
-            title="My Profile"
-            onPress={onPressEdit}
-          />
-          <ProfileItem
-            icon="bar-chart-2"
-            title="Statistics"
-          />
-          <ProfileItem
-            icon="map-pin"
-            title="Location"
-          />
-          <ProfileItem
-            icon="settings"
-            title="Settings"
-          />
+          <ProfileItem icon="user" title="My Profile" onPress={onPressEdit} />
+          <ProfileItem icon="bar-chart-2" title="Statistics" />
+          <ProfileItem icon="map-pin" title="Location" />
+          <ProfileItem icon="settings" title="Settings" />
           <ProfileItem
             icon="log-out"
             title="Logout"

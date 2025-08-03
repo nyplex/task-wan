@@ -4,7 +4,7 @@ const listenerMiddleware = createListenerMiddleware();
 
 listenerMiddleware.startListening({
   matcher: isRejected,
-  effect: async (action, listenerApi) => {
+  effect: async (action) => {
     if (
       action.error.name === "ConditionError" &&
       //@ts-ignore
@@ -12,10 +12,15 @@ listenerMiddleware.startListening({
     ) {
       return;
     }
-    console.log("Redux Listner Middleware triggered for rejected action:", action);
+    console.log(
+      "Redux Listner Middleware triggered for rejected action:",
+      action,
+    );
 
-    const message =
-      (action.payload as string) || action.error?.message || "An unknown error occurred";
+    // const message =
+    //   (action.payload as string) ||
+    //   action.error?.message ||
+    //   "An unknown error occurred";
 
     // Send to Sentry
 

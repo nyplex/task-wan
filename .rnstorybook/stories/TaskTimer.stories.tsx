@@ -1,4 +1,3 @@
-import React from "react";
 import { View } from "react-native";
 import type { Meta, StoryObj } from "@storybook/react";
 import TaskTimer from "../../components/UI/TaskTimer";
@@ -13,7 +12,8 @@ const meta = {
           padding: 16,
           backgroundColor: "#fff",
           flex: 1,
-        }}>
+        }}
+      >
         <Story />
       </View>
     ),

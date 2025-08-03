@@ -1,4 +1,7 @@
-import Animated, { useAnimatedStyle, interpolate } from "react-native-reanimated";
+import Animated, {
+  useAnimatedStyle,
+  interpolate,
+} from "react-native-reanimated";
 import { useReanimatedKeyboardAnimation } from "react-native-keyboard-controller";
 import { Box } from "@/components/gluestack/box";
 import Text from "@/components/Text";
@@ -28,17 +31,14 @@ const LoginScreen = () => {
   return (
     <Box
       className="flex-1 bg-backrgound pt-safe-offset-4 px-4"
-      testID="login-screen-root">
-      <Animated.View
-        style={animatedStyles}
-        className="overflow-hidden">
+      testID="login-screen-root"
+    >
+      <Animated.View style={animatedStyles} className="overflow-hidden">
         <AppTitle />
       </Animated.View>
 
       <Box className="mt-12">
-        <Text
-          weight="semi-bold"
-          className="text-center">
+        <Text weight="semi-bold" className="text-center">
           Login to your account
         </Text>
       </Box>

@@ -29,7 +29,10 @@ const RegisterForm = () => {
   });
 
   const onSubmit = handleSubmit(async (data) => {
-    await signup(data.email.trim().toLowerCase(), data.username.trim().toLowerCase());
+    await signup(
+      data.email.trim().toLowerCase(),
+      data.username.trim().toLowerCase(),
+    );
   });
 
   return (
@@ -43,7 +46,10 @@ const RegisterForm = () => {
           },
           validate: (value) => isValidEmail(value.trim()) || "Invalid email",
         }}
-        render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
+        render={({
+          field: { onChange, onBlur, value },
+          fieldState: { error },
+        }) => (
           <Input
             keyboardType="email-address"
             leftIcon="mail"
@@ -81,7 +87,9 @@ const RegisterForm = () => {
             leftIcon="user"
             value={value}
             autoCorrect={false}
-            onChangeText={(text) => onChange(text.trim().replace(/\s+/g, "").toLowerCase())}
+            onChangeText={(text) =>
+              onChange(text.trim().replace(/\s+/g, "").toLowerCase())
+            }
             onBlur={onBlur}
             isInvalid={!!errors.username}
             isDisabled={isLoading}

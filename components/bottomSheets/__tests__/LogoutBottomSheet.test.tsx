@@ -4,10 +4,7 @@ import LogoutBottomSheet from "../LogoutBottomSheet";
 describe("<LogoutBottomSheet />", () => {
   it("Text renders correctly on AppTitle", () => {
     const { getAllByRole, getByText } = render(
-      <LogoutBottomSheet
-        onPressCancel={() => {}}
-        onPressLogout={() => {}}
-      />
+      <LogoutBottomSheet onPressCancel={() => {}} onPressLogout={() => {}} />,
     );
     const btns = getAllByRole("button");
     expect(btns).toBeDefined();

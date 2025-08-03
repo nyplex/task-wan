@@ -8,18 +8,19 @@ import { Modal, ModalBackdrop, ModalContent } from "../gluestack/modal";
 
 type Props = {
   isOpen: boolean;
-  initialDate?: number;
+  // initialDate?: number;
   onSelect?: (date: number) => void;
   onClose: () => void;
 };
 
-const CalendarModal = ({ isOpen, initialDate, onSelect, onClose }: Props) => {
+const CalendarModal = ({ isOpen, onSelect, onClose }: Props) => {
   const [selected, setSelected] = useState("");
   return (
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      className="justify-center items-center">
+      className="justify-center items-center"
+    >
       <ModalBackdrop className="bg-black" />
       <ModalContent className="justify-center w-full border-0">
         <Box>
@@ -42,29 +43,22 @@ const CalendarModal = ({ isOpen, initialDate, onSelect, onClose }: Props) => {
             renderArrow={(direction) => {
               if (direction === "left") {
                 return (
-                  <Feather
-                    name="chevron-left"
-                    size={24}
-                    color="#006EE9"
-                  />
+                  <Feather name="chevron-left" size={24} color="#006EE9" />
                 );
               } else {
                 return (
-                  <Feather
-                    name="chevron-right"
-                    size={24}
-                    color="#006EE9"
-                  />
+                  <Feather name="chevron-right" size={24} color="#006EE9" />
                 );
               }
             }}
-            renderHeader={(date, info) => {
+            renderHeader={(date) => {
               const month = dayjs(date).format("MMMM");
               const year = dayjs(date).format("YYYY");
               return (
                 <Text
                   className="text-primary-50"
-                  weight="semi-bold">{`${month} ${year}`}</Text>
+                  weight="semi-bold"
+                >{`${month} ${year}`}</Text>
               );
             }}
             theme={{}}

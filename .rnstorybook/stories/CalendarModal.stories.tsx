@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { Button, View } from "react-native";
 import type { Meta, StoryObj } from "@storybook/react";
 import CalendarModal from "../../components/UI/CalendarModal";
@@ -23,25 +23,25 @@ export const Default: StoryObj<typeof meta> = {
     isOpen: false,
     onClose: () => {},
     initialDate: new Date().getTime(),
-    onSelect: (date) => {},
+    onSelect: () => {},
   },
-  render: () => {
-    const [isOpen, setIsOpen] = React.useState(false);
-    return (
-      <View>
-        <Button
-          title="Open Calender Modal"
-          onPress={() => setIsOpen(true)}
-        />
-        <CalendarModal
-          isOpen={isOpen}
-          onClose={() => setIsOpen(false)}
-          initialDate={new Date().getTime()}
-          onSelect={(date) => {
-            setIsOpen(false);
-          }}
-        />
-      </View>
-    );
-  },
+  render: () => <CalendarModalStory />,
+};
+
+const CalendarModalStory = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <View>
+      <Button title="Open Calendar Modal" onPress={() => setIsOpen(true)} />
+      <CalendarModal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        initialDate={new Date().getTime()}
+        onSelect={() => {
+          setIsOpen(false);
+        }}
+      />
+    </View>
+  );
 };

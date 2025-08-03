@@ -12,7 +12,9 @@ import { PanGestureHandler } from "react-native-gesture-handler";
 import { Pressable } from "@/components/gluestack/pressable";
 import LogoutBottomSheet from "@/components/bottomSheets/LogoutBottomSheet";
 // --- Added new InfoBottomSheet ---
-import InfoBottomSheet, { InfoBottomSheetProps } from "@/components/bottomSheets/InfoBottomSheet";
+import InfoBottomSheet, {
+  InfoBottomSheetProps,
+} from "@/components/bottomSheets/InfoBottomSheet";
 
 // -----------------
 // Type Definitions
@@ -30,7 +32,10 @@ type BottomSheetPropsMap = {
 type SheetName = keyof BottomSheetPropsMap;
 
 type BottomSheetContextType = {
-  openBottomSheet: <T extends SheetName>(name: T, props: BottomSheetPropsMap[T]) => void;
+  openBottomSheet: <T extends SheetName>(
+    name: T,
+    props: BottomSheetPropsMap[T],
+  ) => void;
   closeBottomSheet: () => void;
 };
 
@@ -49,7 +54,9 @@ const sheetRegistry: {
 // ------------------
 // Context Creation
 // ------------------
-export const BottomSheetContext = createContext<BottomSheetContextType | null>(null);
+export const BottomSheetContext = createContext<BottomSheetContextType | null>(
+  null,
+);
 
 // ------------------
 // Provider Component
@@ -82,7 +89,7 @@ export const BottomSheetProvider = ({ children }: { children: ReactNode }) => {
         easing: Easing.out(Easing.ease),
       });
     },
-    []
+    [opacityAnim, translateYAnim],
   );
 
   // ------------------
@@ -100,7 +107,7 @@ export const BottomSheetProvider = ({ children }: { children: ReactNode }) => {
       setSheetName(null);
       setSheetProps(null);
     }, ANIMATION_DURATION);
-  }, []);
+  }, [opacityAnim, translateYAnim]);
 
   // ------------------
   // GESTURE HANDLER
@@ -139,22 +146,22 @@ export const BottomSheetProvider = ({ children }: { children: ReactNode }) => {
   // ------------------
   // CONTENT COMPONENT
   // ------------------
-  const ContentComponent = sheetName && sheetRegistry[sheetName] ? sheetRegistry[sheetName] : null;
+  const ContentComponent =
+    sheetName && sheetRegistry[sheetName] ? sheetRegistry[sheetName] : null;
 
   return (
     <BottomSheetContext.Provider value={{ openBottomSheet, closeBottomSheet }}>
       {children}
       {isVisible && (
         <>
-          <Pressable
-            onPress={closeBottomSheet}
-            style={StyleSheet.absoluteFill}>
+          <Pressable onPress={closeBottomSheet} style={StyleSheet.absoluteFill}>
             <Animated.View style={[styles.backdrop, backdropStyle]} />
           </Pressable>
           <PanGestureHandler onGestureEvent={gestureHandler}>
             <Animated.View
               style={[styles.sheetContainer, sheetContainerStyle]}
-              className="bg-brand-background">
+              className="bg-brand-background"
+            >
               {/* Top Bar for drag indicator */}
               <View style={styles.topBar}>
                 <View style={styles.dragIndicator} />

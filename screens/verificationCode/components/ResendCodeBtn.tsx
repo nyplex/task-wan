@@ -37,7 +37,8 @@ const ResendCodeBtn = () => {
     return "Resend Code";
   };
 
-  const isDisabled = isLoading || status === "resending" || countdown > 0 || hasResent;
+  const isDisabled =
+    isLoading || status === "resending" || countdown > 0 || hasResent;
 
   return (
     <Text
@@ -45,7 +46,8 @@ const ResendCodeBtn = () => {
       weight="bold"
       size="bodyXS"
       disabled={isDisabled}
-      onPress={!isDisabled ? handleResend : undefined}>
+      onPress={!isDisabled ? handleResend : undefined}
+    >
       {getButtonLabel()}
     </Text>
   );

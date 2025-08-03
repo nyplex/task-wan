@@ -16,11 +16,13 @@ jest.mock("../components/Header", () => Header);
 jest.mock("../components/WelcomeMessage", () => WelcomeMessage);
 jest.mock("../components/PriorityTaskList", () => PriorityTaskList);
 jest.mock("../components/DailyTaskList", () => DailyTaskList);
-jest.mock("@/components/gluestack/box", () => ({ Box: ({ children }: any) => <>{children}</> }));
+jest.mock("@/components/gluestack/box", () => ({
+  Box: ({ children }: any) => <>{children}</>,
+}));
 
 describe("HomeScreen", () => {
   it("renders without crashing", () => {
-    const { getByTestId } = render(<HomeScreen />);
+    render(<HomeScreen />);
     // No error thrown means pass
   });
 

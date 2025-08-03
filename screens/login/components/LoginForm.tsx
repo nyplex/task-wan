@@ -40,7 +40,10 @@ const LoginForm = () => {
           },
           validate: (value) => isValidEmail(value.trim()) || "Invalid email",
         }}
-        render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
+        render={({
+          field: { onChange, onBlur, value },
+          fieldState: { error },
+        }) => (
           <Input
             keyboardType="email-address"
             leftIcon="mail"
