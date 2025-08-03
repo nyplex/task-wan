@@ -22,6 +22,7 @@ jobs:
       # Add your actual deployment step here (e.g., upload to server, call EAS, etc.)
       - name: Mark Deployment as successful
         uses: bobheadxi/deployments@v1
+        if: always()
         with:
           step: finish
           token: ${{ secrets.GITHUB_TOKEN }}
