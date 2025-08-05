@@ -5,17 +5,22 @@ const withFirebaseNotificationMetaFix = require("./plugins/withFirebaseNotificat
 
 const IS_DEV = process.env.EXPO_PUBLIC_APP_VARIANT === "development";
 const IS_PREVIEW = process.env.EXPO_PUBLIC_APP_VARIANT === "preview";
+const IS_STAGING = process.env.EXPO_PUBLIC_APP_VARIANT === "staging";
 
 const getUniqueIdentifier = () => {
   if (IS_DEV) {
-    return "com.nyplex.taskwan.dev";
+    return "com.taskwan.dev";
   }
 
   if (IS_PREVIEW) {
-    return "com.nyplex.taskwan.preview";
+    return "com.taskwan.preview";
   }
 
-  return "com.nyplex.taskwan";
+  if (IS_STAGING) {
+    return "com.taskwan.staging";
+  }
+
+  return "com.taskwan";
 };
 
 const getAppName = () => {
@@ -25,6 +30,10 @@ const getAppName = () => {
 
   if (IS_PREVIEW) {
     return "Task Wan (Preview)";
+  }
+
+  if (IS_STAGING) {
+    return "Task Wan (Staging)";
   }
 
   return "Task Wan";

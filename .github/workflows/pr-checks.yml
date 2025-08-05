@@ -3,8 +3,9 @@ name: PR Checks
 on:
   pull_request:
     branches:
-      - main
       - develop
+      - staging
+      - main
 
 jobs:
   test-and-lint:
@@ -18,7 +19,70 @@ jobs:
           node-version: 20
       - name: Install dependencies
         run: npm ci
+
       - name: Run tests
-        run: npm test
+        id: run_tests
+        run: |
+          set -o pipefail
+          npm test 2>&1 | tee test_output.log
+        continue-on-error: true
+
+      - name: Upload test output log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test_output.log
+          path: test_output.log
+
+      - name: Notify Slack if tests failed
+        if: steps.run_tests.outcome == 'failure'
+        run: |
+          SLACK_MESSAGE=":x: *Unit Tests failed* on PR #${{ github.event.pull_request.number }} by ${{ github.actor }}. Please check the logs."
+          SLACK_CHANNEL="#development"
+          curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"$SLACK_MESSAGE\", \"channel\":\"$SLACK_CHANNEL\"}" "$SLACK_WEBHOOK_URL"
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
       - name: Run linter
-        run: npm run lint
+        id: run_lint
+        run: |
+          set -o pipefail
+          npm run lint 2>&1 | tee lint_output.log
+        continue-on-error: true
+
+      - name: Upload lint output log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lint_output.log
+          path: lint_output.log
+
+      - name: Notify Slack if linter failed
+        if: steps.run_lint.outcome == 'failure'
+        run: |
+          SLACK_MESSAGE=":rotating_light: *Linter failed* on PR #${{ github.event.pull_request.number }} by ${{ github.actor }}. Please check the logs."
+          SLACK_CHANNEL="#development"
+          curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"$SLACK_MESSAGE\", \"channel\":\"$SLACK_CHANNEL\"}" "$SLACK_WEBHOOK_URL"
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: Add 'eas-preview' label if PR targets develop and all checks passed
+        if: steps.run_tests.outcome == 'success' && steps.run_lint.outcome == 'success' && github.base_ref == 'develop'
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          labels: eas-preview
+
+      - name: Notify Slack if all checks passed
+        if: steps.run_tests.outcome == 'success' && steps.run_lint.outcome == 'success'
+        run: |
+          if [ "$GITHUB_BASE_REF" = "develop" ]; then
+            SLACK_MESSAGE=":white_check_mark: *Unit Tests & Linter passed!* PR #${{ github.event.pull_request.number }} by ${{ github.actor }}. Label 'eas-preview' has been added."
+          else
+            SLACK_MESSAGE=":white_check_mark: *Unit Tests & Linter passed!* PR #${{ github.event.pull_request.number }} by ${{ github.actor }}."
+          fi
+          SLACK_CHANNEL="#development"
+          curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"$SLACK_MESSAGE\", \"channel\":\"$SLACK_CHANNEL\"}" "$SLACK_WEBHOOK_URL"
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          GITHUB_BASE_REF: ${{ github.base_ref }}

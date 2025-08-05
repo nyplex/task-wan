@@ -1,0 +1,173 @@
+name: Publish Preview
+
+on:
+  pull_request_labeled:
+    labels: ["eas-preview"]
+
+jobs:
+  # Job to create a fingerprint for the preview environment
+  fingerprint:
+    type: fingerprint
+    environment: preview
+
+  # Job to notify if fingerprint creation fails
+  notify_fingerprint_fail:
+    needs: [fingerprint]
+    if: ${{ needs.fingerprint.result == 'failure' }}
+    steps:
+      - run: |
+          curl -X POST -H "Content-type: application/json" \
+            --data '{"text":"❌ Fingerprint job failed.","channel":"task-wan"}' \
+            "$SLACK_WEBHOOK_URL"
+
+  # Job to get the Android build for the preview environment
+  get_android_build:
+    needs: [fingerprint]
+    type: get-build
+    params:
+      fingerprint_hash: ${{ needs.fingerprint.outputs.android_fingerprint_hash }}
+      profile: preview
+
+  # Job to notify if getting the Android build fails
+  notify_get_android_build_fail:
+    needs: [get_android_build]
+    if: ${{ needs.get_android_build.result == 'failure' }}
+    steps:
+      - run: |
+          curl -X POST -H "Content-type: application/json" \
+            --data '{"text":"❌ Failed to get Android build.","channel":"task-wan"}' \
+            "$SLACK_WEBHOOK_URL"
+
+  # Job to build the Android app if no existing build is found
+  build_android_if_missing:
+    needs: [get_android_build]
+    if: ${{ !needs.get_android_build.outputs.build_id }}
+    type: build
+    params:
+      platform: android
+      profile: preview
+
+  # Job to notify if the Android build fails
+  notify_build_android_fail:
+    needs: [build_android_if_missing]
+    if: ${{ needs.build_android_if_missing.result == 'failure' }}
+    steps:
+      - run: |
+          curl -X POST -H "Content-type: application/json" \
+            --data '{"text":"❌ Android preview build failed.","channel":"task-wan"}' \
+            "$SLACK_WEBHOOK_URL"
+
+  # Job to notify if the Android build succeeds
+  notify_build_android_success:
+    needs: [build_android_if_missing]
+    if: ${{ needs.build_android_if_missing.result == 'success' }}
+    steps:
+      - run: |
+          curl -X POST -H "Content-type: application/json" \
+            --data '{"text":"✅ Android preview build succeeded.","channel":"task-wan"}' \
+            "$SLACK_WEBHOOK_URL"
+
+  # Job to get the iOS build for the preview environment
+  get_ios_build:
+    needs: [fingerprint]
+    type: get-build
+    params:
+      fingerprint_hash: ${{ needs.fingerprint.outputs.ios_fingerprint_hash }}
+      profile: preview
+
+  # Job to notify if getting the iOS build fails
+  notify_get_ios_build_fail:
+    needs: [get_ios_build]
+    if: ${{ needs.get_ios_build.result == 'failure' }}
+    steps:
+      - run: |
+          curl -X POST -H "Content-type: application/json" \
+            --data '{"text":"❌ Failed to get iOS build.","channel":"task-wan"}' \
+            "$SLACK_WEBHOOK_URL"
+
+  # Job to build the iOS app if no existing build is found
+  build_ios_if_missing:
+    needs: [get_ios_build]
+    if: ${{ !needs.get_ios_build.outputs.build_id }}
+    type: build
+    params:
+      platform: ios
+      profile: preview
+
+  # Job to notify if the iOS build fails
+  notify_build_ios_fail:
+    needs: [build_ios_if_missing]
+    if: ${{ needs.build_ios_if_missing.result == 'failure' }}
+    steps:
+      - run: |
+          curl -X POST -H "Content-type: application/json" \
+            --data '{"text":"❌ iOS preview build failed.","channel":"task-wan"}' \
+            "$SLACK_WEBHOOK_URL"
+
+  # Job to notify if the iOS build succeeds
+  notify_build_ios_success:
+    needs: [build_ios_if_missing]
+    if: ${{ needs.build_ios_if_missing.result == 'success' }}
+    steps:
+      - run: |
+          curl -X POST -H "Content-type: application/json" \
+            --data '{"text":"✅ iOS preview build succeeded.","channel":"task-wan"}' \
+            "$SLACK_WEBHOOK_URL"
+
+  # Job to update the Android app OTA if an existing build is found
+  update_android:
+    needs: [get_android_build]
+    if: ${{ needs.get_android_build.outputs.build_id }}
+    type: update
+    params:
+      branch: preview
+      platform: android
+
+  # Job to notify if the Android OTA update fails
+  notify_update_android_fail:
+    needs: [update_android]
+    if: ${{ needs.update_android.result == 'failure' }}
+    steps:
+      - run: |
+          curl -X POST -H "Content-type: application/json" \
+            --data '{"text":"❌ Android OTA update failed.","channel":"task-wan"}' \
+            "$SLACK_WEBHOOK_URL"
+
+  # Job to notify if the Android OTA update succeeds
+  notify_update_android_success:
+    needs: [update_android]
+    if: ${{ needs.update_android.result == 'success' }}
+    steps:
+      - run: |
+          curl -X POST -H "Content-type: application/json" \
+            --data '{"text":"✅ Android OTA update succeeded.","channel":"task-wan"}' \
+            "$SLACK_WEBHOOK_URL"
+
+  # Job to update the iOS app OTA if an existing build is found
+  update_ios:
+    needs: [get_ios_build]
+    if: ${{ needs.get_ios_build.outputs.build_id }}
+    type: update
+    params:
+      branch: preview
+      platform: ios
+
+  # Job to notify if the iOS OTA update fails
+  notify_update_ios_fail:
+    needs: [update_ios]
+    if: ${{ needs.update_ios.result == 'failure' }}
+    steps:
+      - run: |
+          curl -X POST -H "Content-type: application/json" \
+            --data '{"text":"❌ iOS OTA update failed.","channel":"task-wan"}' \
+            "$SLACK_WEBHOOK_URL"
+
+  # Job to notify if the iOS OTA update succeeds
+  notify_update_ios_success:
+    needs: [update_ios]
+    if: ${{ needs.update_ios.result == 'success' }}
+    steps:
+      - run: |
+          curl -X POST -H "Content-type: application/json" \
+            --data '{"text":"✅ iOS OTA update succeeded.","channel":"task-wan"}' \
+            "$SLACK_WEBHOOK_URL"
