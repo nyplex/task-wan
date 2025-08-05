@@ -9,6 +9,9 @@ on:
 
 jobs:
   test-and-lint:
+    permissions:
+      issues: write
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -66,7 +69,7 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-      - name: Add 'eas-preview' label if PR targets develop and all checks passed
+      - name: Add 'eas-preview' label if PR targets develop and all checks passed 
         if: steps.run_tests.outcome == 'success' && steps.run_lint.outcome == 'success' && github.base_ref == 'develop'
         uses: actions-ecosystem/action-add-labels@v1
         with:
