@@ -9,7 +9,7 @@ jobs:
   fingerprint:
     steps:
       # - run: exit 1
-      - run: echo "Create Fingerprint"
+      - run: echo "Create Fingerprint..."
     # type: fingerprint
     # environment: preview
 
