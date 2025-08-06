@@ -9,7 +9,7 @@
     "android": "DARK_MODE=media expo start --android",
     "ios": "DARK_MODE=media expo start --ios",
     "web": "DARK_MODE=media expo start --web",
-    "lint": "expo lint",
+    "lint": "eslint . --ext .js,.ts,.jsx,.tsx",
     "test-watch": "jest --watchAll",
     "test": "jest",
     "storybook-generate": "sb-rn-get-stories",
