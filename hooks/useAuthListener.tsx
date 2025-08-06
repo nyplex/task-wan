@@ -14,7 +14,7 @@ const useAuthListener = () => {
       },
     );
     return () => listener.subscription.unsubscribe?.();
-  }, []);
+  }, [dispatch]);
 
   return null;
 };
