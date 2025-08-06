@@ -8,7 +8,7 @@ jobs:
   # 1. Create fingerprint for preview environment
   fingerprint:
     steps:
-      - run: exit 1
+      # - run: exit 1
       - run: echo "Create Fingerprint"
     # type: fingerprint
     # environment: preview
