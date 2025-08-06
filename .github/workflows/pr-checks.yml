@@ -3,8 +3,6 @@ on:
   pull_request:
     branches:
       - develop
-      - staging
-      - main
 jobs:
   test-and-lint:
     permissions:
