@@ -183,3 +183,8 @@ jobs:
     env:
       AFTER_BUILD_IOS_IF_MISSING_STATUS: ${{ after.build_ios_if_missing.status }}
       AFTER_UPDATE_IOS_STATUS:         ${{ after.update_ios.status }}
+
+  final_log:
+    after: [notify_failures, notify_android_results, notify_ios_results]
+    steps:
+      - run: echo "🔚 All jobs completed (success or failure). Logging final message."
