@@ -1,10 +1,12 @@
 {
   "cli": {
-    "version": ">= 16.6.1",
+    "version": ">= 16.17.4",
     "appVersionSource": "remote"
   },
   "build": {
     "development": {
+      "autoIncrement": true,
+      "credentialsSource": "remote",
       "environment": "development",
       "developmentClient": true,
       "distribution": "internal",
@@ -13,6 +15,7 @@
       },
       "ios": {
         "image": "latest"
+        
       }
     },
     "development-simulator": {
@@ -36,6 +39,21 @@
       "extends": "preview",
       "ios": {
         "simulator": true
+      }
+    },
+    "staging": {
+      "distribution": "internal",
+      "environment": "preview",
+      "channel": "staging",
+      "autoIncrement": true,
+      "android": {
+        "image": "latest"
+      },
+      "ios": {
+        "image": "latest"
+      },
+      "env": {
+        "EXPO_PUBLIC_APP_VARIANT": "staging"
       }
     },
     "production": {
