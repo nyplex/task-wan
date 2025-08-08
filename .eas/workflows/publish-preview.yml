@@ -184,7 +184,6 @@ jobs:
   #     AFTER_BUILD_IOS_IF_MISSING_STATUS: ${{ after.build_ios_if_missing.status }}
   #     AFTER_UPDATE_IOS_STATUS:         ${{ after.update_ios.status }}
 
-
   call_jira_webhook:
     # after: [notify_android_results, notify_ios_results]
     # if: success()
