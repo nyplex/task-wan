@@ -9,6 +9,7 @@ jobs:
     steps:
       # - run: exit 1
       - run: echo "Create Fingerprint..."
+      - run: echo ${{ github.event.pull_request.title }}
     # type: fingerprint
     # environment: preview
 
@@ -184,29 +185,29 @@ jobs:
   #     AFTER_BUILD_IOS_IF_MISSING_STATUS: ${{ after.build_ios_if_missing.status }}
   #     AFTER_UPDATE_IOS_STATUS:         ${{ after.update_ios.status }}
 
-  call_jira_webhook:
-    # after: [notify_android_results, notify_ios_results]
-    # if: success()
-    steps:
-    - run: |
-        set -e
-        # Extract Jira key from the PR title (e.g., "TEST-1: Something")
-        JIRA_KEY=$(echo "$PR_TITLE" | grep -oE '[A-Z]+-[0-9]+')
+  # call_jira_webhook:
+  #   # after: [notify_android_results, notify_ios_results]
+  #   # if: success()
+  #   steps:
+  #   - run: |
+  #       set -e
+  #       # Extract Jira key from the PR title (e.g., "TEST-1: Something")
+  #       JIRA_KEY=$(echo "$PR_TITLE" | grep -oE '[A-Z]+-[0-9]+')
         
-        if [[ -n "$JIRA_KEY" ]]; then
-          curl -X POST -H 'Content-type: application/json' \
-               -H "X-Automation-Webhook-Token: $JIRA_WEBHOOK_TOKEN" \
-               --data "{\"issues\":[\"$JIRA_KEY\"]}" \
-               https://api-private.atlassian.com/automation/webhooks/jira/a/0c412e71-9ad7-4c46-bbca-79c4a40547a6/01987adb-86d5-7f23-8c58-29b3d2e3d5c7
-        else
-          echo "No Jira key found in PR title."
-        fi
-    env:
-      PR_TITLE: ${{ github.event.pull_request.title }}
-      # PR_TITLE: TKW-16 - Default PR Title
+  #       if [[ -n "$JIRA_KEY" ]]; then
+  #         curl -X POST -H 'Content-type: application/json' \
+  #              -H "X-Automation-Webhook-Token: $JIRA_WEBHOOK_TOKEN" \
+  #              --data "{\"issues\":[\"$JIRA_KEY\"]}" \
+  #              https://api-private.atlassian.com/automation/webhooks/jira/a/0c412e71-9ad7-4c46-bbca-79c4a40547a6/01987adb-86d5-7f23-8c58-29b3d2e3d5c7
+  #       else
+  #         echo "No Jira key found in PR title."
+  #       fi
+  #   env:
+  #     PR_TITLE: ${{ github.event.pull_request.title }}
+  #     # PR_TITLE: TKW-16 - Default PR Title
 
   # 7. Final log message to indicate completion
-  final_log:
-    after: [notify_failures, notify_android_results, notify_ios_results]
-    steps:
-      - run: echo "🔚 All jobs completed (success or failure). Logging final message."
+  # final_log:
+  #   after: [notify_failures, notify_android_results, notify_ios_results]
+  #   steps:
+  #     - run: echo "🔚 All jobs completed (success or failure). Logging final message."
