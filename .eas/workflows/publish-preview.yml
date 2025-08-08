@@ -10,7 +10,7 @@ jobs:
       # - run: exit 1
       - run: echo "Create Fingerprint..."
       - run: echo ${{ github.event }}
-      - run: echo '${{ toJson(github) }}'
+      - run: echo '${{ toJSON(github) }}'
     # type: fingerprint
     # environment: preview
 
