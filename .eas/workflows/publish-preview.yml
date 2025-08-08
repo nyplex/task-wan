@@ -14,6 +14,39 @@ jobs:
     # type: fingerprint
     # environment: preview
 
+  extract_pr_info:
+    # needs: fingerprint
+    steps:
+      - run: |
+          set -e
+          REPO="task-wan"
+          REF_NAME="${{ github.event.ref_name }}
+          TOKEN="${{ GITHUB_TOKEN }}"
+          
+          echo "Looking for PR for branch: $REF_NAME in repo: $REPO"
+          
+          # Fetch PRs for the repo filtered by head branch ref_name
+          PRS_JSON=$(curl -s -H "Authorization: token $TOKEN" \
+            "https://api.github.com/repos/$REPO/pulls?head=$(echo $REPO | cut -d/ -f1):$REF_NAME&state=open")
+          
+          PR_TITLE=$(echo "$PRS_JSON" | jq -r '.[0].title // empty')
+          
+          if [ -z "$PR_TITLE" ]; then
+            echo "No open PR found for branch $REF_NAME"
+            exit 1
+          fi
+          
+          echo "PR Title: $PR_TITLE"
+          
+          # Extract Jira key assuming pattern like ABC-123 (uppercase letters + dash + digits)
+          JIRA_KEY=$(echo "$PR_TITLE" | grep -oE '[A-Z]+-[0-9]+' | head -1 || true)
+          
+          if [ -z "$JIRA_KEY" ]; then
+            echo "No Jira key found in PR title"
+          else
+            echo "Jira Key: $JIRA_KEY"
+          fi
+
   # # 2. Fetch or build Android and iOS in parallel (only if fingerprint succeeds)
   # get_android_build:
   #   after: [fingerprint]
