@@ -12,181 +12,181 @@ jobs:
     # type: fingerprint
     # environment: preview
 
-  # 2. Fetch or build Android and iOS in parallel (only if fingerprint succeeds)
-  get_android_build:
-    after: [fingerprint]
-    if: ${{ after.fingerprint.status == 'success' }}
-    outputs:
-      build_id: ${{ steps.step_1.outputs.build_id }}
-    steps:
-      - id: step_1
-      # - run: exit 1
-        # run: echo "Get Android Build"
-        run: set-output build_id "build_123"
-      - id: step_2
-        run: echo "Get Android Build & produce output"
-    # type: get-build
-    # params:
-    #   fingerprint_hash: ${{ needs.fingerprint.outputs.android_fingerprint_hash }}
-    #   profile: preview
+  # # 2. Fetch or build Android and iOS in parallel (only if fingerprint succeeds)
+  # get_android_build:
+  #   after: [fingerprint]
+  #   if: ${{ after.fingerprint.status == 'success' }}
+  #   outputs:
+  #     build_id: ${{ steps.step_1.outputs.build_id }}
+  #   steps:
+  #     - id: step_1
+  #     # - run: exit 1
+  #       # run: echo "Get Android Build"
+  #       run: set-output build_id "build_123"
+  #     - id: step_2
+  #       run: echo "Get Android Build & produce output"
+  #   # type: get-build
+  #   # params:
+  #   #   fingerprint_hash: ${{ needs.fingerprint.outputs.android_fingerprint_hash }}
+  #   #   profile: preview
 
-  build_android_if_missing:
-    after: [get_android_build]
-    if: ${{ after.get_android_build.status == 'success' && !after.get_android_build.outputs.build_id }}
-    steps:
-      # - run: exit 1
-      - run: echo "Build Android App"
-    # type: build
-    # params:
-    #   platform: android
-    #   profile: preview
+  # build_android_if_missing:
+  #   after: [get_android_build]
+  #   if: ${{ after.get_android_build.status == 'success' && !after.get_android_build.outputs.build_id }}
+  #   steps:
+  #     # - run: exit 1
+  #     - run: echo "Build Android App"
+  #   # type: build
+  #   # params:
+  #   #   platform: android
+  #   #   profile: preview
 
-  get_ios_build:
-    after: [fingerprint]
-    if: ${{ after.fingerprint.status == 'success' }}
-    outputs:
-      build_id: ${{ steps.step_1.outputs.build_id }}
-    steps:
-      - id: step_1
-      # - run: exit 1
-        # run: echo "Get Android Build"
-        run: set-output build_id "build_123"
-      - id: step_2
-        run: echo "Get iOS Build & produce output"
-    # type: get-build
-    # params:
-    #   fingerprint_hash: ${{ needs.fingerprint.outputs.ios_fingerprint_hash }}
-    #   profile: preview
+  # get_ios_build:
+  #   after: [fingerprint]
+  #   if: ${{ after.fingerprint.status == 'success' }}
+  #   outputs:
+  #     build_id: ${{ steps.step_1.outputs.build_id }}
+  #   steps:
+  #     - id: step_1
+  #     # - run: exit 1
+  #       # run: echo "Get Android Build"
+  #       run: set-output build_id "build_123"
+  #     - id: step_2
+  #       run: echo "Get iOS Build & produce output"
+  #   # type: get-build
+  #   # params:
+  #   #   fingerprint_hash: ${{ needs.fingerprint.outputs.ios_fingerprint_hash }}
+  #   #   profile: preview
 
-  build_ios_if_missing:
-    after: [get_ios_build]
-    if: ${{ after.get_ios_build.status == 'success' && !after.get_ios_build.outputs.build_id }}
-    steps:
-      # - run: exit 1
-      - run: echo "Build iOS App"
-    # type: build
-    # params:
-    #   platform: ios
-    #   profile: preview
+  # build_ios_if_missing:
+  #   after: [get_ios_build]
+  #   if: ${{ after.get_ios_build.status == 'success' && !after.get_ios_build.outputs.build_id }}
+  #   steps:
+  #     # - run: exit 1
+  #     - run: echo "Build iOS App"
+  #   # type: build
+  #   # params:
+  #   #   platform: ios
+  #   #   profile: preview
 
-  # 3. OTA updates (if existing builds found)
-  update_android:
-    after: [get_android_build]
-    if: ${{ after.get_android_build.status == 'success' && after.get_android_build.outputs.build_id }}
-    steps:
-      # - run: exit 1
-      - run: echo "Update Android OTA"
-    # type: update
-    # params:
-    #   branch: preview
-    #   platform: android
+  # # 3. OTA updates (if existing builds found)
+  # update_android:
+  #   after: [get_android_build]
+  #   if: ${{ after.get_android_build.status == 'success' && after.get_android_build.outputs.build_id }}
+  #   steps:
+  #     # - run: exit 1
+  #     - run: echo "Update Android OTA"
+  #   # type: update
+  #   # params:
+  #   #   branch: preview
+  #   #   platform: android
 
-  update_ios:
-    after: [get_ios_build]
-    if: ${{ after.get_ios_build.status == 'success' && after.get_ios_build.outputs.build_id  }}
-    steps:
-      # - run: exit 1
-      - run: echo "Update iOS OTA"
-    # type: update
-    # params:
-    #   branch: preview
-    #   platform: ios
+  # update_ios:
+  #   after: [get_ios_build]
+  #   if: ${{ after.get_ios_build.status == 'success' && after.get_ios_build.outputs.build_id  }}
+  #   steps:
+  #     # - run: exit 1
+  #     - run: echo "Update iOS OTA"
+  #   # type: update
+  #   # params:
+  #   #   branch: preview
+  #   #   platform: ios
 
-  # 4. Single notifier for all failures
-  notify_failures:
-    after: [fingerprint, get_android_build, build_android_if_missing, get_ios_build, build_ios_if_missing, update_android, update_ios]
-    if: failure()
-    steps:
-      - run: |
-          set -e
-          MSG=""
-          # Fingerprint failure
-          if [[ "${AFTER_FINGERPRINT_STATUS}" == "failure" ]]; then
-            MSG+="❌ Fingerprint job failed.\n"
-          fi
-          # Android build failures
-          if [[ "${AFTER_GET_ANDROID_BUILD_STATUS}" == "failure" ]]; then
-            MSG+="❌ Failed to get Android build.\n"
-          elif [[ "${AFTER_BUILD_ANDROID_IF_MISSING_STATUS}" == "failure" ]]; then
-            MSG+="❌ Android build step failed.\n"
-          fi
-          # iOS build failures
-          if [[ "${AFTER_GET_IOS_BUILD_STATUS}" == "failure" ]]; then
-            MSG+="❌ Failed to get iOS build.\n"
-          elif [[ "${AFTER_BUILD_IOS_IF_MISSING_STATUS}" == "failure" ]]; then
-            MSG+="❌ iOS build step failed.\n"
-          fi
-          # OTA update failures
-          if [[ "${AFTER_UPDATE_ANDROID_STATUS}" == "failure" ]]; then
-            MSG+="❌ Android OTA update failed.\n"
-          fi
-          if [[ "${AFTER_UPDATE_IOS_STATUS}" == "failure" ]]; then
-            MSG+="❌ iOS OTA update failed.\n"
-          fi
-          # Send consolidated Slack notification
-          curl -X POST -H 'Content-type: application/json' \
-            --data "{\"text\":\"$MSG\", \"channel\":\"development\"}" "$SLACK_WEBHOOK_URL"
-    env:
-      AFTER_FINGERPRINT_STATUS: ${{ after.fingerprint.status }}
-      AFTER_GET_ANDROID_BUILD_STATUS: ${{ after.get_android_build.status }}
-      AFTER_BUILD_ANDROID_IF_MISSING_STATUS: ${{ after.build_android_if_missing.status }}
-      AFTER_GET_IOS_BUILD_STATUS: ${{ after.get_ios_build.status }}
-      AFTER_BUILD_IOS_IF_MISSING_STATUS: ${{ after.build_ios_if_missing.status }}
-      AFTER_UPDATE_ANDROID_STATUS: ${{ after.update_android.status }}
-      AFTER_UPDATE_IOS_STATUS: ${{ after.update_ios.status }}
+  # # 4. Single notifier for all failures
+  # notify_failures:
+  #   after: [fingerprint, get_android_build, build_android_if_missing, get_ios_build, build_ios_if_missing, update_android, update_ios]
+  #   if: failure()
+  #   steps:
+  #     - run: |
+  #         set -e
+  #         MSG=""
+  #         # Fingerprint failure
+  #         if [[ "${AFTER_FINGERPRINT_STATUS}" == "failure" ]]; then
+  #           MSG+="❌ Fingerprint job failed.\n"
+  #         fi
+  #         # Android build failures
+  #         if [[ "${AFTER_GET_ANDROID_BUILD_STATUS}" == "failure" ]]; then
+  #           MSG+="❌ Failed to get Android build.\n"
+  #         elif [[ "${AFTER_BUILD_ANDROID_IF_MISSING_STATUS}" == "failure" ]]; then
+  #           MSG+="❌ Android build step failed.\n"
+  #         fi
+  #         # iOS build failures
+  #         if [[ "${AFTER_GET_IOS_BUILD_STATUS}" == "failure" ]]; then
+  #           MSG+="❌ Failed to get iOS build.\n"
+  #         elif [[ "${AFTER_BUILD_IOS_IF_MISSING_STATUS}" == "failure" ]]; then
+  #           MSG+="❌ iOS build step failed.\n"
+  #         fi
+  #         # OTA update failures
+  #         if [[ "${AFTER_UPDATE_ANDROID_STATUS}" == "failure" ]]; then
+  #           MSG+="❌ Android OTA update failed.\n"
+  #         fi
+  #         if [[ "${AFTER_UPDATE_IOS_STATUS}" == "failure" ]]; then
+  #           MSG+="❌ iOS OTA update failed.\n"
+  #         fi
+  #         # Send consolidated Slack notification
+  #         curl -X POST -H 'Content-type: application/json' \
+  #           --data "{\"text\":\"$MSG\", \"channel\":\"development\"}" "$SLACK_WEBHOOK_URL"
+  #   env:
+  #     AFTER_FINGERPRINT_STATUS: ${{ after.fingerprint.status }}
+  #     AFTER_GET_ANDROID_BUILD_STATUS: ${{ after.get_android_build.status }}
+  #     AFTER_BUILD_ANDROID_IF_MISSING_STATUS: ${{ after.build_android_if_missing.status }}
+  #     AFTER_GET_IOS_BUILD_STATUS: ${{ after.get_ios_build.status }}
+  #     AFTER_BUILD_IOS_IF_MISSING_STATUS: ${{ after.build_ios_if_missing.status }}
+  #     AFTER_UPDATE_ANDROID_STATUS: ${{ after.update_android.status }}
+  #     AFTER_UPDATE_IOS_STATUS: ${{ after.update_ios.status }}
 
-  # 5. Single notifier for all successes
-  notify_android_results:
-    after: [build_android_if_missing, update_android]
-    if: success()
-    steps:
-      - run: |
-          set -e
-          MSG=""
-          # 1) Did we ever run get/build/update for Android?
-          if [[ "${AFTER_BUILD_ANDROID_IF_MISSING_STATUS}" == "success" ]]; then
-            MSG+="✅ New Android PREVIEW build created.\n"
-          fi
-          if [[ "${AFTER_UPDATE_ANDROID_STATUS}" == "success" ]]; then
-            MSG+="🚀 Android OTA update deployed to PREVIEW.\n"
-          fi
-          # 2) Any Android failures? (notify.Failures already runs, so skip here)
-          # Send only if we got *some* positive result
-          if [[ -n "$MSG" ]]; then
-            curl -X POST -H 'Content-type: application/json' \
-              --data "{\"text\":\"$MSG\", \"channel\":\"development\"}" \
-              "$SLACK_WEBHOOK_URL"
-          fi
-    env:
-      AFTER_BUILD_ANDROID_IF_MISSING_STATUS: ${{ after.build_android_if_missing.status }}
-      AFTER_UPDATE_ANDROID_STATUS:      ${{ after.update_android.status }}
+  # # 5. Single notifier for all successes
+  # notify_android_results:
+  #   after: [build_android_if_missing, update_android]
+  #   if: success()
+  #   steps:
+  #     - run: |
+  #         set -e
+  #         MSG=""
+  #         # 1) Did we ever run get/build/update for Android?
+  #         if [[ "${AFTER_BUILD_ANDROID_IF_MISSING_STATUS}" == "success" ]]; then
+  #           MSG+="✅ New Android PREVIEW build created.\n"
+  #         fi
+  #         if [[ "${AFTER_UPDATE_ANDROID_STATUS}" == "success" ]]; then
+  #           MSG+="🚀 Android OTA update deployed to PREVIEW.\n"
+  #         fi
+  #         # 2) Any Android failures? (notify.Failures already runs, so skip here)
+  #         # Send only if we got *some* positive result
+  #         if [[ -n "$MSG" ]]; then
+  #           curl -X POST -H 'Content-type: application/json' \
+  #             --data "{\"text\":\"$MSG\", \"channel\":\"development\"}" \
+  #             "$SLACK_WEBHOOK_URL"
+  #         fi
+  #   env:
+  #     AFTER_BUILD_ANDROID_IF_MISSING_STATUS: ${{ after.build_android_if_missing.status }}
+  #     AFTER_UPDATE_ANDROID_STATUS:      ${{ after.update_android.status }}
 
-  # 6. Single notifier for all iOS results
-  notify_ios_results:
-    after: [build_ios_if_missing, update_ios]
-    if: success()
-    steps:
-      - run: |
-          set -e
-          MSG=""
-          if [[ "${AFTER_BUILD_IOS_IF_MISSING_STATUS}" == "success" ]]; then
-            MSG+="✅ New iOS PREVIEW build created.\n"
-          fi
-          if [[ "${AFTER_UPDATE_IOS_STATUS}" == "success" ]]; then
-            MSG+="🚀 iOS OTA update deployed to PREVIEW.\n"
-          fi
-          if [[ -n "$MSG" ]]; then
-            curl -X POST -H 'Content-type: application/json' \
-              --data "{\"text\":\"$MSG\", \"channel\":\"development\"}" \
-              "$SLACK_WEBHOOK_URL"
-          fi
-    env:
-      AFTER_BUILD_IOS_IF_MISSING_STATUS: ${{ after.build_ios_if_missing.status }}
-      AFTER_UPDATE_IOS_STATUS:         ${{ after.update_ios.status }}
+  # # 6. Single notifier for all iOS results
+  # notify_ios_results:
+  #   after: [build_ios_if_missing, update_ios]
+  #   if: success()
+  #   steps:
+  #     - run: |
+  #         set -e
+  #         MSG=""
+  #         if [[ "${AFTER_BUILD_IOS_IF_MISSING_STATUS}" == "success" ]]; then
+  #           MSG+="✅ New iOS PREVIEW build created.\n"
+  #         fi
+  #         if [[ "${AFTER_UPDATE_IOS_STATUS}" == "success" ]]; then
+  #           MSG+="🚀 iOS OTA update deployed to PREVIEW.\n"
+  #         fi
+  #         if [[ -n "$MSG" ]]; then
+  #           curl -X POST -H 'Content-type: application/json' \
+  #             --data "{\"text\":\"$MSG\", \"channel\":\"development\"}" \
+  #             "$SLACK_WEBHOOK_URL"
+  #         fi
+  #   env:
+  #     AFTER_BUILD_IOS_IF_MISSING_STATUS: ${{ after.build_ios_if_missing.status }}
+  #     AFTER_UPDATE_IOS_STATUS:         ${{ after.update_ios.status }}
 
   call_jira_webhook:
-    after: [notify_android_results, notify_ios_results]
-    if: success()
+    # after: [notify_android_results, notify_ios_results]
+    # if: success()
     steps:
     - run: |
         set -e
@@ -202,7 +202,7 @@ jobs:
           echo "No Jira key found in PR title."
         fi
     env:
-      PR_TITLE: ${{ pull_request.title }}
+      PR_TITLE: ${{ github.event.pull_request.title }}
       # PR_TITLE: TKW-16 - Default PR Title
 
   # 7. Final log message to indicate completion
