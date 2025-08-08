@@ -9,7 +9,8 @@ jobs:
     steps:
       # - run: exit 1
       - run: echo "Create Fingerprint..."
-      - run: echo ${{ github.event.pull_request.title }}
+      - run: echo ${{ github.event }}
+      - run: echo '${{ toJson(github) }}'
     # type: fingerprint
     # environment: preview
 
