@@ -24,6 +24,9 @@ on:
     types: [opened, edited, reopened, synchronize]
     branches:
       - develop
+      - main
+      - staging
+      - 'feature/**'
 jobs:
   test-and-lint:
     permissions:
