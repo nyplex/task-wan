@@ -186,7 +186,8 @@ jobs:
       AFTER_BUILD_IOS_IF_MISSING_STATUS: ${{ after.build_ios_if_missing.status }}
       AFTER_UPDATE_IOS_STATUS:         ${{ after.update_ios.status }}
 
-  extract_pr_info:
+  # 7. Extract PR info and notify Jira
+  notify_jira:
     after: [notify_android_results, notify_ios_results]
     if: success()
     steps:
@@ -225,10 +226,8 @@ jobs:
               https://api-private.atlassian.com/automation/webhooks/jira/a/aee1c92e-a7f0-4e88-a3ba-77a03f97ee84/01988a42-ac8a-7c1a-869e-e8a0a8cdfbc2
           fi
 
-
-
-  # 7. Final log message to indicate completion
+  # 8. Final log message to indicate completion
   final_log:
-    after: [notify_failures, notify_android_results, notify_ios_results]
+    after: [notify_jira]
     steps:
       - run: echo "🔚 All jobs completed (success or failure). Logging final message."
