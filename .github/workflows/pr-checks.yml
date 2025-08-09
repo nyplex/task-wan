@@ -1,9 +1,36 @@
 name: PR Checks
 on:
   pull_request:
+    types: [opened, edited, reopened, synchronize]
     branches:
       - develop
 jobs:
+  check-pr-title:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check PR title for Jira key
+        id: check_pr_title
+        continue-on-error: true           # <--- allow job to continue so we can notify
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          echo "PR Title: $PR_TITLE"
+          if [[ ! "$PR_TITLE" =~ [A-Z]{2,}-[0-9]+ ]]; then
+            echo "ERROR: PR title does not contain a valid Jira key (e.g. ABC-123)"
+            exit 1
+          fi
+
+      - name: Notify Slack if PR title check failed
+        if: steps.check_pr_title.outcome == 'failure'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          SLACK_MESSAGE=":rotating_light: *PR Title Check failed* — PR #${{ github.event.pull_request.number }} by ${{ github.actor }} is missing a Jira key."
+          SLACK_CHANNEL="#task-wan"
+          curl -X POST -H 'Content-type: application/json' \
+            --data "{\"text\":\"$SLACK_MESSAGE\", \"channel\":\"$SLACK_CHANNEL\"}" "$SLACK_WEBHOOK_URL" || true
+          # finally fail the job so branch protection blocks merges
+          exit 1
   test-and-lint:
     permissions:
       issues: write

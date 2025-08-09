@@ -64,29 +64,29 @@ jobs:
       - run: |
           echo "Extracting PR info..."
           echo "$GITHUB_TOKEN"
-          # set -e
+          set -e
 
           PRS_JSON=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
             "https://api.github.com/repos/nyplex/task-wan/pulls?head=nyplex:${{ github.ref_name }}&state=open")
 
-          # PR_TITLE=$(echo "$PRS_JSON" | jq -r '.[0].title // empty')
+          PR_TITLE=$(echo "$PRS_JSON" | jq -r '.[0].title // empty')
 
-          # if [ -z "$PR_TITLE" ]; then
-          #   echo "No open PR found for branch ${{ github.ref_name }}"
-          #   exit 1
-          # fi
+          if [ -z "$PR_TITLE" ]; then
+            echo "No open PR found for branch ${{ github.ref_name }}"
+            exit 1
+          fi
 
-          # echo "PR Title: $PR_TITLE"
+          echo "PR Title: $PR_TITLE"
 
-          # JIRA_KEY=$(echo "$PR_TITLE" | grep -oE '[A-Z]+-[0-9]+' | head -1 || true)
+          JIRA_KEY=$(echo "$PR_TITLE" | grep -oE '[A-Z]+-[0-9]+' | head -1 || true)
 
-          # if [ -z "$JIRA_KEY" ]; then
-          #   echo "No Jira key found in PR title"
-          # else
-          #   echo "Jira Key: $JIRA_KEY"
-          # fi
+          if [ -z "$JIRA_KEY" ]; then
+            echo "No Jira key found in PR title"
+          else
+            echo "Jira Key: $JIRA_KEY"
+          fi
 
-          #   extract_pr_info:
+            extract_pr_info:
   # needs: fingerprint
     # steps:
     #   - run: |
