@@ -56,7 +56,7 @@ jobs:
           SLACK_MESSAGE=":rotating_light: *PR Title Check failed* — PR #${{ github.event.pull_request.number }} by ${{ github.actor }} is missing a Jira key."
           SLACK_CHANNEL="#task-wan"
           curl -X POST -H 'Content-type: application/json' \
-            --data "{\"text\":\"$SLACK_MESSAGE\", \"channel\":\"$SLACK_CHANNEL\"}" "$SLACK_WEBHOOK_URL" || true
+            --data "{\"text\":\"$SLACK_MESSAGE\", \"username\": \"GITHUB - CHECKS\", \"channel\":\"$SLACK_CHANNEL\"}" "$SLACK_WEBHOOK_URL" || true
           # finally fail the job so branch protection blocks merges
           exit 1
       # Step 3: Checkout repository code
@@ -88,9 +88,9 @@ jobs:
       - name: Notify Slack if tests failed
         if: steps.run_tests.outcome == 'failure'
         run: |
-          SLACK_MESSAGE=":x: *Unit Tests failed* on PR #${{ github.event.pull_request.number }} by ${{ github.actor }}. Please check the logs."
+          SLACK_MESSAGE=":rotating_light: *Unit Tests failed* on PR #${{ github.event.pull_request.number }} by ${{ github.actor }}. Please check the logs."
           SLACK_CHANNEL="#task-wan"
-          curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"$SLACK_MESSAGE\", \"channel\":\"$SLACK_CHANNEL\"}" "$SLACK_WEBHOOK_URL"
+          curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"$SLACK_MESSAGE\", \"username\": \"GITHUB - CHECKS\", \"channel\":\"$SLACK_CHANNEL\"}" "$SLACK_WEBHOOK_URL"
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       # Step 9: Run linter and save output to a log file
@@ -113,7 +113,7 @@ jobs:
         run: |
           SLACK_MESSAGE=":rotating_light: *Linter failed* on PR #${{ github.event.pull_request.number }} by ${{ github.actor }}. Please check the logs."
           SLACK_CHANNEL="#task-wan"
-          curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"$SLACK_MESSAGE\", \"channel\":\"$SLACK_CHANNEL\"}" "$SLACK_WEBHOOK_URL"
+          curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"$SLACK_MESSAGE\", \"username\": \"GITHUB - CHECKS\", \"channel\":\"$SLACK_CHANNEL\"}" "$SLACK_WEBHOOK_URL"
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       # Step 12: Remove 'eas-preview' label if all checks passed and base branch is develop
@@ -140,7 +140,7 @@ jobs:
             SLACK_MESSAGE=":white_check_mark: *Unit Tests & Linter passed!* PR #${{ github.event.pull_request.number }} by ${{ github.actor }}."
           fi
           SLACK_CHANNEL="#task-wan"
-          curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"$SLACK_MESSAGE\", \"channel\":\"$SLACK_CHANNEL\"}" "$SLACK_WEBHOOK_URL"
+          curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"$SLACK_MESSAGE\", \"username\": \"GITHUB - CHECKS\", \"channel\":\"$SLACK_CHANNEL\"}" "$SLACK_WEBHOOK_URL"
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           GITHUB_BASE_REF: ${{ github.base_ref }}
