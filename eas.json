@@ -4,6 +4,7 @@
     "appVersionSource": "remote"
   },
   "build": {
+    // DEVELOPMENT BUILD CONFIGURATION
     "development": {
       "autoIncrement": true,
       "credentialsSource": "remote",
@@ -15,7 +16,9 @@
       },
       "ios": {
         "image": "latest"
-        
+      },
+      "env": {
+        "EXPO_PUBLIC_APP_VARIANT": "development"
       }
     },
     "development-simulator": {
@@ -24,6 +27,8 @@
         "simulator": true
       }
     },
+
+    // PREVIEW BUILD CONFIGURATION
     "preview": {
       "environment": "preview",
       "distribution": "internal",
@@ -33,6 +38,9 @@
       },
       "ios": {
         "image": "latest"
+      },
+      "env": {
+        "EXPO_PUBLIC_APP_VARIANT": "preview"
       }
     },
     "preview-simulator": {
@@ -41,6 +49,8 @@
         "simulator": true
       }
     },
+
+    // STAGING BUILD CONFIGURATION
     "staging": {
       "distribution": "internal",
       "environment": "preview",
@@ -56,6 +66,25 @@
         "EXPO_PUBLIC_APP_VARIANT": "staging"
       }
     },
+
+    // E2E TEST BUILD CONFIGURATION
+    "e2e-test": {
+      "withoutCredentials": true,
+      "environment": "preview",
+      "channel": "staging",
+      "ios": {
+        "simulator": true
+      },
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {
+        "EXPO_PUBLIC_APP_VARIANT": "staging",
+        "EAS_BUILD_PROFILE": "e2e-test"
+      }
+    },
+
+    // PRODUCTION BUILD CONFIGURATION
     "production": {
       "distribution": "store",
       "environment": "production",
@@ -66,9 +95,14 @@
       },
       "ios": {
         "image": "latest"
+      },
+      "env": {
+        "EXPO_PUBLIC_APP_VARIANT": "production"
       }
     }
   },
+
+  // EAS SUBMIT CONFIGURATION
   "submit": {
     "production": {}
   }

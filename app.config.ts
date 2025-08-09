@@ -9,18 +9,18 @@ const IS_STAGING = process.env.EXPO_PUBLIC_APP_VARIANT === "staging";
 
 const getUniqueIdentifier = () => {
   if (IS_DEV) {
-    return "com.taskwan.dev";
+    return "com.nyplex.taskwan.dev";
   }
 
-  if (IS_PREVIEW) {
-    return "com.taskwan.preview";
+  if (IS_PREVIEW && !IS_STAGING) {
+    return "com.nyplex.taskwan.preview";
   }
 
   if (IS_STAGING) {
-    return "com.taskwan.staging";
+    return "com.nyplex.taskwan.staging";
   }
 
-  return "com.taskwan";
+  return "com.nyplex.taskwan";
 };
 
 const getAppName = () => {
@@ -28,7 +28,7 @@ const getAppName = () => {
     return "Task Wan (Dev)";
   }
 
-  if (IS_PREVIEW) {
+  if (IS_PREVIEW && !IS_STAGING) {
     return "Task Wan (Preview)";
   }
 
