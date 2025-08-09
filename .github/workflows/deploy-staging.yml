@@ -1,11 +1,11 @@
-name: Deploy to Preview
+name: Deploy to Staging Environment
 on:
   push:
     branches:
-      - develop
+      - staging
 jobs:
   deploy:
-    name: Deploy to Preview
+    name: Deploy to Staging Environment
     runs-on: ubuntu-latest
     permissions:
       deployments: write
