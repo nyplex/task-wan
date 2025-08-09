@@ -81,6 +81,8 @@ jobs:
     # after: [maestro_test_android, maestro_test_ios]
     # if: success()
     type: build
+    env: 
+      EXPO_PUBLIC_APP_VARIANT: "staging"
     params:
       platform: android
       profile: staging
@@ -89,6 +91,8 @@ jobs:
     # after: [maestro_test_android, maestro_test_ios]
     # if: success()
     type: build
+    env: 
+      EXPO_PUBLIC_APP_VARIANT: "staging"
     params:
       platform: ios
       profile: staging
