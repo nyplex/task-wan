@@ -14,7 +14,6 @@ jobs:
     # type: fingerprint
     # environment: preview
 
-
   # 2. Fetch or build Android and iOS in parallel (only if fingerprint succeeds)
   get_android_build:
     after: [fingerprint]
