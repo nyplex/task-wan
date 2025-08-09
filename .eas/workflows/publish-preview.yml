@@ -5,47 +5,121 @@ on:
 jobs:
 
   # 1. Create fingerprint for preview environment
-  fingerprint:
-    steps:
-      # - run: exit 1
-      - run: echo "Create Fingerprint..."
-      - run: echo ${{ github.event }}
-      - run: echo '${{ toJSON(github) }}'
-    # type: fingerprint
-    # environment: preview
+  # fingerprint:
+  #   steps:
+  #     # - run: exit 1
+  #     - run: echo "Create Fingerprint..."
+  #     - run: echo ${{ github.event }}
+  #     - run: echo '${{ toJSON(github) }}'
+  #   # type: fingerprint
+  #   # environment: preview
+
+  # https://api.github.com/repos/task-wan/pulls?head=task-wan:CPG-16&state=open
+  # https://api.github.com/repos/nyplex/task-wan/pulls?head=nyplex:CPG-16&state=open
+
+  #   extract_pr_info:
+  #  # needs: fingerprint
+
+  #   steps:
+  #     # - run: |
+  #     #     echo "Extracting PR info..."
+  #     #     echo "$GITHUB_TOKEN"
+  #     - run: |
+  #         echo "$GITHUB_TOKEN"
+  #         set -e
+  #         PRS_JSON=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+  #           "https://api.github.com/repos/nyplex/task-wan/pulls?head=nyplex:CPG-16&state=open")
+
+  #         # Check if PRS_JSON is an array
+  #         IS_ARRAY=$(echo "$PRS_JSON" | jq 'if type=="array" then "yes" else "no" end')
+
+  #         if [ "$IS_ARRAY" != "\"yes\"" ]; then
+  #           echo "Error: Unexpected response from GitHub API:"
+  #           echo "$PRS_JSON"
+  #           exit 1
+  #         fi
+
+  #         PR_TITLE=$(echo "$PRS_JSON" | jq -r '.[0].title // empty')
+
+  #         if [ -z "$PR_TITLE" ]; then
+  #           echo "No open PR found for branch CPG-16"
+  #           exit 1
+  #         fi
+
+  #         echo "PR Title: $PR_TITLE"
+
+  #         JIRA_KEY=$(echo "$PR_TITLE" | grep -oE '[A-Z]+-[0-9]+' | head -1 || true)
+
+  #         if [ -z "$JIRA_KEY" ]; then
+  #           echo "No Jira key found in PR title"
+  #         else
+  #           echo "Jira Key: $JIRA_KEY"
+  #         fi
 
   extract_pr_info:
-    # needs: fingerprint
+   # needs: fingerprint
+    # env: 
+    #   GITHUB_TOKEN: $GITHUB_TOKEN
     steps:
       - run: |
-          set -e
-          REPO="task-wan"
-          REF_NAME="${{ github.event.ref_name }}
-          TOKEN="${{ GITHUB_TOKEN }}"
-          
-          echo "Looking for PR for branch: $REF_NAME in repo: $REPO"
-          
-          # Fetch PRs for the repo filtered by head branch ref_name
-          PRS_JSON=$(curl -s -H "Authorization: token $TOKEN" \
-            "https://api.github.com/repos/$REPO/pulls?head=$(echo $REPO | cut -d/ -f1):$REF_NAME&state=open")
-          
-          PR_TITLE=$(echo "$PRS_JSON" | jq -r '.[0].title // empty')
-          
-          if [ -z "$PR_TITLE" ]; then
-            echo "No open PR found for branch $REF_NAME"
-            exit 1
-          fi
-          
-          echo "PR Title: $PR_TITLE"
-          
-          # Extract Jira key assuming pattern like ABC-123 (uppercase letters + dash + digits)
-          JIRA_KEY=$(echo "$PR_TITLE" | grep -oE '[A-Z]+-[0-9]+' | head -1 || true)
-          
-          if [ -z "$JIRA_KEY" ]; then
-            echo "No Jira key found in PR title"
-          else
-            echo "Jira Key: $JIRA_KEY"
-          fi
+          echo "Extracting PR info..."
+          echo "$GITHUB_TOKEN"
+          # set -e
+
+          PRS_JSON=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+            "https://api.github.com/repos/nyplex/task-wan/pulls?head=nyplex:${{ github.ref_name }}&state=open")
+
+          # PR_TITLE=$(echo "$PRS_JSON" | jq -r '.[0].title // empty')
+
+          # if [ -z "$PR_TITLE" ]; then
+          #   echo "No open PR found for branch ${{ github.ref_name }}"
+          #   exit 1
+          # fi
+
+          # echo "PR Title: $PR_TITLE"
+
+          # JIRA_KEY=$(echo "$PR_TITLE" | grep -oE '[A-Z]+-[0-9]+' | head -1 || true)
+
+          # if [ -z "$JIRA_KEY" ]; then
+          #   echo "No Jira key found in PR title"
+          # else
+          #   echo "Jira Key: $JIRA_KEY"
+          # fi
+
+          #   extract_pr_info:
+  # needs: fingerprint
+    # steps:
+    #   - run: |
+    #       set -e
+
+    #       PRS_JSON=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+    #         "https://api.github.com/repos/nyplex/pulls?head=nyplex:CPG-16&state=open")
+
+    #       # Check if PRS_JSON is an array
+    #       IS_ARRAY=$(echo "$PRS_JSON" | jq 'if type=="array" then "yes" else "no" end')
+
+    #       if [ "$IS_ARRAY" != "\"yes\"" ]; then
+    #         echo "Error: Unexpected response from GitHub API:"
+    #         echo "$PRS_JSON"
+    #         exit 1
+    #       fi
+
+    #       PR_TITLE=$(echo "$PRS_JSON" | jq -r '.[0].title // empty')
+
+    #       if [ -z "$PR_TITLE" ]; then
+    #         echo "No open PR found for branch CPG-16"
+    #         exit 1
+    #       fi
+
+    #       echo "PR Title: $PR_TITLE"
+
+    #       JIRA_KEY=$(echo "$PR_TITLE" | grep -oE '[A-Z]+-[0-9]+' | head -1 || true)
+
+    #       if [ -z "$JIRA_KEY" ]; then
+    #         echo "No Jira key found in PR title"
+    #       else
+    #         echo "Jira Key: $JIRA_KEY"
+    #       fi
 
   # # 2. Fetch or build Android and iOS in parallel (only if fingerprint succeeds)
   # get_android_build:
