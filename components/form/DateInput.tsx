@@ -28,15 +28,11 @@ const DateInput = ({ timestamp, disabled, onPress }: Props) => {
       style={{
         backgroundColor: disabled ? "#EEF5FD" : "#FFFFFF",
       }}
-      className="w-full h-[48px] justify-center px-4 border-[1px] border-primary-700 rounded-[10px]">
+      className="w-full h-[48px] justify-center px-4 border-[1px] border-primary-700 rounded-[10px]"
+    >
       <HStack className="items-center gap-2">
-        <Icon
-          icon="calendar"
-          size="large"
-        />
-        <Text
-          size="bodyS"
-          weight="medium">
+        <Icon icon="calendar" size="large" />
+        <Text size="bodyS" weight="medium">
           {getFormattedDate()}
         </Text>
       </HStack>

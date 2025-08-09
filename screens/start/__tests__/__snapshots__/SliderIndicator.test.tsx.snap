@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SliderIndicator applies the correct style to the active indicator (snapshot) 1`] = `
+<View
+  className="flex-row items-center mt-4"
+>
+  <View
+    className="w-[10px] h-[10px] rounded-full mx-1 bg-primary-700"
+    testID="slider-indicator-0"
+  />
+  <View
+    className="w-[10px] h-[10px] rounded-full mx-1 bg-primary-100"
+    testID="slider-indicator-1"
+  />
+  <View
+    className="w-[10px] h-[10px] rounded-full mx-1 bg-primary-700"
+    testID="slider-indicator-2"
+  />
+</View>
+`;
+
+exports[`SliderIndicator renders with length=1 (snapshot) 1`] = `
+<View
+  className="flex-row items-center mt-4"
+>
+  <View
+    className="w-[10px] h-[10px] rounded-full mx-1 bg-primary-100"
+    testID="slider-indicator-0"
+  />
+</View>
+`;
+
+exports[`SliderIndicator renders with no active indicator if currentIndex is undefined (snapshot) 1`] = `
+<View
+  className="flex-row items-center mt-4"
+>
+  <View
+    className="w-[10px] h-[10px] rounded-full mx-1 bg-primary-700"
+    testID="slider-indicator-0"
+  />
+  <View
+    className="w-[10px] h-[10px] rounded-full mx-1 bg-primary-700"
+    testID="slider-indicator-1"
+  />
+  <View
+    className="w-[10px] h-[10px] rounded-full mx-1 bg-primary-700"
+    testID="slider-indicator-2"
+  />
+</View>
+`;

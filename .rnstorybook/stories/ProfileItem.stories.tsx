@@ -1,4 +1,3 @@
-import React from "react";
 import { View } from "react-native";
 import type { Meta, StoryObj } from "@storybook/react";
 import { action } from "storybook/actions";
@@ -14,7 +13,8 @@ const meta = {
           paddingVertical: 16,
           backgroundColor: "#fff",
           flex: 1,
-        }}>
+        }}
+      >
         <Story />
       </View>
     ),

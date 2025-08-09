@@ -10,7 +10,8 @@ export default function HomeScreen() {
     <ScrollView
       showsVerticalScrollIndicator={false}
       stickyHeaderHiddenOnScroll
-      stickyHeaderIndices={[0]}>
+      stickyHeaderIndices={[0]}
+    >
       <Box className="flex-1 bg-backrgound py-safe-offset-4">
         <Box className="px-4">
           <Header />

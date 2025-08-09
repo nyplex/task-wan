@@ -8,7 +8,7 @@ const useToast = () => {
   const handleToast = (
     title: string,
     description: string,
-    onCloseCompleteCallback?: () => void
+    onCloseCompleteCallback?: () => void,
   ) => {
     if (!toast.isActive(toastId)) {
       showNewToast(title, description, onCloseCompleteCallback);
@@ -18,7 +18,7 @@ const useToast = () => {
   const showNewToast = (
     title: string,
     description: string,
-    onCloseCompleteCallback?: () => void
+    onCloseCompleteCallback?: () => void,
   ) => {
     const newId = Math.random().toString();
     setToastId(newId);
@@ -35,10 +35,9 @@ const useToast = () => {
             className="p-4 rounded-[10px] max-w-[450px]"
             style={{
               backgroundColor: "#121212",
-            }}>
-            <Text
-              weight="semi-bold"
-              className="text-white">
+            }}
+          >
+            <Text weight="semi-bold" className="text-white">
               {title}
             </Text>
             <Text className="text-white">{description}</Text>

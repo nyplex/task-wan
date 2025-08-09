@@ -7,11 +7,7 @@ describe("TabsSelector", () => {
 
   it("renders all tabs", () => {
     const { getByText } = render(
-      <TabsSelector
-        tabs={tabs}
-        selectedTab={0}
-        onTabSelect={() => {}}
-      />
+      <TabsSelector tabs={tabs} selectedTab={0} onTabSelect={() => {}} />,
     );
     tabs.forEach((tab) => {
       expect(getByText(tab)).toBeTruthy();
@@ -25,7 +21,7 @@ describe("TabsSelector", () => {
         tabs={tabs}
         selectedTab={selectedTab}
         onTabSelect={() => {}}
-      />
+      />,
     );
     const selectedTabText = getByText(tabs[selectedTab]);
     expect(selectedTabText.props.className).toContain("text-primary-50");
@@ -34,11 +30,7 @@ describe("TabsSelector", () => {
   it("calls onTabSelect with correct index when a tab is pressed", () => {
     const onTabSelect = jest.fn();
     const { getByText } = render(
-      <TabsSelector
-        tabs={tabs}
-        selectedTab={0}
-        onTabSelect={onTabSelect}
-      />
+      <TabsSelector tabs={tabs} selectedTab={0} onTabSelect={onTabSelect} />,
     );
 
     fireEvent.press(getByText(tabs[2]));
@@ -53,7 +45,7 @@ describe("TabsSelector", () => {
         selectedTab={0}
         disabled
         onTabSelect={onTabSelect}
-      />
+      />,
     );
 
     const tab = getByText(tabs[1]);

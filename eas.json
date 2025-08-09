@@ -1,10 +1,13 @@
 {
   "cli": {
-    "version": ">= 16.6.1",
+    "version": ">= 16.17.4",
     "appVersionSource": "remote"
   },
   "build": {
+    // DEVELOPMENT BUILD CONFIGURATION
     "development": {
+      "autoIncrement": true,
+      "credentialsSource": "remote",
       "environment": "development",
       "developmentClient": true,
       "distribution": "internal",
@@ -13,6 +16,9 @@
       },
       "ios": {
         "image": "latest"
+      },
+      "env": {
+        "EXPO_PUBLIC_APP_VARIANT": "development"
       }
     },
     "development-simulator": {
@@ -21,18 +27,66 @@
         "simulator": true
       }
     },
+
+    // PREVIEW BUILD CONFIGURATION
     "preview": {
       "environment": "preview",
       "distribution": "internal",
-      "channel": "main",
+      "channel": "preview",
       "android": {
         "image": "latest"
       },
       "ios": {
         "image": "latest"
+      },
+      "env": {
+        "EXPO_PUBLIC_APP_VARIANT": "preview"
       }
     },
+    "preview-simulator": {
+      "extends": "preview",
+      "ios": {
+        "simulator": true
+      }
+    },
+
+    // STAGING BUILD CONFIGURATION
+    "staging": {
+      "distribution": "internal",
+      "environment": "preview",
+      "channel": "staging",
+      "autoIncrement": true,
+      "android": {
+        "image": "latest"
+      },
+      "ios": {
+        "image": "latest"
+      },
+      "env": {
+        "EXPO_PUBLIC_APP_VARIANT": "staging"
+      }
+    },
+
+    // E2E TEST BUILD CONFIGURATION
+    "e2e-test": {
+      "withoutCredentials": true,
+      "environment": "preview",
+      "channel": "staging",
+      "ios": {
+        "simulator": true
+      },
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {
+        "EXPO_PUBLIC_APP_VARIANT": "staging",
+        "EAS_BUILD_PROFILE": "e2e-test"
+      }
+    },
+
+    // PRODUCTION BUILD CONFIGURATION
     "production": {
+      "distribution": "store",
       "environment": "production",
       "channel": "production",
       "autoIncrement": true,
@@ -41,9 +95,14 @@
       },
       "ios": {
         "image": "latest"
+      },
+      "env": {
+        "EXPO_PUBLIC_APP_VARIANT": "production"
       }
     }
   },
+
+  // EAS SUBMIT CONFIGURATION
   "submit": {
     "production": {}
   }

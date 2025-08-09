@@ -11,35 +11,21 @@ describe("TaskCard", () => {
   });
 
   it("applies selected styles when isSelected is true", () => {
-    const { getByText } = render(
-      <TaskCard
-        title={title}
-        isSelected
-      />
-    );
+    const { getByText } = render(<TaskCard title={title} isSelected />);
     const text = getByText(title);
     // Check className includes text-primary-0 (adapt if needed to your testing setup)
     expect(text.props.className).toContain("text-primary-0");
   });
 
   it("shows the select circle when showSelect is true", () => {
-    const { getByTestId } = render(
-      <TaskCard
-        title={title}
-        showSelect
-      />
-    );
+    const { getByTestId } = render(<TaskCard title={title} showSelect />);
     const selectCircle = getByTestId("select-circle");
     expect(selectCircle).toBeTruthy();
   });
 
   it("renders inner filled circle when selected", () => {
     const { getByTestId } = render(
-      <TaskCard
-        title={title}
-        showSelect
-        isSelected
-      />
+      <TaskCard title={title} showSelect isSelected />,
     );
     const filledCircle = getByTestId("filled-circle");
     expect(filledCircle).toBeTruthy();
@@ -48,11 +34,7 @@ describe("TaskCard", () => {
   it("does not call onPress when disabled", () => {
     const onPress = jest.fn();
     const { getByRole } = render(
-      <TaskCard
-        title={title}
-        onPress={onPress}
-        disabled
-      />
+      <TaskCard title={title} onPress={onPress} disabled />,
     );
     fireEvent.press(getByRole("button"));
     expect(onPress).not.toHaveBeenCalled();
@@ -60,12 +42,7 @@ describe("TaskCard", () => {
 
   it("calls onPress when pressed", () => {
     const onPress = jest.fn();
-    const { getByRole } = render(
-      <TaskCard
-        title={title}
-        onPress={onPress}
-      />
-    );
+    const { getByRole } = render(<TaskCard title={title} onPress={onPress} />);
     fireEvent.press(getByRole("button"));
     expect(onPress).toHaveBeenCalled();
   });

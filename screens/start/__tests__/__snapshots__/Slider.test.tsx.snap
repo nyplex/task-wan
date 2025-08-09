@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Slider matches the rendered output snapshot 1`] = `
+<View
+  collapsable={false}
+  handlerTag={3}
+  handlerType="PanGestureHandler"
+  onGestureHandlerEvent={[Function]}
+  onGestureHandlerStateChange={[Function]}
+  style={
+    {
+      "flex": 1,
+      "overflow": "hidden",
+      "width": 750,
+    }
+  }
+>
+  <View
+    style={
+      {
+        "flexDirection": "row",
+        "transform": [
+          {
+            "translateX": 0,
+          },
+        ],
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "width": 750,
+        }
+      }
+    >
+      Snapshot 1
+    </View>
+    <View
+      style={
+        {
+          "width": 750,
+        }
+      }
+    >
+      Snapshot 2
+    </View>
+  </View>
+</View>
+`;

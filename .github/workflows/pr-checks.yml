@@ -1,0 +1,212 @@
+###################################################################################################
+# GitHub Actions Workflow: PR Checks                                                               #
+# ------------------------------------------------------------------------------------------------ #
+# This workflow runs on pull requests targeting the 'develop' branch.                              #
+# It enforces code quality and process standards by:                                               #
+#   - Checking PR titles for a valid Jira key (e.g. ABC-123)                                       #
+#   - Notifying Slack if the PR title is invalid and blocking merges                               #
+#   - Installing dependencies and setting up Node.js                                               #
+#   - Running unit tests and uploading test output logs                                            #
+#   - Notifying Slack if tests fail                                                                #
+#   - Running linter and uploading lint output logs                                                #
+#   - Notifying Slack if linter fails                                                              #
+#   - Managing the 'eas-preview' label to trigger EAS builds if all checks pass                    #
+#   - Notifying Slack when all checks pass                                                         #
+#                                                                                                  #
+# This ensures code quality, process compliance, and team visibility via Slack notifications.      #
+#                                                                                                  #
+# Required secrets: SLACK_WEBHOOK_URL, GITHUB_TOKEN                                                #
+###################################################################################################
+
+name: PR Checks
+on:
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
+    branches:
+      - develop
+      - main
+      - staging
+      - 'feature/**'
+jobs:
+  test-and-lint:
+    permissions:
+      issues: write
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Check PR title for a valid Jira key (e.g. ABC-123)
+      - name: Check PR title for Jira key
+        id: check_pr_title
+        continue-on-error: true           # <--- allow job to continue so we can notify
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          echo "PR Title: $PR_TITLE"
+          if [[ ! "$PR_TITLE" =~ [A-Z]{2,}-[0-9]+ ]]; then
+            echo "ERROR: PR title does not contain a valid Jira key (e.g. ABC-123)"
+            exit 1
+          fi
+
+      # Step 2: Notify Slack and fail the job if PR title check failed
+      - name: Notify Slack if PR title check failed
+        if: steps.check_pr_title.outcome == 'failure'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          SLACK_MESSAGE="*•* *PR Title Check failed* — PR #${{ github.event.pull_request.number }} by ${{ github.actor }} is missing a Jira key."
+          PR_URL="${{ github.event.pull_request.html_url }}"
+          SLACK_CHANNEL="#task-wan"
+          curl -X POST -H 'Content-type: application/json' \
+            --data "{ \
+              \"username\": \"GITHUB - CHECKS\", \
+              \"icon_url\": \"https://raw.githubusercontent.com/nyplex/bot-icons/refs/heads/main/github-icon.png\", \
+              \"channel\": \"task-wan\", \
+              \"attachments\": [ \
+                { \
+                  \"fallback\": \"🚨 PR Title Check Failed: <$PR_URL|Check PR>\", \
+                  \"pretext\": \"🚨 PR Title Check Failed: <$PR_URL|Check PR>\", \
+                  \"color\": \"#D00000\", \
+                  \"fields\": [ \
+                    { \
+                      \"title\": \"Details\", \
+                      \"value\": \"$SLACK_MESSAGE\", \
+                      \"short\": false \
+                    } \
+                  ] \
+                } \
+              ] \
+            }" \
+            "$SLACK_WEBHOOK_URL"
+          # finally fail the job so branch protection blocks merges
+          exit 1
+      # Step 3: Checkout repository code
+      - name: Checkout code
+        uses: actions/checkout@v4
+      # Step 4: Set up Node.js environment
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      # Step 5: Install npm dependencies
+      - name: Install dependencies
+        run: npm ci
+      # Step 6: Run unit tests and save output to a log file
+      - name: Run tests
+        id: run_tests
+        run: |
+          set -o pipefail
+          npm test 2>&1 | tee test_output.log
+        continue-on-error: true
+      # Step 7: Upload the test output log as an artifact
+      - name: Upload test output log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test_output.log
+          path: test_output.log
+      # Step 8: Notify Slack if tests failed
+      - name: Notify Slack if tests failed
+        if: steps.run_tests.outcome == 'failure'
+        run: |
+          SLACK_MESSAGE="*•* *Unit Tests failed* on PR #${{ github.event.pull_request.number }} by ${{ github.actor }}. Please check the logs."
+          PR_URL="${{ github.event.pull_request.html_url }}"
+          SLACK_CHANNEL="#task-wan"
+          curl -X POST -H 'Content-type: application/json' \
+            --data "{ \
+              \"username\": \"GITHUB - CHECKS\", \
+              \"icon_url\": \"https://raw.githubusercontent.com/nyplex/bot-icons/refs/heads/main/github-icon.png\", \
+              \"channel\": \"task-wan\", \
+              \"attachments\": [ \
+                { \
+                  \"fallback\": \"🚨 PR Unit Tests Failed: <$PR_URL|Check PR>\", \
+                  \"pretext\": \"🚨 PR Unit Tests Failed: <$PR_URL|Check PR>\", \
+                  \"color\": \"#D00000\", \
+                  \"fields\": [ \
+                    { \
+                      \"title\": \"Details\", \
+                      \"value\": \"$SLACK_MESSAGE\", \
+                      \"short\": false \
+                    } \
+                  ] \
+                } \
+              ] \
+            }" \
+            "$SLACK_WEBHOOK_URL"
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      # Step 9: Run linter and save output to a log file
+      - name: Run linter
+        id: run_lint
+        run: |
+          set -o pipefail
+          npm run lint 2>&1 | tee lint_output.log
+
+      # Step 10: Upload the lint output log as an artifact
+      - name: Upload lint output log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lint_output.log
+          path: lint_output.log
+      # Step 11: Notify Slack if linter failed
+      - name: Notify Slack if linter failed
+        if: steps.run_lint.outcome == 'failure'
+        run: |
+          SLACK_MESSAGE="*•* *Linter failed* on PR #${{ github.event.pull_request.number }} by ${{ github.actor }}. Please check the logs."
+          PR_URL="${{ github.event.pull_request.html_url }}"
+          SLACK_CHANNEL="#task-wan"
+          curl -X POST -H 'Content-type: application/json' \
+            --data "{ \
+              \"username\": \"GITHUB - CHECKS\", \
+              \"icon_url\": \"https://raw.githubusercontent.com/nyplex/bot-icons/refs/heads/main/github-icon.png\", \
+              \"channel\": \"task-wan\", \
+              \"attachments\": [ \
+                { \
+                  \"fallback\": \"🚨 PR Linter Failed: <$PR_URL|Check PR>\", \
+                  \"pretext\": \"🚨 PR Linter Failed: <$PR_URL|Check PR>\", \
+                  \"color\": \"#D00000\", \
+                  \"fields\": [ \
+                    { \
+                      \"title\": \"Details\", \
+                      \"value\": \"$SLACK_MESSAGE\", \
+                      \"short\": false \
+                    } \
+                  ] \
+                } \
+              ] \
+            }" \
+            "$SLACK_WEBHOOK_URL"
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      # Step 12: Remove 'eas-preview' label if all checks passed and base branch is develop
+      - name: Remove existing eas-preview label (if any)
+        if: steps.run_tests.outcome == 'success' && steps.run_lint.outcome == 'success' && github.base_ref == 'develop'
+        uses: actions-ecosystem/action-remove-labels@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          labels: eas-preview
+      # Step 13: Re-add 'eas-preview' label to retrigger EAS if all checks passed and base branch is develop
+      - name: Re-add eas-preview label to retrigger EAS
+        if: steps.run_tests.outcome == 'success' && steps.run_lint.outcome == 'success' && github.base_ref == 'develop'
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          labels: eas-preview
+      # Step 14: Notify Slack if all checks passed
+      - name: Notify Slack if all checks passed
+        if: steps.run_tests.outcome == 'success' && steps.run_lint.outcome == 'success'
+        run: |
+          if [ "$GITHUB_BASE_REF" = "develop" ]; then
+            SLACK_MESSAGE=":white_check_mark: *Unit Tests & Linter passed!* *<${{ github.event.pull_request.html_url }}|PR #${{ github.event.pull_request.number }}>*  by *${{ github.actor }}*. Label 'eas-preview' has been added."
+          else
+            SLACK_MESSAGE=":white_check_mark: *Unit Tests & Linter passed!* *<${{ github.event.pull_request.html_url }}|PR #${{ github.event.pull_request.number }}>*  by *${{ github.actor }}*."
+          fi
+          SLACK_CHANNEL="#task-wan"
+            curl -X POST -H 'Content-type: application/json' \
+              --data "{\"text\":\"$SLACK_MESSAGE\", \"username\": \"GITHUB - CHECKS\", \
+              \"icon_url\": \"https://raw.githubusercontent.com/nyplex/bot-icons/main/github-icon.png\", \
+              \"channel\":\"$SLACK_CHANNEL\"}" \
+              "$SLACK_WEBHOOK_URL"
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          GITHUB_BASE_REF: ${{ github.base_ref }}

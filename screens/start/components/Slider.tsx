@@ -19,7 +19,7 @@ type SliderProps = {
 
 const SWIPE_THRESHOLD = 50;
 
-export const Slider: React.FC<SliderProps> = ({ children, onIndexChange }) => {
+const Slider: React.FC<SliderProps> = ({ children, onIndexChange }) => {
   const { width } = useWindowDimensions();
   const translateX = useSharedValue(0);
   const currentIndex = useSharedValue(0);
@@ -58,7 +58,7 @@ export const Slider: React.FC<SliderProps> = ({ children, onIndexChange }) => {
   // reset on width change (e.g. rotation)
   useEffect(() => {
     translateX.value = -currentIndex.value * width;
-  }, [width]);
+  }, [width, currentIndex.value, translateX]);
 
   const slidingStyle = useAnimatedStyle(() => ({
     flexDirection: "row",
@@ -79,3 +79,5 @@ export const Slider: React.FC<SliderProps> = ({ children, onIndexChange }) => {
     </PanGestureHandler>
   );
 };
+
+export default Slider;

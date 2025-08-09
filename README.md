@@ -1,50 +1,99 @@
-# Welcome to your Expo app 👋
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+# TASK-WAN
 
-## Get started
+**TASK-WAN** is a modern, cross-platform task manager app built with React Native and Expo (bare workflow). The UI is based on a Figma design by Hub Academy. This project is part of my portfolio to showcase my skills as a React Native developer.
 
-1. Install dependencies
+---
 
+## ✨ Features
+
+- Beautiful, responsive UI (Figma by Hub Academy)
+- Task management: create, update, delete, and organize tasks
+- Authentication and user management (Supabase)
+- Real-time sync and offline support (PowerSync)
+- State management with Redux
+- Navigation with Expo Router (file-based routing)
+- Cross-platform: iOS, Android
+
+---
+
+## 🛠️ Tech Stack
+
+- **React Native** (Expo bare workflow)
+- **Expo Router** for navigation
+- **Redux** for state management
+- **PowerSync** for real-time/offline data sync
+- **Supabase** for backend/auth
+- **TypeScript**
+
+---
+
+## 🚀 Getting Started
+
+1. **Clone the repo:**
    ```bash
-   npm install
+   git clone https://github.com/nyplex/task-wan.git
+   cd task-wan
    ```
 
-2. Start the app
+2. **Install dependencies:**
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
 
+3. **Start the app:**
    ```bash
    npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+4. **Run on device/emulator:**
+   - This project uses native code and cannot run in Expo Go.
+   - Run the following steps:
+     1. Prebuild native code:
+        ```bash
+        npx expo prebuild
+        ```
+     2. Build the app on EAS servers:
+        ```bash
+        npx eas build --profile [see profile in eas.json] --platform ios # or android
+        ```
+     3. Download and install the build on your device or simulator.
+     4. Start the development server:
+        ```bash
+        npx expo start
+        ```
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+---
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## 🗂️ Project Structure
 
-## Get a fresh project
+- `app/` — App entry and screens (Expo Router)
+- `components/` — Reusable UI components
+- `context/` — React context providers
+- `redux/` — Redux store, slices, and middleware
+- `powersync/` — PowerSync integration
+- `lib/` — Supabase and other libraries
+- `assets/` — Fonts and images
+- `types/` — TypeScript types
+- `utils/` — Utility functions
 
-When you're ready, run:
+---
 
-```bash
-npm run reset-project
-```
+## 🧑‍🎨 Credits
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+- **UI Design:** [Hub Academy](https://hubacademy.io/) (Figma)
+- **Development:** [@nyplex](https://github.com/nyplex)
 
-## Learn more
+---
 
-To learn more about developing your project with Expo, look at the following resources:
+## 📣 About
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+This project was built to demonstrate my ability to deliver a production-ready, full-stack React Native app using modern tools and best practices. If you’re hiring for a React Native developer, I’d love to chat!
 
-## Join the community
+---
 
-Join our community of developers creating universal apps.
+## 📄 License
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+MIT

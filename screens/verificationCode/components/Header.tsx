@@ -8,12 +8,10 @@ import BackButtonIcon from "@/components/buttons/BackButtonIcon";
 const Header = () => {
   const router = useRouter();
   const isLoading = useSelector(selectAuthStatus);
+
   return (
     <Box>
-      <BackButtonIcon
-        onPress={() => router.back()}
-        disabled={isLoading}
-      />
+      <BackButtonIcon onPress={() => router.back()} disabled={isLoading} />
       <Box className="mt-4">
         <AppTitle />
       </Box>

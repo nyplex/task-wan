@@ -1,71 +1,110 @@
+import { useForm, Controller } from "react-hook-form";
+import { useSelector } from "react-redux";
+import { selectAuthStatus } from "@/redux/slices/authSlice/authSelectors";
+import { VStack } from "@/components/gluestack/vstack";
+import { Box } from "@/components/gluestack/box";
+import { isValidEmail } from "@/utils/isValidEmail";
+import useAuth from "@/hooks/useAuth";
 import Button from "@/components/buttons/Button";
 import Input from "@/components/form/Input";
-import { Box } from "@/components/gluestack/box";
-import { VStack } from "@/components/gluestack/vstack";
-import useAuth from "@/hooks/useAuth";
-import { selectAuthStatus } from "@/redux/slices/authSlice/authSelectors";
-import { isValidEmail } from "@/utils/isValidEmail";
-import { useState } from "react";
-import { useSelector } from "react-redux";
 
 const RegisterForm = () => {
-  const isLoading = useSelector(selectAuthStatus);
   const { signup } = useAuth();
+  const isLoading = useSelector(selectAuthStatus);
 
-  const [email, setEmail] = useState("");
-  const [emailTouched, setEmailTouched] = useState(false);
-  const emailError = emailTouched && !isValidEmail(email) ? "Invalid email format" : "";
-  const [username, setUsername] = useState("");
-  const [usernameTouched, setUsernameTouched] = useState(false);
-  const usernameError =
-    usernameTouched && !username.trim()
-      ? "Username is required"
-      : username.length > 20
-        ? "Username must be 20 characters or less"
-        : "";
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isSubmitting, isValid },
+  } = useForm<{
+    email: string;
+    username: string;
+  }>({
+    mode: "onSubmit",
+    reValidateMode: "onChange",
+    defaultValues: {
+      email: "",
+      username: "",
+    },
+  });
 
-  const handleRegister = async () => {
-    await signup(email, username);
-  };
+  const onSubmit = handleSubmit(async (data) => {
+    await signup(
+      data.email.trim().toLowerCase(),
+      data.username.trim().toLowerCase(),
+    );
+  });
 
   return (
-    <VStack className="gap-2 mb-8 mt-4">
-      <Input
-        placeholder="Username"
-        leftIcon="user"
-        autoCorrect={false}
-        autoCapitalize="none"
-        value={username}
-        onChangeText={(text) => {
-          setUsername(text);
-          if (!usernameTouched) setUsernameTouched(true);
+    <VStack className="gap-2 mt-4">
+      <Controller
+        control={control}
+        rules={{
+          required: {
+            value: true,
+            message: "Email is required",
+          },
+          validate: (value) => isValidEmail(value.trim()) || "Invalid email",
         }}
-        invalidText={usernameError}
-        isDisabled={isLoading}
-        isInvalid={!!usernameError}
-        maxLength={20}
+        render={({
+          field: { onChange, onBlur, value },
+          fieldState: { error },
+        }) => (
+          <Input
+            keyboardType="email-address"
+            leftIcon="mail"
+            value={value}
+            autoCorrect={false}
+            onChangeText={(text) => onChange(text.toLowerCase())}
+            onBlur={onBlur}
+            isInvalid={!!error}
+            isDisabled={isLoading}
+            placeholder="Email"
+            invalidText={error?.message || " "}
+          />
+        )}
+        name="email"
       />
-      <Input
-        placeholder="Email"
-        leftIcon="mail"
-        autoCorrect={false}
-        autoCapitalize="none"
-        keyboardType="email-address"
-        value={email}
-        onChangeText={(text) => {
-          setEmail(text);
-          if (!emailTouched) setEmailTouched(true);
+      <Controller
+        control={control}
+        rules={{
+          required: {
+            value: true,
+            message: "Email is required",
+          },
+          maxLength: {
+            value: 25,
+            message: "Username must be 25 characters or less",
+          },
+          minLength: {
+            value: 2,
+            message: "Username must be at least 2 characters",
+          },
         }}
-        invalidText={emailError}
-        isDisabled={isLoading}
-        isInvalid={!!emailError}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <Input
+            keyboardType="default"
+            leftIcon="user"
+            value={value}
+            autoCorrect={false}
+            onChangeText={(text) =>
+              onChange(text.trim().replace(/\s+/g, "").toLowerCase())
+            }
+            onBlur={onBlur}
+            isInvalid={!!errors.username}
+            isDisabled={isLoading}
+            placeholder="Username"
+            invalidText={errors.username?.message || " "}
+          />
+        )}
+        name="username"
       />
-      <Box>
+      <Box className="mt-8">
         <Button
           title="Register"
-          isLoading={isLoading}
-          onPress={handleRegister}
-          disabled={!!emailError || !email || !!usernameError || !username || isLoading}
+          isLoading={isLoading || isSubmitting}
+          onPress={onSubmit}
+          disabled={isLoading || isSubmitting || !isValid}
         />
       </Box>
     </VStack>

@@ -24,10 +24,7 @@ describe("ProfileItem", () => {
   it("calls onPress when pressed", () => {
     const onPress = jest.fn();
     const { getByRole } = render(
-      <ProfileItem
-        {...defaultProps}
-        onPress={onPress}
-      />
+      <ProfileItem {...defaultProps} onPress={onPress} />,
     );
     fireEvent.press(getByRole("button"));
     expect(onPress).toHaveBeenCalled();
@@ -36,11 +33,7 @@ describe("ProfileItem", () => {
   it("does not call onPress when disabled", () => {
     const onPress = jest.fn();
     const { getByRole } = render(
-      <ProfileItem
-        {...defaultProps}
-        onPress={onPress}
-        disabled
-      />
+      <ProfileItem {...defaultProps} onPress={onPress} disabled />,
     );
     fireEvent.press(getByRole("button"));
     expect(onPress).not.toHaveBeenCalled();
@@ -48,30 +41,21 @@ describe("ProfileItem", () => {
 
   it("renders badgeCounter if > 0", () => {
     const { getByText } = render(
-      <ProfileItem
-        {...defaultProps}
-        badgeCounter={5}
-      />
+      <ProfileItem {...defaultProps} badgeCounter={5} />,
     );
     expect(getByText("5")).toBeTruthy();
   });
 
   it("does not render badgeCounter if 0", () => {
     const { queryByText } = render(
-      <ProfileItem
-        {...defaultProps}
-        badgeCounter={0}
-      />
+      <ProfileItem {...defaultProps} badgeCounter={0} />,
     );
     expect(queryByText("0")).toBeNull();
   });
 
   it("shows '99+' when badgeCounter is greater than 99", () => {
     const { getByText } = render(
-      <ProfileItem
-        {...defaultProps}
-        badgeCounter={150}
-      />
+      <ProfileItem {...defaultProps} badgeCounter={150} />,
     );
     expect(getByText("99+")).toBeTruthy();
   });

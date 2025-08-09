@@ -25,10 +25,7 @@ describe("NotificationCard", () => {
 
   it("applies unread styles when unread is true", () => {
     const { getByTestId } = render(
-      <NotificationCard
-        {...defaultProps}
-        unread
-      />
+      <NotificationCard {...defaultProps} unread />,
     );
 
     const pressable = getByTestId("pressable");
@@ -41,10 +38,7 @@ describe("NotificationCard", () => {
 
   it("applies default styles when unread is false", () => {
     const { getByTestId } = render(
-      <NotificationCard
-        {...defaultProps}
-        unread={false}
-      />
+      <NotificationCard {...defaultProps} unread={false} />,
     );
     const pressable = getByTestId("pressable");
     expect(pressable.props.style.backgroundColor).toBe("transparent");
@@ -56,10 +50,7 @@ describe("NotificationCard", () => {
   it("calls onPress when pressed and not disabled", () => {
     const onPressMock = jest.fn();
     const { getByTestId } = render(
-      <NotificationCard
-        {...defaultProps}
-        onPress={onPressMock}
-      />
+      <NotificationCard {...defaultProps} onPress={onPressMock} />,
     );
     fireEvent.press(getByTestId("pressable"));
     expect(onPressMock).toHaveBeenCalled();
@@ -68,11 +59,7 @@ describe("NotificationCard", () => {
   it("does not call onPress when disabled", () => {
     const onPressMock = jest.fn();
     const { getByTestId } = render(
-      <NotificationCard
-        {...defaultProps}
-        onPress={onPressMock}
-        disabled
-      />
+      <NotificationCard {...defaultProps} onPress={onPressMock} disabled />,
     );
     fireEvent.press(getByTestId("pressable"));
     expect(onPressMock).not.toHaveBeenCalled();
@@ -80,10 +67,7 @@ describe("NotificationCard", () => {
 
   it("renders without description if not provided", () => {
     const { queryByText } = render(
-      <NotificationCard
-        {...defaultProps}
-        description={undefined}
-      />
+      <NotificationCard {...defaultProps} description={undefined} />,
     );
     expect(queryByText(defaultProps.description)).toBeNull();
   });

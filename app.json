@@ -17,7 +17,8 @@
         "ITSAppUsesNonExemptEncryption": false
       },
       "usesAppleSignIn": true,
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#ffffff",
+      "appleTeamId": "A7FT82MA3V"
     },
     "android": {
       "adaptiveIcon": {
@@ -26,7 +27,16 @@
       },
       "edgeToEdgeEnabled": true,
       "package": "com.nyplex.taskwan",
-      "googleServicesFile": "./google-services.json"
+      "googleServicesFile": "./google-services.json",
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS",
+        "android.permission.READ_CALENDAR",
+        "android.permission.WRITE_CALENDAR",
+        "android.permission.CAMERA",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION"
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -109,7 +119,8 @@
           "defaultChannel": "default",
           "enableBackgroundRemoteNotifications": true
         }
-      ]
+      ],
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true
@@ -119,7 +130,7 @@
         "projectId": "eeb8a74a-56e0-4299-8f39-b42e74c93076"
       }
     },
-    "owner": "nyplex",
+    "owner": "nyplex-studio",
     "updates": {
       "url": "https://u.expo.dev/eeb8a74a-56e0-4299-8f39-b42e74c93076"
     },

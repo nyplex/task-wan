@@ -1,13 +1,22 @@
 import { Text as TextGS } from "@/components/gluestack/text";
-import clsx from "clsx";
+import { clsx } from "clsx";
 
 type TextProps = {
   children: React.ReactNode;
-  size?: "heading2XL" | "headingXL" | "heading" | "bodyL" | "body" | "bodyS" | "bodyXS" | "caption";
+  size?:
+    | "heading2XL"
+    | "headingXL"
+    | "heading"
+    | "bodyL"
+    | "body"
+    | "bodyS"
+    | "bodyXS"
+    | "caption";
   weight?: "bold" | "semi-bold" | "medium" | "regular";
   color?: "primary" | "secondary" | "disabled";
   disabled?: boolean;
   className?: string;
+  testID?: string;
   onPress?: () => void;
 };
 
@@ -18,6 +27,7 @@ const Text = ({
   color = "primary",
   disabled,
   className,
+  testID,
   onPress,
 }: TextProps) => {
   const CN = clsx("based-styles", {
@@ -52,16 +62,19 @@ const Text = ({
     // "leading-[12px]": size === "bodyXS" || size === "bodyXS-bold",
 
     // Set letter spacing
-    "tracking-[1px]": size === "heading2XL" || size === "headingXL" || size === "heading",
+    "tracking-[1px]":
+      size === "heading2XL" || size === "headingXL" || size === "heading",
     "tracking-[0.5px]": size === "bodyL",
     "tracking-[0px]": size === "body" || size === "bodyS" || size === "bodyXS",
   });
 
   return (
     <TextGS
+      testID={testID}
       onPress={onPress}
       className={clsx(CN, className)}
-      disabled={disabled}>
+      disabled={disabled}
+    >
       {children}
     </TextGS>
   );

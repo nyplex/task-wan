@@ -18,7 +18,8 @@ const TabsSelector = ({ tabs, selectedTab, disabled, onTabSelect }: Props) => {
           key={index}
           onPress={() => onTabSelect(index)}
           disabled={disabled}
-          className="flex-1 justify-center items-center h-[40px]">
+          className="flex-1 justify-center items-center h-[40px]"
+        >
           <Text
             className={
               selectedTab === index
@@ -26,7 +27,8 @@ const TabsSelector = ({ tabs, selectedTab, disabled, onTabSelect }: Props) => {
                 : "text-typography-primary text-center line-clamp-1"
             }
             size="body"
-            weight="semi-bold">
+            weight="semi-bold"
+          >
             {tab}
           </Text>
           <Box

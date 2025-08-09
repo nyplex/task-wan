@@ -5,5 +5,4 @@ const fonts = {
   poppinsBold: require("./Poppins-Bold.ttf"),
 };
 
-
 export default fonts;
