@@ -53,10 +53,31 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
-          SLACK_MESSAGE=":rotating_light: *PR Title Check failed* — PR #${{ github.event.pull_request.number }} by ${{ github.actor }} is missing a Jira key."
+          SLACK_MESSAGE="*•* *PR Title Check failed* — PR #${{ github.event.pull_request.number }} by ${{ github.actor }} is missing a Jira key."
+          PR_URL="${{ github.event.pull_request.html_url }}"
           SLACK_CHANNEL="#task-wan"
           curl -X POST -H 'Content-type: application/json' \
-            --data "{\"text\":\"$SLACK_MESSAGE\", \"username\": \"GITHUB - CHECKS\", \"channel\":\"$SLACK_CHANNEL\"}" "$SLACK_WEBHOOK_URL" || true
+            --data "{ \
+              \"username\": \"GITHUB - CHECKS\", \
+              \"icon_url\": \"https://raw.githubusercontent.com/nyplex/bot-icons/refs/heads/main/github-icon.png\", \
+              \"channel\": \"task-wan\", \
+              \"attachments\": [ \
+                { \
+                  \"fallback\": \"🚨 PR Title Check Failed: <$PR_URL|Check PR>\", \
+                  \"pretext\": \"🚨 PR Title Check Failed: <$PR_URL|Check PR>\", \
+                  \"color\": \"#D00000\", \
+                  \"fields\": [ \
+                    { \
+                      \"title\": \"Details\", \
+                      \"value\": \"$SLACK_MESSAGE\", \
+                      \"short\": false \
+                    } \
+                  ] \
+                } \
+              ] \
+            }" \
+            "$SLACK_WEBHOOK_URL"
+          # --data "{\"text\":\"$SLACK_MESSAGE\", \"username\": \"GITHUB - CHECKS\", \"channel\":\"$SLACK_CHANNEL\"}" "$SLACK_WEBHOOK_URL" || true
           # finally fail the job so branch protection blocks merges
           exit 1
       # Step 3: Checkout repository code
@@ -88,9 +109,30 @@ jobs:
       - name: Notify Slack if tests failed
         if: steps.run_tests.outcome == 'failure'
         run: |
-          SLACK_MESSAGE=":rotating_light: *Unit Tests failed* on PR #${{ github.event.pull_request.number }} by ${{ github.actor }}. Please check the logs."
+          SLACK_MESSAGE="*•* *Unit Tests failed* on PR #${{ github.event.pull_request.number }} by ${{ github.actor }}. Please check the logs."
+          PR_URL="${{ github.event.pull_request.html_url }}"
           SLACK_CHANNEL="#task-wan"
-          curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"$SLACK_MESSAGE\", \"username\": \"GITHUB - CHECKS\", \"channel\":\"$SLACK_CHANNEL\"}" "$SLACK_WEBHOOK_URL"
+          curl -X POST -H 'Content-type: application/json' \
+            --data "{ \
+              \"username\": \"GITHUB - CHECKS\", \
+              \"icon_url\": \"https://raw.githubusercontent.com/nyplex/bot-icons/refs/heads/main/github-icon.png\", \
+              \"channel\": \"task-wan\", \
+              \"attachments\": [ \
+                { \
+                  \"fallback\": \"🚨 PR Unit Tests Failed: <$PR_URL|Check PR>\", \
+                  \"pretext\": \"🚨 PR Unit Tests Failed: <$PR_URL|Check PR>\", \
+                  \"color\": \"#D00000\", \
+                  \"fields\": [ \
+                    { \
+                      \"title\": \"Details\", \
+                      \"value\": \"$SLACK_MESSAGE\", \
+                      \"short\": false \
+                    } \
+                  ] \
+                } \
+              ] \
+            }" \
+            "$SLACK_WEBHOOK_URL"
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       # Step 9: Run linter and save output to a log file
@@ -111,9 +153,30 @@ jobs:
       - name: Notify Slack if linter failed
         if: steps.run_lint.outcome == 'failure'
         run: |
-          SLACK_MESSAGE=":rotating_light: *Linter failed* on PR #${{ github.event.pull_request.number }} by ${{ github.actor }}. Please check the logs."
+          SLACK_MESSAGE="*•* *Linter failed* on PR #${{ github.event.pull_request.number }} by ${{ github.actor }}. Please check the logs."
+          PR_URL="${{ github.event.pull_request.html_url }}"
           SLACK_CHANNEL="#task-wan"
-          curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"$SLACK_MESSAGE\", \"username\": \"GITHUB - CHECKS\", \"channel\":\"$SLACK_CHANNEL\"}" "$SLACK_WEBHOOK_URL"
+          curl -X POST -H 'Content-type: application/json' \
+            --data "{ \
+              \"username\": \"GITHUB - CHECKS\", \
+              \"icon_url\": \"https://raw.githubusercontent.com/nyplex/bot-icons/refs/heads/main/github-icon.png\", \
+              \"channel\": \"task-wan\", \
+              \"attachments\": [ \
+                { \
+                  \"fallback\": \"🚨 PR Linter Failed: <$PR_URL|Check PR>\", \
+                  \"pretext\": \"🚨 PR Linter Failed: <$PR_URL|Check PR>\", \
+                  \"color\": \"#D00000\", \
+                  \"fields\": [ \
+                    { \
+                      \"title\": \"Details\", \
+                      \"value\": \"$SLACK_MESSAGE\", \
+                      \"short\": false \
+                    } \
+                  ] \
+                } \
+              ] \
+            }" \
+            "$SLACK_WEBHOOK_URL"
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       # Step 12: Remove 'eas-preview' label if all checks passed and base branch is develop
@@ -135,12 +198,16 @@ jobs:
         if: steps.run_tests.outcome == 'success' && steps.run_lint.outcome == 'success'
         run: |
           if [ "$GITHUB_BASE_REF" = "develop" ]; then
-            SLACK_MESSAGE=":white_check_mark: *Unit Tests & Linter passed!* PR #${{ github.event.pull_request.number }} by ${{ github.actor }}. Label 'eas-preview' has been added."
+            SLACK_MESSAGE=":white_check_mark: *Unit Tests & Linter passed!* *PR #${{ github.event.pull_request.number }}* by *${{ github.actor }}*. Label 'eas-preview' has been added."
           else
-            SLACK_MESSAGE=":white_check_mark: *Unit Tests & Linter passed!* PR #${{ github.event.pull_request.number }} by ${{ github.actor }}."
+            SLACK_MESSAGE=":white_check_mark: *Unit Tests & Linter passed!* *PR #${{ github.event.pull_request.number }}* by *${{ github.actor }}*."
           fi
           SLACK_CHANNEL="#task-wan"
-          curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"$SLACK_MESSAGE\", \"username\": \"GITHUB - CHECKS\", \"channel\":\"$SLACK_CHANNEL\"}" "$SLACK_WEBHOOK_URL"
+            curl -X POST -H 'Content-type: application/json' \
+              --data "{\"text\":\"$SLACK_MESSAGE\", \"username\": \"GITHUB - CHECKS\", \
+              \"icon_url\": \"https://raw.githubusercontent.com/nyplex/bot-icons/main/expo-icon.png\", \
+              \"channel\":\"$SLACK_CHANNEL\"}" \
+              "$SLACK_WEBHOOK_URL"
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           GITHUB_BASE_REF: ${{ github.base_ref }}
