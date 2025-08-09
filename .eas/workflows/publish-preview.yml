@@ -90,7 +90,7 @@ jobs:
             curl -X POST -H 'Content-type: application/json' \
               -H "X-Automation-Webhook-Token: $JIRA_WEBHOOK_TOKEN_QA_PREVIEW" \
               --data "{\"issues\":[\"$JIRA_KEY\"]}" \
-              https://api-private.atlassian.com/automation/webhooks/jira/a/0c412e71-9ad7-4c46-bbca-79c4a40547a6/01987adb-86d5-7f23-8c58-29b3d2e3d5c7
+              https://api-private.atlassian.com/automation/webhooks/jira/a/aee1c92e-a7f0-4e88-a3ba-77a03f97ee84/01988a42-ac8a-7c1a-869e-e8a0a8cdfbc2
           fi
 
 
