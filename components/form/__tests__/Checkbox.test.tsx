@@ -5,7 +5,11 @@ import Checkbox from "../Checkbox";
 // Mock custom Icon component
 jest.mock("../../UI/Icon", () => {
   const { Text } = require("react-native");
-  return ({ icon }: { icon: string }) => <Text testID="icon">{icon}</Text>;
+  const MockIcon = ({ icon }: { icon: string }) => (
+    <Text testID="icon">{icon}</Text>
+  );
+  MockIcon.displayName = "MockIcon";
+  return MockIcon;
 });
 
 describe("Checkbox", () => {
@@ -27,10 +31,7 @@ describe("Checkbox", () => {
 
   it("toggles checked state on press and calls onPress", () => {
     const { getByRole, queryByTestId } = render(
-      <Checkbox
-        checked={false}
-        onPress={onPressMock}
-      />
+      <Checkbox checked={false} onPress={onPressMock} />,
     );
 
     const pressable = getByRole("button");
@@ -43,11 +44,7 @@ describe("Checkbox", () => {
 
   it("does not call onPress if disabled", () => {
     const { getByRole } = render(
-      <Checkbox
-        checked
-        onPress={onPressMock}
-        disabled
-      />
+      <Checkbox checked onPress={onPressMock} disabled />,
     );
 
     fireEvent.press(getByRole("button"));

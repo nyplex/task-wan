@@ -30,14 +30,9 @@ const Checkbox = ({ checked, disabled, onPress }: Props) => {
       style={{
         backgroundColor: isChecked ? "#006EE9" : undefined,
       }}
-      className="w-[30px] h-[30px] items-center justify-center border-2 border-primary-50 rounded-[10px]">
-      {isChecked && (
-        <Icon
-          icon="check"
-          size="large"
-          color="white"
-        />
-      )}
+      className="w-[30px] h-[30px] items-center justify-center border-2 border-primary-50 rounded-[10px]"
+    >
+      {isChecked && <Icon icon="check" size="large" color="white" />}
     </Pressable>
   );
 };

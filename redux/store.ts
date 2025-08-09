@@ -15,12 +15,14 @@ const store = configureStore({
   },
   devTools: false,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().prepend(listenerMiddleware.middleware).concat(apiSlice.middleware),
+    getDefaultMiddleware()
+      .prepend(listenerMiddleware.middleware)
+      .concat(apiSlice.middleware),
   enhancers: (getDefaultEnhancers) =>
     getDefaultEnhancers().concat(
       devToolsEnhancer({
         trace: true,
-      })
+      }),
     ),
 });
 

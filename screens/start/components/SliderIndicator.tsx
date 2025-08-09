@@ -1,5 +1,5 @@
 import { Box } from "@/components/gluestack/box";
-import clsx from "clsx";
+import { clsx } from "clsx";
 
 type Props = {
   length: number;
@@ -10,7 +10,7 @@ const SliderIndicator = ({ length, currentIndex }: Props) => {
   const getIndicatorStyle = (index: number) => {
     return clsx(
       "w-[10px] h-[10px] rounded-full mx-1",
-      index === currentIndex ? "bg-primary-100" : "bg-primary-700"
+      index === currentIndex ? "bg-primary-100" : "bg-primary-700",
     );
   };
 
@@ -19,6 +19,7 @@ const SliderIndicator = ({ length, currentIndex }: Props) => {
       {Array.from({ length }, (_, index) => (
         <Box
           key={index}
+          testID={`slider-indicator-${index}`}
           className={getIndicatorStyle(index)}
         />
       ))}

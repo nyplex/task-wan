@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { View } from "react-native";
 import type { Meta, StoryObj } from "@storybook/react";
 import { action } from "storybook/actions";
@@ -41,22 +41,24 @@ export const Interactive: Story = {
     disabled: false,
     onDateChange: action("onPress"),
   },
-  render: (args) => {
-    const [currentDate, setCurrentDate] = React.useState(args.currentDate);
+  render: (args) => <InteractiveStory {...args} />,
+};
 
-    useEffect(() => {
-      setCurrentDate(args.currentDate);
-    }, [args.currentDate]);
+const InteractiveStory = (args) => {
+  const [currentDate, setCurrentDate] = useState(args.currentDate);
 
-    return (
-      <DatePicker
-        {...args}
-        currentDate={currentDate}
-        onDateChange={(date) => {
-          setCurrentDate(date);
-          args.onDateChange(date);
-        }}
-      />
-    );
-  },
+  useEffect(() => {
+    setCurrentDate(args.currentDate);
+  }, [args.currentDate]);
+
+  return (
+    <DatePicker
+      {...args}
+      currentDate={currentDate}
+      onDateChange={(date) => {
+        setCurrentDate(date);
+        args.onDateChange(date);
+      }}
+    />
+  );
 };

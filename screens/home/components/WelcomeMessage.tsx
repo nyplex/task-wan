@@ -1,6 +1,5 @@
 import Text from "@/components/Text";
 import { VStack } from "@/components/gluestack/vstack";
-import { useSelector } from "react-redux";
 
 const morningGreeting = [
   "Good morning, ready to tackle the day?",
@@ -40,11 +39,17 @@ const WelcomeMessage = () => {
     const currentHour = new Date().getHours();
     // determine the greeting based on the hour
     if (currentHour < 12) {
-      return morningGreeting[Math.floor(Math.random() * morningGreeting.length)];
+      return morningGreeting[
+        Math.floor(Math.random() * morningGreeting.length)
+      ];
     } else if (currentHour < 18) {
-      return afternoonGreeting[Math.floor(Math.random() * afternoonGreeting.length)];
+      return afternoonGreeting[
+        Math.floor(Math.random() * afternoonGreeting.length)
+      ];
     } else if (currentHour < 22) {
-      return eveningGreeting[Math.floor(Math.random() * eveningGreeting.length)];
+      return eveningGreeting[
+        Math.floor(Math.random() * eveningGreeting.length)
+      ];
     } else {
       return nightGreeting[Math.floor(Math.random() * nightGreeting.length)];
     }
@@ -52,14 +57,10 @@ const WelcomeMessage = () => {
 
   return (
     <VStack className="mt-8 gap-1">
-      <Text
-        size="heading"
-        weight="bold">
+      <Text size="heading" weight="bold">
         Welcome Jon Smith
       </Text>
-      <Text
-        size="bodyS"
-        weight="medium">
+      <Text size="bodyS" weight="medium">
         {getCustomGreeting()}
       </Text>
     </VStack>

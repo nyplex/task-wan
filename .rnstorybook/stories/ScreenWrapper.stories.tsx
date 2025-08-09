@@ -1,4 +1,3 @@
-import React from "react";
 import { Text, View } from "react-native";
 import type { Meta, StoryObj } from "@storybook/react";
 import ScreenWrapper from "../../components/layout/ScreenWrapper";
@@ -20,7 +19,8 @@ export const Default: StoryObj<typeof meta> = {
           <View style={{ height: 50 }}>
             <Text style={{ textAlign: "center", padding: 10 }}>Header</Text>
           </View>
-        }>
+        }
+      >
         <View style={{ paddingHorizontal: 0 }}>
           <Text
             style={{
@@ -28,7 +28,8 @@ export const Default: StoryObj<typeof meta> = {
               textAlign: "center",
               padding: 10,
               color: "black",
-            }}>
+            }}
+          >
             Main Content
           </Text>
         </View>

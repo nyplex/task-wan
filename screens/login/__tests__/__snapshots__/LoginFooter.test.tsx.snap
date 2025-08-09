@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoginFooter renders correctly and matches snapshot 1`] = `
+<View
+  className="flex-row justify-center items-center gap-1"
+>
+  <Text
+    className="based-styles font-regular text-typography-primary text-[16px] tracking-[0px] text-center mt-8"
+    testID="login-footer"
+  >
+    Don't have an account?
+     
+  </Text>
+  <Text
+    className="font-body based-styles font-bold text-typography-primary text-[16px] tracking-[0px] underline mt-8"
+    disabled={false}
+    onPress={[Function]}
+    testID="login-footer-signup"
+  >
+    Sign Up
+  </Text>
+</View>
+`;

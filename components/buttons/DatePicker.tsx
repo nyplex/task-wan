@@ -23,17 +23,10 @@ const DatePicker = ({ currentDate, disabled, onDateChange }: Props) => {
 
   return (
     <>
-      <Pressable
-        disabled={disabled}
-        onPress={() => setShowCalendar(true)}>
+      <Pressable disabled={disabled} onPress={() => setShowCalendar(true)}>
         <HStack className="items-center gap-2">
-          <Icon
-            icon="calendar"
-            size="large"
-          />
-          <Text
-            size="bodyL"
-            weight="bold">
+          <Icon icon="calendar" size="large" />
+          <Text size="bodyL" weight="bold">
             {formattedDate}
           </Text>
         </HStack>

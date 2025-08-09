@@ -1,6 +1,10 @@
 import React, { useEffect } from "react";
 import Svg, { Circle } from "react-native-svg";
-import Animated, { useSharedValue, useAnimatedProps, withTiming } from "react-native-reanimated";
+import Animated, {
+  useSharedValue,
+  useAnimatedProps,
+  withTiming,
+} from "react-native-reanimated";
 import { Box } from "../gluestack/box";
 import Text from "../Text";
 
@@ -18,15 +22,21 @@ const STROKE_WIDTH = 12;
 const RADIUS = (SIZE - STROKE_WIDTH) / 2;
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 
-const CircularChart = ({ title, showTitle, progress, showValue = true }: Props) => {
+const CircularChart = ({
+  title,
+  showTitle,
+  progress,
+  showValue = true,
+}: Props) => {
   const animatedProgress = useSharedValue(progress);
 
   useEffect(() => {
     animatedProgress.value = withTiming(progress, { duration: 800 });
-  }, [progress]);
+  }, [progress, animatedProgress]);
 
   const animatedProps = useAnimatedProps(() => {
-    const strokeDashoffset = CIRCUMFERENCE - (CIRCUMFERENCE * animatedProgress.value) / 100;
+    const strokeDashoffset =
+      CIRCUMFERENCE - (CIRCUMFERENCE * animatedProgress.value) / 100;
     return {
       strokeDashoffset,
     };
@@ -34,17 +44,11 @@ const CircularChart = ({ title, showTitle, progress, showValue = true }: Props) 
 
   return (
     <Box className="items-center">
-      <Text
-        className="mb-3"
-        weight="medium"
-        size="body">
+      <Text className="mb-3" weight="medium" size="body">
         {showTitle ? title : ""}
       </Text>
       <Box className="relative w-[100px] h-[100px]">
-        <Svg
-          width={SIZE}
-          height={SIZE}
-          testID="circular-chart-svg">
+        <Svg width={SIZE} height={SIZE} testID="circular-chart-svg">
           <Circle
             stroke="#E8E8E8"
             cx={SIZE / 2}
@@ -70,9 +74,7 @@ const CircularChart = ({ title, showTitle, progress, showValue = true }: Props) 
         </Svg>
         {showValue && (
           <Box className="absolute inset-0 justify-center items-center">
-            <Text
-              size="bodyXS"
-              weight="medium">
+            <Text size="bodyXS" weight="medium">
               {Math.round(progress)}%
             </Text>
           </Box>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import { Text, StyleSheet, View } from "react-native";
 import {
   CodeField,
@@ -63,35 +63,36 @@ const CodeInput = ({
     setValue,
   });
 
-  React.useEffect(() => {
-    onValueChange(value);
-  }, [value, onValueChange]);
-
-  React.useEffect(() => {
+  useEffect(() => {
     setValue(currentValue);
   }, [currentValue]);
 
   return (
     <View>
       <CodeField
+        testID="code-input-field"
         ref={ref}
         {...props}
-        value={value}
-        onChangeText={setValue}
+        value={currentValue}
+        onChangeText={(text) => {
+          setValue(text);
+          onValueChange(text);
+        }}
         cellCount={CELL_COUNT}
         rootStyle={styles.codeFieldRoot}
         keyboardType="number-pad"
         textContentType="oneTimeCode"
         renderCell={({ index, symbol, isFocused }) => (
           <View
-            // Make sure that you pass onLayout={getCellOnLayoutHandler(index)} prop to root component of "Cell"
+            testID={`code-input-cell-${index}`}
             onLayout={getCellOnLayoutHandler(index)}
             key={index}
             style={[
               styles.cellRoot,
               isFocused && styles.focusCell,
               invalid && styles.invalidCellRoot,
-            ]}>
+            ]}
+          >
             <Text style={!invalid ? styles.cellText : styles.invalidCellText}>
               {symbol || (isFocused ? <Cursor /> : null)}
             </Text>

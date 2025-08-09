@@ -1,8 +1,11 @@
 import { useState } from "react";
-import { ButtonSpinner, Button as GSButton } from "@/components/gluestack/button";
+import {
+  ButtonSpinner,
+  Button as GSButton,
+} from "@/components/gluestack/button";
 import { HStack } from "../gluestack/hstack";
 import ThemedText from "../Text";
-import clsx from "clsx";
+import { clsx } from "clsx";
 
 type Props = {
   title: string;
@@ -41,7 +44,8 @@ const Button = ({
     "bg-transparent data-[active=true]:bg-transparent": variant === "secondary",
     "border border-primary-50 border-[1px] data-[active=true]:border-primary-0":
       variant === "secondary",
-    "border border-[#C6C2C2]": (variant === "secondary" && disabled) || isLoading,
+    "border border-[#C6C2C2]":
+      (variant === "secondary" && disabled) || isLoading,
     "border border-error data-[active=true]:border-error":
       variant === "secondary" && destructive && !disabled,
   });
@@ -67,14 +71,12 @@ const Button = ({
         }}
         onPressOut={() => {
           setActive(0);
-        }}>
+        }}
+      >
         {!isLoading && (
           <HStack className="items-center justify-center gap-2 flex-1">
             {leftIcon && leftIcon}
-            <ThemedText
-              size="body"
-              weight="regular"
-              className={CNText}>
+            <ThemedText size="body" weight="regular" className={CNText}>
               {title}
             </ThemedText>
             {rightIcon && rightIcon}

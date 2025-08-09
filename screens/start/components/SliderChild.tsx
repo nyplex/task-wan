@@ -19,15 +19,10 @@ const SliderChild = ({ title, imageSource, description }: Props) => {
         />
       </Box>
       <Box className="w-full h-full px-4">
-        <Text
-          size="body"
-          weight="semi-bold"
-          className="text-center">
+        <Text size="body" weight="semi-bold" className="text-center">
           {title}
         </Text>
-        <Text
-          size="bodyS"
-          className="text-center mt-2">
+        <Text size="bodyS" className="text-center mt-2">
           {description}
         </Text>
       </Box>

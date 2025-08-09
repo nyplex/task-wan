@@ -1,10 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { initializeApp } from "./appThunks";
-import { initializeAuthThunk } from "../authSlice/authThunks";
+import { initializeAuthThunk } from "../authSlice/thunks/initializeAuthThunk";
+import { initializeAppThunk } from "./thunks/initializeAppThunk";
 
-// ------------------------------
-// Define the State Interface
-// ------------------------------
 export interface AppStateType {
   isAppReady: boolean;
   isLoading: boolean;
@@ -14,9 +11,6 @@ export interface AppStateType {
   authInitDone: boolean;
 }
 
-// ------------------------------
-// Initial State
-// ------------------------------
 const initialState: AppStateType = {
   isAppReady: false,
   isLoading: false,
@@ -26,14 +20,10 @@ const initialState: AppStateType = {
   authInitDone: false,
 };
 
-// ------------------------------
-// Slice Definition
-// ------------------------------
 export const appSlice = createSlice({
   name: "app",
   initialState,
   reducers: {
-    // Example of a simple reducer
     setAppReady: (state, action: PayloadAction<boolean>) => {
       state.isAppReady = action.payload;
     },
@@ -48,18 +38,16 @@ export const appSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    // Handling async thunk states
     builder
-
-      .addCase(initializeApp.pending, (state) => {
+      .addCase(initializeAppThunk.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(initializeApp.rejected, (state, action: PayloadAction<any>) => {
+      .addCase(initializeAppThunk.rejected, (state) => {
         state.isLoading = false;
         state.appInitDone = true;
         state.isAppReady = false;
       })
-      .addCase(initializeApp.fulfilled, (state) => {
+      .addCase(initializeAppThunk.fulfilled, (state) => {
         state.appInitDone = true;
         if (state.authInitDone) {
           state.isLoading = false;
@@ -75,8 +63,6 @@ export const appSlice = createSlice({
         state.isAppReady = false;
       })
       .addCase(initializeAuthThunk.fulfilled, (state) => {
-        console.log("Auth initialization fulfilled");
-
         state.authInitDone = true;
         if (state.appInitDone) {
           state.isLoading = false;
@@ -86,9 +72,7 @@ export const appSlice = createSlice({
   },
 });
 
-// ------------------------------
-// Exports
-// ------------------------------
-export const { setAppReady, setIsLoading, setAppVersion, toggleTheme } = appSlice.actions;
+export const { setAppReady, setIsLoading, setAppVersion, toggleTheme } =
+  appSlice.actions;
 
 export default appSlice.reducer;

@@ -4,7 +4,7 @@ import DatePicker from "../DatePicker";
 
 // Mock the CalendarModal with testID and props handling
 jest.mock("../../UI/CalendarModal", () => {
-  return ({
+  const compoenent = ({
     isOpen,
     onSelect,
     onClose,
@@ -22,14 +22,12 @@ jest.mock("../../UI/CalendarModal", () => {
           title="Select Date"
           onPress={() => onSelect(1234567890000)}
         />
-        <Button
-          testID="close-modal"
-          title="Close"
-          onPress={onClose}
-        />
+        <Button testID="close-modal" title="Close" onPress={onClose} />
       </View>
     ) : null;
   };
+  compoenent.displayName = "CalendarModal";
+  return compoenent;
 });
 
 describe("DatePicker Component", () => {
@@ -42,10 +40,7 @@ describe("DatePicker Component", () => {
 
   it("renders correctly with formatted date", () => {
     const { getByText } = render(
-      <DatePicker
-        currentDate={mockDate}
-        onDateChange={mockOnDateChange}
-      />
+      <DatePicker currentDate={mockDate} onDateChange={mockOnDateChange} />,
     );
 
     expect(getByText("Oct, 2023")).toBeTruthy();
@@ -53,10 +48,7 @@ describe("DatePicker Component", () => {
 
   it("opens calendar modal on press", () => {
     const { getByText, queryByTestId } = render(
-      <DatePicker
-        currentDate={mockDate}
-        onDateChange={mockOnDateChange}
-      />
+      <DatePicker currentDate={mockDate} onDateChange={mockOnDateChange} />,
     );
 
     expect(queryByTestId("calendar-modal")).toBeNull();
@@ -66,10 +58,7 @@ describe("DatePicker Component", () => {
 
   it("calls onDateChange and closes modal on date selection", () => {
     const { getByText, getByTestId, queryByTestId } = render(
-      <DatePicker
-        currentDate={mockDate}
-        onDateChange={mockOnDateChange}
-      />
+      <DatePicker currentDate={mockDate} onDateChange={mockOnDateChange} />,
     );
 
     fireEvent.press(getByText("Oct, 2023")); // open modal
@@ -83,10 +72,7 @@ describe("DatePicker Component", () => {
 
   it("closes calendar modal on cancel/close", () => {
     const { getByText, getByTestId, queryByTestId } = render(
-      <DatePicker
-        currentDate={mockDate}
-        onDateChange={mockOnDateChange}
-      />
+      <DatePicker currentDate={mockDate} onDateChange={mockOnDateChange} />,
     );
 
     fireEvent.press(getByText("Oct, 2023")); // open modal
@@ -103,7 +89,7 @@ describe("DatePicker Component", () => {
         currentDate={mockDate}
         onDateChange={mockOnDateChange}
         disabled
-      />
+      />,
     );
 
     fireEvent.press(getByText("Oct, 2023"));

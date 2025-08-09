@@ -1,28 +1,28 @@
-import { useAppDispatch } from "./redux";
 import { useEffect } from "react";
-import { initializeApp } from "@/redux/slices/appSlice/appThunks";
+import { useAppDispatch } from "./redux";
+import { initializeAppThunk } from "@/redux/slices/appSlice/thunks/initializeAppThunk";
 import { addError } from "@/redux/slices/errorsSlice/errorsSlice";
 
 const useInitializeApp = () => {
-  const disptach = useAppDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const initialize = async () => {
       try {
-        await disptach(initializeApp()).unwrap();
-      } catch (error) {
-        disptach(
+        await dispatch(initializeAppThunk()).unwrap();
+      } catch (e) {
+        console.log("Error during app initialization:", e);
+        dispatch(
           addError({
             message: "Failed to initialize app",
             source: "useInitializeApp",
-            statusCode: "500",
             type: "unknown",
-          })
+          }),
         );
       }
     };
     initialize();
-  }, []);
+  }, [dispatch]);
 };
 
 export default useInitializeApp;

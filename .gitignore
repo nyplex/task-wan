@@ -40,5 +40,7 @@ app-example
 
 *storybook.log
 
-android/
 ios/
+android/
+google-services.json
+GoogleService-Info.plist

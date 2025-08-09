@@ -15,22 +15,14 @@ describe("<Avatar />", () => {
   });
 
   it("renders edit icon if editable is true", () => {
-    const { getByTestId } = render(
-      <Avatar
-        editable
-        fallbackName="AB"
-      />
-    );
+    const { getByTestId } = render(<Avatar editable fallbackName="AB" />);
     expect(getByTestId("avatar-edit-icon-wrapper")).toBeTruthy();
   });
 
   it("calls onPress when pressed and not disabled", () => {
     const onPressMock = jest.fn();
     const { getByTestId } = render(
-      <Avatar
-        fallbackName="AB"
-        onPress={onPressMock}
-      />
+      <Avatar fallbackName="AB" onPress={onPressMock} />,
     );
     act(() => {
       fireEvent.press(getByTestId("avatar-pressable"));
@@ -41,11 +33,7 @@ describe("<Avatar />", () => {
   it("does not call onPress when disabled", () => {
     const onPressMock = jest.fn();
     const { getByTestId } = render(
-      <Avatar
-        fallbackName="AB"
-        onPress={onPressMock}
-        disabled
-      />
+      <Avatar fallbackName="AB" onPress={onPressMock} disabled />,
     );
     act(() => {
       fireEvent.press(getByTestId("avatar-pressable"));

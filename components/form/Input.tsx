@@ -1,11 +1,11 @@
 import { KeyboardType } from "react-native";
 import { Box } from "@/components/gluestack/box";
+import { VStack } from "../gluestack/vstack";
 import { Input as InputGS, InputField } from "@/components/gluestack/input";
 import { HStack } from "@/components/gluestack/hstack";
-import Text from "../Text";
-import clsx from "clsx";
-import { VStack } from "../gluestack/vstack";
 import Icon, { IconList } from "../UI/Icon";
+import Text from "../Text";
+import { clsx } from "clsx";
 
 type Props = {
   isInvalid?: boolean;
@@ -20,6 +20,8 @@ type Props = {
   secureTextEntry?: boolean;
   invalidText?: string;
   onChangeText?: (text: string) => void;
+  onBlur?: () => void;
+  onFocus?: () => void;
 };
 
 const Input = ({
@@ -35,6 +37,8 @@ const Input = ({
   autoCorrect = true,
   invalidText,
   onChangeText,
+  onBlur,
+  onFocus,
 }: Props) => {
   const CNInput = clsx("text-buttons-text flex-1", {
     "h-[48px] rounded-r-[10px]": true,
@@ -60,19 +64,15 @@ const Input = ({
       <HStack>
         {leftIcon && (
           <Box className={CNIconBox}>
-            <Icon
-              icon={leftIcon}
-              size="medium"
-              color="white"
-              disabled
-            />
+            <Icon icon={leftIcon} size="medium" color="white" disabled />
           </Box>
         )}
         <InputGS
           isInvalid={isInvalid}
           isDisabled={isDisabled}
           testID="input-field"
-          className={CNInput}>
+          className={CNInput}
+        >
           <InputField
             placeholder={placeholder}
             placeholderTextColor="#9A9A9A"
@@ -83,13 +83,16 @@ const Input = ({
             autoCapitalize={autoCapitalize}
             autoCorrect={autoCorrect}
             secureTextEntry={secureTextEntry}
+            onBlur={onBlur}
+            onFocus={onFocus}
           />
         </InputGS>
       </HStack>
       <Text
         className="text-right px-2 text-red-500 line-clamp-1"
         size="bodyXS"
-        weight="medium">
+        weight="medium"
+      >
         {isInvalid && invalidText ? invalidText : ""}
       </Text>
     </VStack>

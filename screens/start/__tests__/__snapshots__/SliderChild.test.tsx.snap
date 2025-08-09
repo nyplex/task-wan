@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SliderChild matches the rendered output snapshot 1`] = `
+<View
+  className="px-4"
+>
+  <View>
+    <ViewManagerAdapter_ExpoImage
+      containerViewRef={"[React.ref]"}
+      contentFit="contain"
+      contentPosition={
+        {
+          "left": "50%",
+          "top": "50%",
+        }
+      }
+      height={400}
+      nativeViewRef={"[React.ref]"}
+      onError={[Function]}
+      onLoad={[Function]}
+      onLoadStart={[Function]}
+      onProgress={[Function]}
+      placeholder={[]}
+      source={
+        [
+          {
+            "uri": "snapshot.png",
+          },
+        ]
+      }
+      style={
+        {
+          "height": 400,
+          "width": "100%",
+        }
+      }
+      transition={null}
+      width="100%"
+    />
+  </View>
+  <View
+    className="w-full h-full px-4"
+  >
+    <Text
+      className="font-body based-styles font-semibold text-typography-primary text-[16px] tracking-[0px] text-center"
+    >
+      Snapshot Title
+    </Text>
+    <Text
+      className="based-styles font-regular text-typography-primary text-[14px] tracking-[0px] text-center mt-2"
+    >
+      Snapshot Description
+    </Text>
+  </View>
+</View>
+`;

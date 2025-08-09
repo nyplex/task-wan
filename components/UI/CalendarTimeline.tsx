@@ -22,9 +22,13 @@ type Props = {
   onPress?: (date: number) => void;
 };
 
-const CalendarTimeline = ({ initialDate, disabled = false, onPress }: Props) => {
-  const baseDate = new Date(initialDate);
-  const days = useMemo(() => generateMonthDays(baseDate), [initialDate]);
+const CalendarTimeline = ({
+  initialDate,
+  disabled = false,
+  onPress,
+}: Props) => {
+  const baseDate = useMemo(() => new Date(initialDate), [initialDate]);
+  const days = useMemo(() => generateMonthDays(baseDate), [baseDate]);
   const [selectedDate, setSelectedDate] = useState(baseDate);
   const listRef = useRef<FlatList>(null);
 
@@ -43,7 +47,7 @@ const CalendarTimeline = ({ initialDate, disabled = false, onPress }: Props) => 
         });
       }, 100);
     }
-  }, [initialDate, days]);
+  }, [initialDate, days, baseDate]);
 
   const handlePress = (date: Date, index: number) => {
     if (disabled) return;
@@ -63,7 +67,8 @@ const CalendarTimeline = ({ initialDate, disabled = false, onPress }: Props) => 
       <TouchableOpacity
         disabled={disabled}
         onPress={() => handlePress(item, index)}
-        className="h-[64px]">
+        className="h-[64px]"
+      >
         <View className="h-[64px] w-[70px] justify-center items-center">
           <View
             style={{
@@ -80,11 +85,19 @@ const CalendarTimeline = ({ initialDate, disabled = false, onPress }: Props) => 
                 height: 2,
               },
               shadowOpacity: isSelected ? 0.25 : 0,
-            }}>
-            <Text style={{ color: isSelected ? "white" : "#777", fontWeight: "600" }}>
+            }}
+          >
+            <Text
+              style={{
+                color: isSelected ? "white" : "#777",
+                fontWeight: "600",
+              }}
+            >
               {format(item, "EEE")}
             </Text>
-            <Text style={{ color: isSelected ? "white" : "#111", fontSize: 16 }}>
+            <Text
+              style={{ color: isSelected ? "white" : "#111", fontSize: 16 }}
+            >
               {format(item, "d")}
             </Text>
           </View>

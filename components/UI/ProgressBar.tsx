@@ -19,7 +19,8 @@ const ProgressBar = ({ progress }: Props) => {
         <Text
           size="caption"
           weight="semi-bold"
-          className="text-center text-white">
+          className="text-center text-white"
+        >
           {progress}%
         </Text>
       </Box>

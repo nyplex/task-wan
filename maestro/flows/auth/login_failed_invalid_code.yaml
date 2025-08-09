@@ -1,0 +1,25 @@
+appId: com.nyplex.taskwan.preview
+tags:
+  - auth
+---
+- launchApp:
+    clearState: true
+- assertVisible: Get Started
+- tapOn: Get Started
+- tapOn: Email
+- assertVisible:
+    text: Login
+    enabled: false
+- inputText: maestro@e2e.com
+- hideKeyboard
+- assertVisible:
+    text: Login
+    enabled: true
+- tapOn: Login
+- assertVisible: Verify Account
+- tapOn:
+    id: code-input-field
+- inputText: '00000'
+- inputText: '1'
+- assertVisible: Token has expired or is invalid
+- stopApp

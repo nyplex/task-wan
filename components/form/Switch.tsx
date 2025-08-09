@@ -1,5 +1,9 @@
 import React, { useEffect } from "react";
-import Animated, { useAnimatedStyle, withSpring, useSharedValue } from "react-native-reanimated";
+import Animated, {
+  useAnimatedStyle,
+  withSpring,
+  useSharedValue,
+} from "react-native-reanimated";
 import { Pressable } from "../gluestack/pressable";
 import { Box } from "../gluestack/box";
 
@@ -21,7 +25,7 @@ const Switch = ({ value, onValueChange, disabled = false }: SwitchProps) => {
       damping: 14,
       stiffness: 180,
     });
-  }, [value]);
+  }, [value, translateX]);
 
   const thumbStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: translateX.value }],
@@ -42,7 +46,8 @@ const Switch = ({ value, onValueChange, disabled = false }: SwitchProps) => {
     <Pressable
       testID="switch-pressable"
       onPress={() => !disabled && onValueChange(!value)}
-      className="h-[25px] self-center items-center justify-center ml-[2px]">
+      className="h-[25px] self-center items-center justify-center ml-[2px]"
+    >
       <Box
         style={{
           width: SWITCH_WIDTH,
