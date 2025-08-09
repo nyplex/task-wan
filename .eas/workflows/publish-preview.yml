@@ -88,7 +88,7 @@ jobs:
           else
             echo "Jira Key: $JIRA_KEY"
             curl -X POST -H 'Content-type: application/json' \
-              -H "X-Automation-Webhook-Token: $JIRA_WEBHOOK_TOKEN" \
+              -H "X-Automation-Webhook-Token: $JIRA_WEBHOOK_TOKEN_QA_PREVIEW" \
               --data "{\"issues\":[\"$JIRA_KEY\"]}" \
               https://api-private.atlassian.com/automation/webhooks/jira/a/0c412e71-9ad7-4c46-bbca-79c4a40547a6/01987adb-86d5-7f23-8c58-29b3d2e3d5c7
           fi
