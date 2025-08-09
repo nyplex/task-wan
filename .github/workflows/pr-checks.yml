@@ -5,7 +5,10 @@ on:
     branches:
       - develop
 jobs:
-  check-pr-title:
+  test-and-lint:
+    permissions:
+      issues: write
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
       - name: Check PR title for Jira key
@@ -31,12 +34,6 @@ jobs:
             --data "{\"text\":\"$SLACK_MESSAGE\", \"channel\":\"$SLACK_CHANNEL\"}" "$SLACK_WEBHOOK_URL" || true
           # finally fail the job so branch protection blocks merges
           exit 1
-  test-and-lint:
-    permissions:
-      issues: write
-      pull-requests: write
-    runs-on: ubuntu-latest
-    steps:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Set up Node.js

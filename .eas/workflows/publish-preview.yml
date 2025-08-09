@@ -57,22 +57,25 @@ jobs:
   #         fi
 
   extract_pr_info:
-   # needs: fingerprint
-    # env: 
-    #   GITHUB_TOKEN: $GITHUB_TOKEN
     steps:
       - run: |
           echo "Extracting PR info..."
           echo "$GITHUB_TOKEN"
           set -e
 
-          PRS_JSON=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
-            "https://api.github.com/repos/nyplex/task-wan/pulls?head=nyplex:${{ github.ref_name }}&state=open")
+          BRANCH="${{ github.ref_name }}"
+          # optional: encode branch if it may contain slashes
+          BRANCH_ENC=$(jq -nr --arg v "$BRANCH" '$v|@uri')
 
-          PR_TITLE=$(echo "$PRS_JSON" | jq -r '.[0].title // empty')
+          PRS_JSON=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+            "https://api.github.com/repos/nyplex/task-wan/pulls?head=nyplex:${BRANCH_ENC}&state=open")
+
+          # Safely extract title only when response is an array with at least one element
+          PR_TITLE=$(echo "$PRS_JSON" | jq -r 'if type=="array" and length>0 then .[0].title else "" end')
 
           if [ -z "$PR_TITLE" ]; then
-            echo "No open PR found for branch ${{ github.ref_name }}"
+            echo "No open PR found for branch $BRANCH"
+            echo "API response (debug): $PRS_JSON"
             exit 1
           fi
 
@@ -84,9 +87,13 @@ jobs:
             echo "No Jira key found in PR title"
           else
             echo "Jira Key: $JIRA_KEY"
+            curl -X POST -H 'Content-type: application/json' \
+              -H "X-Automation-Webhook-Token: $JIRA_WEBHOOK_TOKEN" \
+              --data "{\"issues\":[\"$JIRA_KEY\"]}" \
+              https://api-private.atlassian.com/automation/webhooks/jira/a/0c412e71-9ad7-4c46-bbca-79c4a40547a6/01987adb-86d5-7f23-8c58-29b3d2e3d5c7
           fi
 
-            extract_pr_info:
+
   # needs: fingerprint
     # steps:
     #   - run: |
