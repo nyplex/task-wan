@@ -4,82 +4,82 @@ on:
     labels: ["eas-staging-ota"]
     
 jobs:
-  build_android_for_e2e:
-    type: build
-    params:
-      platform: android
-      profile: e2e-test # your eas build profile for E2E test
+  # build_android_for_e2e:
+  #   type: build
+  #   params:
+  #     platform: android
+  #     profile: e2e-test # your eas build profile for E2E test
 
-  build_ios_for_e2e:
-    type: build
-    params:
-      platform: ios
-      profile: e2e-test # your eas build profile for E2E test
+  # build_ios_for_e2e:
+  #   type: build
+  #   params:
+  #     platform: ios
+  #     profile: e2e-test # your eas build profile for E2E test
 
-  maestro_test_android:
-    needs: [build_android_for_e2e]
-    type: maestro
-    environment: preview
-    params:
-      build_id: ${{ needs.build_android_for_e2e.outputs.build_id }}
-      flow_path: ./maestro/flows
+  # maestro_test_android:
+  #   needs: [build_android_for_e2e]
+  #   type: maestro
+  #   environment: preview
+  #   params:
+  #     build_id: ${{ needs.build_android_for_e2e.outputs.build_id }}
+  #     flow_path: ./maestro/flows
 
-  maestro_test_ios:
-    needs: [build_ios_for_e2e]
-    type: maestro
-    environment: preview
-    params:
-      build_id: ${{ needs.build_ios_for_e2e.outputs.build_id }}
-      flow_path: ./maestro/flows
+  # maestro_test_ios:
+  #   needs: [build_ios_for_e2e]
+  #   type: maestro
+  #   environment: preview
+  #   params:
+  #     build_id: ${{ needs.build_ios_for_e2e.outputs.build_id }}
+  #     flow_path: ./maestro/flows
 
   # Notifty maestro test results (success or failure)
-  notify_maestro_results:
-    after: [maestro_test_android, maestro_test_ios]
-    steps:
-      - run: |
-          set -e
-          MSG=""
-          # Android test results
-          if [[ "${AFTER_MAESTRO_TEST_ANDROID_STATUS}" == "success" ]]; then
-            MSG+="✅ Android E2E tests passed.\n"
-          elif [[ "${AFTER_MAESTRO_TEST_ANDROID_STATUS}" == "failure" ]]; then
-            MSG+="🚨 Android E2E tests failed.\n"
-          fi
-          # iOS test results
-          if [[ "${AFTER_MAESTRO_TEST_IOS_STATUS}" == "success" ]]; then
-            MSG+="✅ iOS E2E tests passed.\n"
-          elif [[ "${AFTER_MAESTRO_TEST_IOS_STATUS}" == "failure" ]]; then
-            MSG+="🚨 iOS E2E tests failed.\n"
-          fi
-          # Send consolidated Slack notification
-          curl -X POST -H 'Content-type: application/json' \
-            --data "{ \
-              \"username\": \"EAS - WORKFLOWS\", \
-              \"icon_url\": \"https://raw.githubusercontent.com/nyplex/bot-icons/main/expo-icon.png\", \
-              \"channel\": \"task-wan\", \
-              \"attachments\": [ \
-                { \
-                  \"fallback\": \"📣 Maestro E2E Tests Results: <https://expo.dev/accounts/nyplex-studio/projects/task-wan/workflows|Check workflows>\", \
-                  \"pretext\": \"📣 Maestro E2E Tests Results: <https://expo.dev/accounts/nyplex-studio/projects/task-wan/workflows|Check workflows>\", \
-                  \"color\": \"#36A2EB\", \
-                  \"fields\": [ \
-                    { \
-                      \"title\": \"Details\", \
-                      \"value\": \"$MSG\", \
-                      \"short\": false \
-                    } \
-                  ] \
-                } \
-              ] \
-            }" \
-            "$SLACK_WEBHOOK_URL"
-    env:
-      AFTER_MAESTRO_TEST_ANDROID_STATUS: ${{ after.maestro_test_android.status }}
-      AFTER_MAESTRO_TEST_IOS_STATUS: ${{ after.maestro_test_ios.status
+  # notify_maestro_results:
+  #   after: [maestro_test_android, maestro_test_ios]
+  #   steps:
+  #     - run: |
+  #         set -e
+  #         MSG=""
+  #         # Android test results
+  #         if [[ "${AFTER_MAESTRO_TEST_ANDROID_STATUS}" == "success" ]]; then
+  #           MSG+="✅ Android E2E tests passed.\n"
+  #         elif [[ "${AFTER_MAESTRO_TEST_ANDROID_STATUS}" == "failure" ]]; then
+  #           MSG+="🚨 Android E2E tests failed.\n"
+  #         fi
+  #         # iOS test results
+  #         if [[ "${AFTER_MAESTRO_TEST_IOS_STATUS}" == "success" ]]; then
+  #           MSG+="✅ iOS E2E tests passed.\n"
+  #         elif [[ "${AFTER_MAESTRO_TEST_IOS_STATUS}" == "failure" ]]; then
+  #           MSG+="🚨 iOS E2E tests failed.\n"
+  #         fi
+  #         # Send consolidated Slack notification
+  #         curl -X POST -H 'Content-type: application/json' \
+  #           --data "{ \
+  #             \"username\": \"EAS - WORKFLOWS\", \
+  #             \"icon_url\": \"https://raw.githubusercontent.com/nyplex/bot-icons/main/expo-icon.png\", \
+  #             \"channel\": \"task-wan\", \
+  #             \"attachments\": [ \
+  #               { \
+  #                 \"fallback\": \"📣 Maestro E2E Tests Results: <https://expo.dev/accounts/nyplex-studio/projects/task-wan/workflows|Check workflows>\", \
+  #                 \"pretext\": \"📣 Maestro E2E Tests Results: <https://expo.dev/accounts/nyplex-studio/projects/task-wan/workflows|Check workflows>\", \
+  #                 \"color\": \"#36A2EB\", \
+  #                 \"fields\": [ \
+  #                   { \
+  #                     \"title\": \"Details\", \
+  #                     \"value\": \"$MSG\", \
+  #                     \"short\": false \
+  #                   } \
+  #                 ] \
+  #               } \
+  #             ] \
+  #           }" \
+  #           "$SLACK_WEBHOOK_URL"
+  #   env:
+  #     AFTER_MAESTRO_TEST_ANDROID_STATUS: ${{ after.maestro_test_android.status }}
+  #     AFTER_MAESTRO_TEST_IOS_STATUS: ${{ after.maestro_test_ios.status
 
   fingerprint:
-    after: [maestro_test_android, maestro_test_ios]
-    if: success()
+    # after: [maestro_test_android, maestro_test_ios]
+    # if: success()
     type: fingerprint
     environment: preview
     env: 

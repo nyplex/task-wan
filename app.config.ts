@@ -6,6 +6,9 @@ const withFirebaseNotificationMetaFix = require("./plugins/withFirebaseNotificat
 const IS_DEV = process.env.EXPO_PUBLIC_APP_VARIANT === "development";
 const IS_PREVIEW = process.env.EXPO_PUBLIC_APP_VARIANT === "preview";
 const IS_STAGING = process.env.EXPO_PUBLIC_APP_VARIANT === "staging";
+const GOOGLE_SERVICES = IS_STAGING
+  ? process.env.GOOGLE_SERVICES_STAGING
+  : process.env.GOOGLE_SERVICES;
 
 const getUniqueIdentifier = () => {
   if (IS_DEV) {
@@ -50,7 +53,7 @@ export default ({ config }: { config: any }) => ({
   android: {
     ...config.android,
     package: getUniqueIdentifier(),
-    googleServicesFile: process.env.GOOGLE_SERVICES,
+    googleServicesFile: GOOGLE_SERVICES,
   },
   plugins: [
     ...config.plugins,
