@@ -1,0 +1,80 @@
+name: Build Production
+
+jobs:
+  # 1. Build Android app for production
+  build_android_app:
+    type: build
+    env:
+      EXPO_PUBLIC_APP_VARIANT: "production"
+    params:
+      platform: android
+      profile: production
+
+  # 2. Build iOS app for production
+  build_ios_app:
+    type: build
+    env:
+      EXPO_PUBLIC_APP_VARIANT: "production"
+    params:
+      platform: ios
+      profile: production
+
+  # 3. Notify Slack about Android build success
+  send_notification_android:
+    after: [build_android_app]
+    if: success()
+    steps:
+      - name: Notify Android Build
+        run: |
+          set -e
+          MSG="✅ New Android PRODUCTION build created.\n"
+          curl -X POST -H 'Content-type: application/json' \
+            --data "{\"text\":\"$MSG\", \"username\": \"EAS - WORKFLOWS\", \
+            \"icon_url\": \"https://raw.githubusercontent.com/nyplex/bot-icons/main/expo-icon.png\", \
+            \"channel\":\"task-wan\"}" \
+            "$SLACK_WEBHOOK_URL"
+
+  # 4. Notify Slack about iOS build success
+  send_notification_ios:
+    after: [build_ios_app]
+    if: success()
+    steps:
+      - name: Notify iOS Build
+        run: |
+          set -e
+          MSG="✅ New iOS PRODUCTION build created.\n"
+          curl -X POST -H 'Content-type: application/json' \
+            --data "{\"text\":\"$MSG\", \"username\": \"EAS - WORKFLOWS\", \
+            \"icon_url\": \"https://raw.githubusercontent.com/nyplex/bot-icons/main/expo-icon.png\", \
+            \"channel\":\"task-wan\"}" \
+            "$SLACK_WEBHOOK_URL"
+
+  # 5. Notify Slack about Android build failure
+  send_notification_failure:
+    after: [build_android_app]
+    if: failure()
+    steps:
+      - name: Notify Build Failure
+        run: |
+          set -e
+          MSG="🚨 Android Production build has failed.\nPlease check the EAS dashboard for details."
+          curl -X POST -H 'Content-type: application/json' \
+            --data "{\"text\":\"$MSG\", \"username\": \"EAS - WORKFLOWS\", \
+            \"icon_url\": \"https://raw.githubusercontent.com/nyplex/bot-icons/main/expo-icon.png\", \
+            \"channel\":\"task-wan\"}" \
+            "$SLACK_WEBHOOK_URL"
+  
+  # 6. Notify Slack about iOS build failure
+  send_notification_ios_failure:
+    after: [build_ios_app]
+    if: failure()
+    steps:
+      - name: Notify iOS Build Failure
+        run: |
+          set -e
+          MSG="🚨 iOS Production build has failed.\nPlease check the EAS dashboard for details."
+          curl -X POST -H 'Content-type: application/json' \
+            --data "{\"text\":\"$MSG\", \"username\": \"EAS - WORKFLOWS\", \
+            \"icon_url\": \"https://raw.githubusercontent.com/nyplex/bot-icons/main/expo-icon.png\", \
+            \"channel\":\"task-wan\"}" \
+            "$SLACK_WEBHOOK_URL"

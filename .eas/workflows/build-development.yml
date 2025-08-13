@@ -1,23 +1,17 @@
 name: Build
 
 jobs:
+  # 1. Fingerprint job to check for existing builds
   fingerprint:
     type: fingerprint
     environment: development
 
+  # 2. Get Android and iOS builds based on fingerprints
   get_android_build:
     needs: [fingerprint]
     type: get-build
     params:
       fingerprint_hash: ${{ needs.fingerprint.outputs.android_fingerprint_hash }}
-      profile: development-simulator
-
-  build_android_app:
-    type: build
-    needs: [get_android_build]
-    if: ${{ !needs.get_android_build.outputs.build_id }}
-    params:
-      platform: android
       profile: development-simulator
 
   get_ios_build:
@@ -27,6 +21,16 @@ jobs:
       fingerprint_hash: ${{ needs.fingerprint.outputs.ios_fingerprint_hash }}
       profile: development-simulator
 
+  # 3. Build Android app for simulator if no existing build found
+  build_android_app:
+    type: build
+    needs: [get_android_build]
+    if: ${{ !needs.get_android_build.outputs.build_id }}
+    params:
+      platform: android
+      profile: development-simulator
+
+  # 4. Build iOS app for simulator & device if no existing build found
   build_ios_simulator_app:
     type: build
     needs: [get_ios_build]
@@ -43,36 +47,102 @@ jobs:
       platform: ios
       profile: development
 
-  send_notification_android :
+  # 5. Notify Slack about failures
+  notify_failures:
+    after:
+      [
+        fingerprint,
+        get_android_build,
+        get_ios_build,
+        build_android_app,
+        build_ios_simulator_app,
+        build_ios_app,
+      ]
+    if: failure()
+    steps:
+      - run: |
+          set -e
+          MSG=""
+          # Fingerprint failure
+          if [[ "${AFTER_FINGERPRINT_STATUS}" == "failure" ]]; then
+            MSG+="*•* Fingerprint job failed.\n"
+          fi
+          # Android build failures
+          if [[ "${AFTER_GET_ANDROID_BUILD_STATUS}" == "failure" ]]; then
+            MSG+="*•* Failed to get Android build.\n"
+          elif [[ "${AFTER_BUILD_ANDROID_STATUS}" == "failure" ]]; then
+            MSG+="*•* Android build step failed.\n"
+          fi
+          # iOS build failures
+          if [[ "${AFTER_GET_IOS_BUILD_STATUS}" == "failure" ]]; then
+            MSG+="*•* Failed to get iOS build.\n"
+          elif [[ "${AFTER_BUILD_IOS_STATUS}" == "failure" ]]; then
+            MSG+="*•* iOS build step failed.\n"
+          elif [[ "${AFTER_BUILD_IOS_SIMULATOR_STATUS}" == "failure" ]]; then
+            MSG+="*•* iOS Simulator build step failed.\n"
+          fi
+          # Send consolidated Slack notification
+          curl -X POST -H 'Content-type: application/json' \
+            --data "{ \
+              \"username\": \"EAS - WORKFLOWS\", \
+              \"icon_url\": \"https://raw.githubusercontent.com/nyplex/bot-icons/main/expo-icon.png\", \
+              \"channel\": \"task-wan\", \
+              \"attachments\": [ \
+                { \
+                  \"fallback\": \"🚨 Build Development Workflow Failed: <https://expo.dev/accounts/nyplex-studio/projects/task-wan/workflows|Check workflows>\", \
+                  \"pretext\": \"🚨 Build Development Workflow Failed: <https://expo.dev/accounts/nyplex-studio/projects/task-wan/workflows|Check workflows>\", \
+                  \"color\": \"#D00000\", \
+                  \"fields\": [ \
+                    { \
+                      \"title\": \"Details\", \
+                      \"value\": \"$MSG\", \
+                      \"short\": false \
+                    } \
+                  ] \
+                } \
+              ] \
+            }" \
+            "$SLACK_WEBHOOK_URL"
+    env:
+      AFTER_FINGERPRINT_STATUS: ${{ after.fingerprint.status }}
+      AFTER_GET_ANDROID_BUILD_STATUS: ${{ after.get_android_build.status }}
+      AFTER_GET_IOS_BUILD_STATUS: ${{ after.get_ios_build.status }}
+      AFTER_BUILD_ANDROID_STATUS: ${{ after.build_android_app.status }}
+      AFTER_BUILD_IOS_SIMULATOR_STATUS: ${{ after.build_ios_simulator_app.status }}
+      AFTER_BUILD_IOS_STATUS: ${{ after.build_ios_app.status }}
+
+  # 6. Send Android notifications for successful builds
+  send_notification_android:
     after: [build_android_app]
     steps:
       - name: Notify Android Build
         run: |
           if [ "${{ needs.get_android_build.outputs.build_id }}" ]; then
-            curl -X POST -H 'Content-type: application/json' --data '{"text":"Android Development build was skipped: existing build with same fingerprints found.", "channel":"task-wan"}' "$SLACK_WEBHOOK_URL"
+            curl -X POST -H 'Content-type: application/json' --data '{"text":"⚠️ Android Development build was skipped: existing build with same fingerprints found.", "channel":"task-wan"}' "$SLACK_WEBHOOK_URL"
           else
-            curl -X POST -H 'Content-type: application/json' --data '{"text":"Android Development build was successful!", "channel":"task-wan"}' "$SLACK_WEBHOOK_URL"
+            curl -X POST -H 'Content-type: application/json' --data '{"text":"✅ Android Development build was successful!", "channel":"task-wan"}' "$SLACK_WEBHOOK_URL"
           fi
 
-
+  # 7. Send iOS Simulator notifications for successful builds
   send_notification_ios_simulator:
     after: [build_ios_simulator_app]
     steps:
       - name: Notify iOS Simulator Build
         run: |
-          if [ "${{ needs.get_ios_build.outputs.build_id }}" ]; then
-            curl -X POST -H 'Content-type: application/json' --data '{"text":"iOS Simulator Development build was skipped: existing build with same fingerprints found.", "channel":"task-wan"}' "$SLACK_WEBHOOK_URL"
+          if [ "${{ needs.get_ios_simulator_build.outputs.build_id }}" ]; then
+            curl -X POST -H 'Content-type: application/json' --data '{"text":"⚠️ iOS Simulator Development build was skipped: existing build with same fingerprints found.", "channel":"task-wan"}' "$SLACK_WEBHOOK_URL"
           else
-            curl -X POST -H 'Content-type: application/json' --data '{"text":"iOS Simulator Development build was successful!", "channel":"task-wan"}' "$SLACK_WEBHOOK_URL"
+            curl -X POST -H 'Content-type: application/json' --data '{"text":"✅ iOS Simulator Development build was successful!", "channel":"task-wan"}' "$SLACK_WEBHOOK_URL"
           fi
 
+  # 8. Send iOS notifications for successful builds
   send_notification_ios:
     after: [build_ios_app]
     steps:
       - name: Notify iOS Build
         run: |
           if [ "${{ needs.get_ios_build.outputs.build_id }}" ]; then
-            curl -X POST -H 'Content-type: application/json' --data '{"text":"iOS Development build was skipped: existing build with same fingerprints found.", "channel":"task-wan"}' "$SLACK_WEBHOOK_URL"
+            curl -X POST -H 'Content-type: application/json' --data '{"text":"⚠️ iOS Development build was skipped: existing build with same fingerprints found.", "channel":"task-wan"}' "$SLACK_WEBHOOK_URL"
           else
-            curl -X POST -H 'Content-type: application/json' --data '{"text":"iOS Development build was successful!", "channel":"task-wan"}' "$SLACK_WEBHOOK_URL"
+            curl -X POST -H 'Content-type: application/json' --data '{"text":"✅ iOS Development build was successful!", "channel":"task-wan"}' "$SLACK_WEBHOOK_URL"
           fi

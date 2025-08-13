@@ -1,7 +1,10 @@
 name: Require PR Label
 on:
+  workflow_run:
+    workflows: ["PR Checks"]
+    types: [completed]
   pull_request:
-    types: [opened, labeled, unlabeled, synchronize, reopened]
+    types: [labeled, unlabeled, synchronize, reopened]
 
 jobs:
   check-label:
