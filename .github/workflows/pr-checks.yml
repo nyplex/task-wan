@@ -116,18 +116,18 @@ jobs:
           GITHUB_ACTOR: ${{ github.actor }}
 
       # EAS Label Management (only if all checks passed)
-      - name: Manage EAS labels
-        if: |
-          steps.run_tests.outcome == 'success' && 
-          steps.run_lint.outcome == 'success' && 
-          steps.validate_pr_title.outcome == 'success' &&
-          (github.base_ref == 'develop' || github.base_ref == 'main')
-        run: ./.github/scripts/manage-eas-labels.sh
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BASE_REF: ${{ github.base_ref }}
-          REPO: ${{ github.repository }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
+      # - name: Manage EAS labels
+      #   if: |
+      #     steps.run_tests.outcome == 'success' && 
+      #     steps.run_lint.outcome == 'success' && 
+      #     steps.validate_pr_title.outcome == 'success' &&
+      #     (github.base_ref == 'develop' || github.base_ref == 'main')
+      #   run: ./.github/scripts/manage-eas-labels.sh
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     BASE_REF: ${{ github.base_ref }}
+      #     REPO: ${{ github.repository }}
+      #     PR_NUMBER: ${{ github.event.pull_request.number }}
 
       # Success Notification
       - name: Notify Slack - all checks passed

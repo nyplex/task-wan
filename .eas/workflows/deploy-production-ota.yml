@@ -154,8 +154,8 @@ jobs:
       AFTER_UPDATE_ANDROID_STATUS: ${{ after.update_android.status }}
       AFTER_UPDATE_IOS_STATUS: ${{ after.update_ios.status }}
     if: |
-        env.AFTER_UPDATE_ANDROID_STATUS == 'success' &&
-        env.AFTER_UPDATE_IOS_STATUS == 'success'
+        after.update_android.status == 'success' &&
+        after.update_ios.status == 'success'
     steps:
       - run: |
           echo "Extracting PR info..."
