@@ -113,7 +113,8 @@ jobs:
 
   # 6. Send Android notifications for successful builds
   send_notification_android:
-    after: [build_android_app]
+    needs:
+      - get_android_build
     steps:
       - name: Notify Android Build
         run: |
@@ -125,7 +126,8 @@ jobs:
 
   # 7. Send iOS Simulator notifications for successful builds
   send_notification_ios_simulator:
-    after: [build_ios_simulator_app]
+    needs:
+      - get_ios_build
     steps:
       - name: Notify iOS Simulator Build
         run: |
@@ -137,7 +139,8 @@ jobs:
 
   # 8. Send iOS notifications for successful builds
   send_notification_ios:
-    after: [build_ios_app]
+    needs:
+      - get_ios_build
     steps:
       - name: Notify iOS Build
         run: |
