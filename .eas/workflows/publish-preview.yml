@@ -195,11 +195,11 @@ jobs:
     #   AFTER_UPDATE_IOS_STATUS: ${{ after.update_ios.status }}
     if: |
       (
-        after.build_android_if_missing == 'success' ||
+        after.build_android_if_missing.status == 'success' ||
         after.update_android.status == 'success'
       ) &&
       (
-        after.build_ios_if_missing == 'success' ||
+        after.build_ios_if_missing.status == 'success' ||
         after.update_ios.status == 'success'
       )
     steps:
