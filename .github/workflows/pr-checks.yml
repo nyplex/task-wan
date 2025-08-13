@@ -6,7 +6,7 @@ on:
       - develop
       - main
       - staging
-      - "story/**"
+      - "feature/**"
 
 jobs:
   test-and-lint:
