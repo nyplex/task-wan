@@ -188,19 +188,19 @@ jobs:
   # 8. Extract PR info and notify Jira
   notify_jira:
     after: [build_android_if_missing, build_ios_if_missing, update_android, update_ios]
-    env:
-      AFTER_BUILD_ANDROID_STATUS: ${{ after.build_android_if_missing.status }}
-      AFTER_UPDATE_ANDROID_STATUS: ${{ after.update_android.status }}
-      AFTER_BUILD_IOS_STATUS: ${{ after.build_ios_if_missing.status }}
-      AFTER_UPDATE_IOS_STATUS: ${{ after.update_ios.status }}
+    # env:
+    #   AFTER_BUILD_ANDROID_STATUS: ${{ after.build_android_if_missing.status }}
+    #   AFTER_UPDATE_ANDROID_STATUS: ${{ after.update_android.status }}
+    #   AFTER_BUILD_IOS_STATUS: ${{ after.build_ios_if_missing.status }}
+    #   AFTER_UPDATE_IOS_STATUS: ${{ after.update_ios.status }}
     if: |
       (
-        env.AFTER_BUILD_ANDROID_STATUS == 'success' ||
-        env.AFTER_UPDATE_ANDROID_STATUS == 'success'
+        after.AFTER_BUILD_ANDROID_STATUS == 'success' ||
+        after.AFTER_UPDATE_ANDROID_STATUS == 'success'
       ) &&
       (
-        env.AFTER_BUILD_IOS_STATUS == 'success' ||
-        env.AFTER_UPDATE_IOS_STATUS == 'success'
+        after.AFTER_BUILD_IOS_STATUS == 'success' ||
+        after.AFTER_UPDATE_IOS_STATUS == 'success'
       )
     steps:
       - run: |
