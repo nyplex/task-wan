@@ -1,4 +1,4 @@
-name: Build
+name: Build Development
 
 jobs:
   # 1. Fingerprint job to check for existing builds
@@ -42,7 +42,7 @@ jobs:
   build_ios_app:
     type: build
     needs: [get_ios_build]
-    if: ${{ needs.get_ios_build.outputs.build_id }}
+    if: ${{ !needs.get_ios_build.outputs.build_id }}
     params:
       platform: ios
       profile: development
