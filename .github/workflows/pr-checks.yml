@@ -16,6 +16,8 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+      - name: Make scripts executable
+        run: chmod +x .github/scripts/*.sh
       - name: Checkout code
         uses: actions/checkout@v4
 
