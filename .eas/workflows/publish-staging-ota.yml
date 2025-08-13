@@ -136,7 +136,7 @@ jobs:
   # 6. Single notifier for all Android results
   notify_android_results:
     after: [build_android_if_missing, update_android]
-    if: env.AFTER_BUILD_ANDROID_IF_MISSING_STATUS == 'success' || env.AFTER_UPDATE_ANDROID_STATUS == 'success'
+    if: after.build_android_if_missing == 'success' || after.update_android == 'success'
     steps:
       - run: |
           set -e
@@ -164,7 +164,7 @@ jobs:
   # 7. Single notifier for all iOS results
   notify_ios_results:
     after: [build_ios_if_missing, update_ios]
-    if: env.AFTER_BUILD_IOS_IF_MISSING_STATUS == 'success' || env.AFTER_UPDATE_IOS_STATUS == 'success'
+    if: after.build_ios_if_missing == 'success' || after.update_ios == 'success'
     steps:
       - run: |
           set -e
@@ -195,8 +195,8 @@ jobs:
       AFTER_BUILD_IOS_IF_MISSING_STATUS: ${{ after.build_ios_if_missing.status }}
       AFTER_UPDATE_IOS_STATUS: ${{ after.update_ios.status }}
     if: |
-      (env.AFTER_BUILD_ANDROID_IF_MISSING_STATUS == 'success' || env.AFTER_UPDATE_ANDROID_STATUS == 'success') &&
-      (env.AFTER_BUILD_IOS_IF_MISSING_STATUS == 'success' || env.AFTER_UPDATE_IOS_STATUS == 'success')
+      (after.build_android_if_missing == 'success' || after.update_android.status == 'success') &&
+      (after.build_ios_if_missing == 'success' || after.update_ios.status == 'success')
     steps:
       - run: |
           echo "Extracting PR info..."

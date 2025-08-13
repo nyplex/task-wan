@@ -181,7 +181,7 @@ jobs:
       AFTER_SUBMIT_ANDROID_STATUS: ${{ after.submit_android_build.status }}
       AFTER_SUBMIT_IOS_STATUS: ${{ after.submit_ios_build.status }}
     if: |
-      env.AFTER_SUBMIT_ANDROID_STATUS == 'success' && env.AFTER_SUBMIT_IOS_STATUS == 'success'
+      after.submit_android_build == 'success' && after.submit_ios_build == 'success'
     steps:
       - run: |
           echo "Extracting PR info..."

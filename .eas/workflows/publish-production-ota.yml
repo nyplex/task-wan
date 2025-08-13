@@ -144,7 +144,7 @@ jobs:
     env: 
       AFTER_BUILD_ANDROID_STATUS: ${{ after.build_android.status }}
       AFTER_UPDATE_ANDROID_STATUS: ${{ after.update_android.status }}
-    if: env.AFTER_BUILD_ANDROID_STATUS == 'success' || env.AFTER_UPDATE_ANDROID_STATUS == 'success'
+    if: after.build_android == 'success' || after.update_android.status == 'success'
     steps:
       - run: |
           set -e
@@ -169,7 +169,7 @@ jobs:
     env: 
       AFTER_BUILD_IOS_STATUS: ${{ after.build_ios.status }}
       AFTER_UPDATE_IOS_STATUS: ${{ after.update_ios.status }}
-    if: env.AFTER_BUILD_IOS_STATUS == 'success' || env.AFTER_UPDATE_IOS_STATUS == 'success'
+    if: after.build_ios.status == 'success' || after.update_ios.status == 'success'
     steps:
       - run: |
           set -e
@@ -257,8 +257,8 @@ jobs:
       AFTER_SUBMIT_ANDROID_STATUS: ${{ after.submit_android_build.status }}
       AFTER_SUBMIT_IOS_STATUS: ${{ after.submit_ios_build.status }}
     if: |
-        (env.AFTER_UPDATE_ANDROID_STATUS == 'success' && env.AFTER_UPDATE_IOS_STATUS == 'success') ||
-        (env.AFTER_SUBMIT_ANDROID_STATUS == 'success' && env.AFTER_SUBMIT_IOS_STATUS == 'success')
+        (after.update_android.status == 'success' && after.update_ios.status == 'success') ||
+        (after.submit_android.status == 'success' && after.submit_ios.status == 'success')
     steps:
       - run: |
           echo "Extracting PR info..."

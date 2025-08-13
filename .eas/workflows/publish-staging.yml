@@ -163,7 +163,7 @@ jobs:
   # 6. Single notifier for all iOS results
   notify_ios_results:
     after: [build_ios, ios_repack]
-    if: AFTER_BUILD_IOS_STATUS == 'success' || AFTER_IOS_REPACK_STATUS == 'success'
+    if: after.build_ios.status == 'success' || after.ios_repack.status == 'success'
     steps:
       - run: |
           set -e
@@ -193,8 +193,8 @@ jobs:
       AFTER_BUILD_ANDROID_STATUS: ${{ after.build_android.status }}
       AFTER_BUILD_IOS_STATUS: ${{ after.build_ios.status }}
     if: |
-      (env.AFTER_ANDROID_REPACK_STATUS == 'success' || env.AFTER_BUILD_ANDROID_STATUS == 'success') &&
-      (env.AFTER_IOS_REPACK_STATUS == 'success' || env.AFTER_BUILD_IOS_STATUS == 'success')
+      (after.android_repack.status == 'success' || after.build_android.status == 'success') &&
+      (after.ios_repack.status == 'success' || after.build_ios.status == 'success')
     steps:
       - run: |
           echo "Extracting PR info..."
