@@ -136,7 +136,7 @@ jobs:
   # 5. Single notifier for all successes
   notify_android_results:
     after: [build_android, android_repack]
-    if: AFTER_BUILD_ANDROID_STATUS == 'success' || AFTER_ANDROID_REPACK_STATUS == 'success'
+    if: after.build_android.status == 'success' || after.android_repack.status == 'success'
     steps:
       - run: |
           set -e
