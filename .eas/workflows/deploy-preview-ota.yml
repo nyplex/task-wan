@@ -1,7 +1,4 @@
-name: Publish Staging OTA
-on:
-  pull_request_labeled:
-    labels: ["eas-staging-ota"]
+name: Deploy Preview OTA
 
 jobs:
   # 1. Fingerprint job to check if builds already exist
@@ -9,7 +6,7 @@ jobs:
     type: fingerprint
     environment: preview
     env:
-      EXPO_PUBLIC_APP_VARIANT: "staging"
+      EXPO_PUBLIC_APP_VARIANT: "preview"
 
   # 2. Fetch Android and iOS in parallel (only if fingerprint succeeds)
   get_android_build:
@@ -18,7 +15,7 @@ jobs:
     type: get-build
     params:
       fingerprint_hash: ${{ needs.fingerprint.outputs.android_fingerprint_hash }}
-      profile: staging
+      profile: preview
 
   get_ios_build:
     after: [fingerprint]
@@ -26,32 +23,15 @@ jobs:
     type: get-build
     params:
       fingerprint_hash: ${{ needs.fingerprint.outputs.ios_fingerprint_hash }}
-      profile: staging
+      profile: preview
 
-  # 3. Build Android and iOS if no existing builds found
-  build_android_if_missing:
-    after: [get_android_build]
-    if: ${{ after.get_android_build.status == 'success' && !after.get_android_build.outputs.build_id }}
-    type: build
-    params:
-      platform: android
-      profile: staging
-
-  build_ios_if_missing:
-    after: [get_ios_build]
-    if: ${{ after.get_ios_build.status == 'success' && !after.get_ios_build.outputs.build_id }}
-    type: build
-    params:
-      platform: ios
-      profile: staging
-
-  # 4. Deploy OTA updates if builds exist to Android and iOS
+  # 3. Update OTA for Android and iOS in parallel (if builds exist)
   update_android:
     after: [get_android_build]
     if: ${{ after.get_android_build.status == 'success' && after.get_android_build.outputs.build_id }}
     type: update
     params:
-      channel: staging
+      channel: preview
       platform: android
 
   update_ios:
@@ -59,18 +39,16 @@ jobs:
     if: ${{ after.get_ios_build.status == 'success' && after.get_ios_build.outputs.build_id  }}
     type: update
     params:
-      channel: staging
+      channel: preview
       platform: ios
 
-  # 5. Single notifier for all failures
+  # 4. Single notifier for all failures
   notify_failures:
     after:
       [
         fingerprint,
         get_android_build,
         get_ios_build,
-        build_android_if_missing,
-        build_ios_if_missing,
         update_android,
         update_ios,
       ]
@@ -86,21 +64,17 @@ jobs:
           # Android build failures
           if [[ "${AFTER_GET_ANDROID_BUILD_STATUS}" == "failure" ]]; then
             MSG+="*•* Failed to get Android build.\n"
-          elif [[ "${AFTER_BUILD_ANDROID_IF_MISSING_STATUS}" == "failure" ]]; then
-            MSG+="*•* Android Staging build failed.\n"
           fi
           # iOS build failures
           if [[ "${AFTER_GET_IOS_BUILD_STATUS}" == "failure" ]]; then
             MSG+="*•* Failed to get iOS build.\n"
-          elif [[ "${AFTER_BUILD_IOS_IF_MISSING_STATUS}" == "failure" ]]; then
-            MSG+="*•* iOS Staging build failed.\n"
           fi
           # OTA update failures
           if [[ "${AFTER_UPDATE_ANDROID_STATUS}" == "failure" ]]; then
-            MSG+="*•* Android Staging OTA update failed.\n"
+            MSG+="*•* Deploy OTA to Android Preview failed.\n"
           fi
           if [[ "${AFTER_UPDATE_IOS_STATUS}" == "failure" ]]; then
-            MSG+="*•* iOS Staging OTA update failed.\n"
+            MSG+="*•* Deploy OTA to iOS Preview failed.\n"
           fi
           # Send consolidated Slack notification
           curl -X POST -H 'Content-type: application/json' \
@@ -110,8 +84,8 @@ jobs:
               \"channel\": \"task-wan\", \
               \"attachments\": [ \
                 { \
-                  \"fallback\": \"🚨 Publish Staging OTA Workflow Failed: <https://expo.dev/accounts/nyplex-studio/projects/task-wan/workflows|Check workflows>\", \
-                  \"pretext\": \"🚨 Publish Staging OTA Workflow Failed: <https://expo.dev/accounts/nyplex-studio/projects/task-wan/workflows|Check workflows>\", \
+                  \"fallback\": \"🚨 Deploy Preview OTA Workflow Failed: <https://expo.dev/accounts/nyplex-studio/projects/task-wan/workflows|Check workflows>\", \
+                  \"pretext\": \"🚨 Deploy Preview OTA Workflow Failed: <https://expo.dev/accounts/nyplex-studio/projects/task-wan/workflows|Check workflows>\", \
                   \"color\": \"#D00000\", \
                   \"fields\": [ \
                     { \
@@ -127,29 +101,21 @@ jobs:
     env:
       AFTER_FINGERPRINT_STATUS: ${{ after.fingerprint.status }}
       AFTER_GET_ANDROID_BUILD_STATUS: ${{ after.get_android_build.status }}
-      AFTER_BUILD_ANDROID_IF_MISSING_STATUS: ${{ after.build_android_if_missing.status }}
       AFTER_GET_IOS_BUILD_STATUS: ${{ after.get_ios_build.status }}
-      AFTER_BUILD_IOS_IF_MISSING_STATUS: ${{ after.build_ios_if_missing.status }}
       AFTER_UPDATE_ANDROID_STATUS: ${{ after.update_android.status }}
       AFTER_UPDATE_IOS_STATUS: ${{ after.update_ios.status }}
 
-  # 6. Single notifier for all Android results
+  # 5. Notify Android OTA update results
   notify_android_results:
-    after: [build_android_if_missing, update_android]
-    if: env.AFTER_BUILD_ANDROID_IF_MISSING_STATUS == 'success' || env.AFTER_UPDATE_ANDROID_STATUS == 'success'
+    after: [update_android]
+    if: success()
     steps:
       - run: |
           set -e
           MSG=""
-          # 1) Did we ever run get/build/update for Android?
-          if [[ "${AFTER_BUILD_ANDROID_IF_MISSING_STATUS}" == "success" ]]; then
-            MSG+="⚠️ OTA failed! No compatible build found. ✅ New Android STAGING build created.\n"
-          fi
           if [[ "${AFTER_UPDATE_ANDROID_STATUS}" == "success" ]]; then
-            MSG+="🚀 Android OTA update deployed to STAGING.\n"
+            MSG+="🚀 Android OTA update deployed to PREVIEW.\n"
           fi
-          # 2) Any Android failures? (notify.Failures already runs, so skip here)
-          # Send only if we got *some* positive result
           if [[ -n "$MSG" ]]; then
             curl -X POST -H 'Content-type: application/json' \
               --data "{\"text\":\"$MSG\", \"username\": \"EAS - WORKFLOWS\", \
@@ -158,22 +124,18 @@ jobs:
               "$SLACK_WEBHOOK_URL"
           fi
     env:
-      AFTER_BUILD_ANDROID_IF_MISSING_STATUS: ${{ after.build_android_if_missing.status }}
       AFTER_UPDATE_ANDROID_STATUS: ${{ after.update_android.status }}
 
-  # 7. Single notifier for all iOS results
+  # 6. Notify iOS OTA update results
   notify_ios_results:
-    after: [build_ios_if_missing, update_ios]
-    if: env.AFTER_BUILD_IOS_IF_MISSING_STATUS == 'success' || env.AFTER_UPDATE_IOS_STATUS == 'success'
+    after: [update_ios]
+    if: success()
     steps:
       - run: |
           set -e
           MSG=""
-          if [[ "${AFTER_BUILD_IOS_IF_MISSING_STATUS}" == "success" ]]; then
-            MSG+="⚠️ OTA failed! No compatible build found. ✅ New iOS STAGING build created.\n"
-          fi
           if [[ "${AFTER_UPDATE_IOS_STATUS}" == "success" ]]; then
-            MSG+="🚀 iOS OTA update deployed to STAGING.\n"
+            MSG+="🚀 iOS OTA update deployed to PREVIEW.\n"
           fi
           if [[ -n "$MSG" ]]; then
             curl -X POST -H 'Content-type: application/json' \
@@ -183,20 +145,17 @@ jobs:
               "$SLACK_WEBHOOK_URL"
           fi
     env:
-      AFTER_BUILD_IOS_IF_MISSING_STATUS: ${{ after.build_ios_if_missing.status }}
       AFTER_UPDATE_IOS_STATUS: ${{ after.update_ios.status }}
 
-  # 8. Extract PR info and notify Jira
+  # 7. Extract PR info and notify Jira
   notify_jira:
-    after: [update_android, update_ios, build_android_if_missing, build_ios_if_missing]
+    after: [update_android, update_ios]
     env:
-      AFTER_BUILD_ANDROID_IF_MISSING_STATUS: ${{ after.build_android_if_missing.status }}
       AFTER_UPDATE_ANDROID_STATUS: ${{ after.update_android.status }}
-      AFTER_BUILD_IOS_IF_MISSING_STATUS: ${{ after.build_ios_if_missing.status }}
       AFTER_UPDATE_IOS_STATUS: ${{ after.update_ios.status }}
     if: |
-      (env.AFTER_BUILD_ANDROID_IF_MISSING_STATUS == 'success' || env.AFTER_UPDATE_ANDROID_STATUS == 'success') &&
-      (env.AFTER_BUILD_IOS_IF_MISSING_STATUS == 'success' || env.AFTER_UPDATE_IOS_STATUS == 'success')
+        env.AFTER_UPDATE_ANDROID_STATUS == 'success' &&
+        env.AFTER_UPDATE_IOS_STATUS == 'success'
     steps:
       - run: |
           echo "Extracting PR info..."
@@ -271,19 +230,19 @@ jobs:
             echo "Calling Jira webhook with keys: $JIRA_KEYS_JSON"
 
             curl -X POST -H 'Content-type: application/json' \
-              -H "X-Automation-Webhook-Token: $JIRA_WEBHOOK_TOKEN_QA_STAGING" \
+              -H "X-Automation-Webhook-Token: $JIRA_WEBHOOK_TOKEN_QA_PREVIEW" \
               --data "{\"issues\":$JIRA_KEYS_JSON}" \
-              https://api-private.atlassian.com/automation/webhooks/jira/a/aee1c92e-a7f0-4e88-a3ba-77a03f97ee84/01988b6f-4bd0-7eef-9468-621ebc426a1d
+              https://api-private.atlassian.com/automation/webhooks/jira/a/aee1c92e-a7f0-4e88-a3ba-77a03f97ee84/01988a42-ac8a-7c1a-869e-e8a0a8cdfbc2
           fi
 
-  # 9. Notify Slack if Jira failed
+  # 8. Notify Slack if Jira failed
   notify_jira_failure:
     after: [notify_jira]
     if: failure()
     steps:
       - run: |
           set -e
-          MSG="🚨 Failed to notify Jira! Check the logs in the workflow publish-staging-ota to get the Jira keys impacted.\n"
+          MSG="🚨 Failed to notify Jira! Check the logs in the workflow deploy-preview-ota to get the Jira keys impacted.\n"
           curl -X POST -H 'Content-type: application/json' \
             --data "{\"text\":\"$MSG\", \"username\": \"EAS - WORKFLOWS\", \
             \"icon_url\": \"https://raw.githubusercontent.com/nyplex/bot-icons/main/expo-icon.png\", \
@@ -291,7 +250,7 @@ jobs:
             "$SLACK_WEBHOOK_URL"
           fi
 
-  # 10. Final log message to indicate completion
+  # 9. Final log message to indicate completion
   final_log:
     after: [notify_jira]
     steps:
