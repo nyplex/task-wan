@@ -124,37 +124,88 @@ jobs:
       AFTER_BUILD_IOS_STATUS: ${{ after.build_ios_app.status }}
 
   # 6. Send Android notifications for successful builds
-  send_notification_android:
-    needs: [get_android_build]
+  send_notification_android_build_success:
+    after: [build_android_app]
+    if: success()
     steps:
-      - name: Notify Android Build
+      - name: Notify Android Build Success
         run: |
-          if [ "${{ !needs.get_android_build.outputs.build_id }}" ]; then
-            curl -X POST -H 'Content-type: application/json' --data '{"text":"⚠️ Android Development build was skipped: existing build with same fingerprints found.", "channel":"task-wan"}' "$SLACK_WEBHOOK_URL"
-          else
-            curl -X POST -H 'Content-type: application/json' --data '{"text":"✅ Android Development build was successful!", "channel":"task-wan"}' "$SLACK_WEBHOOK_URL"
-          fi
+          set -e
+          MSG="✅ New Android Development build created.\n"
+          curl -X POST -H 'Content-type: application/json' \
+            --data "{\"text\":\"$MSG\", \"username\": \"EAS - WORKFLOWS\", \
+            \"icon_url\": \"https://raw.githubusercontent.com/nyplex/bot-icons/main/expo-icon.png\", \
+            \"channel\":\"task-wan\"}" \
+            "$SLACK_WEBHOOK_URL"
+  # 7. Send Android notification if no build was created
+  send_notification_android_no_build:
+    after: [get_android_build]
+    if: ${{ !needs.get_android_build.outputs.build_id }}
+    steps:
+      - name: Notify No Android Build
+        run: |
+          set -e
+          MSG="⚠️ Android Development build was skipped: existing build with same fingerprints found."
+          curl -X POST -H 'Content-type: application/json' \
+            --data "{\"text\":\"$MSG\", \"username\": \"EAS - WORKFLOWS\", \
+            \"icon_url\": \"https://raw.githubusercontent.com/nyplex/bot-icons/main/expo-icon.png\", \
+            \"channel\":\"task-wan\"}" \
+            "$SLACK_WEBHOOK_URL"
 
-  # 7. Send iOS Simulator notifications for successful builds
-  send_notification_ios_simulator:
-    needs: [get_ios_simulator_build]
+  # 8. Send iOS Simulator notifications for successful builds
+  send_notification_ios_simulator_build_success:
+    after: [build_ios_simulator_app]
+    if: success()
     steps:
-      - name: Notify iOS Simulator Build
+      - name: Notify iOS Simulator Build Success
         run: |
-          if [ "${{ !needs.get_ios_simulator_build.outputs.build_id }}" ]; then
-            curl -X POST -H 'Content-type: application/json' --data '{"text":"⚠️ iOS Simulator Development build was skipped: existing build with same fingerprints found.", "channel":"task-wan"}' "$SLACK_WEBHOOK_URL"
-          else
-            curl -X POST -H 'Content-type: application/json' --data '{"text":"✅ iOS Simulator Development build was successful!", "channel":"task-wan"}' "$SLACK_WEBHOOK_URL"
-          fi
+          set -e
+          MSG="✅ New iOS Simulator Development build created.\n"
+          curl -X POST -H 'Content-type: application/json' \
+            --data "{\"text\":\"$MSG\", \"username\": \"EAS - WORKFLOWS\", \
+            \"icon_url\": \"https://raw.githubusercontent.com/nyplex/bot-icons/main/expo-icon.png\", \
+            \"channel\":\"task-wan\"}" \
+            "$SLACK_WEBHOOK_URL"
+  # 9. Send iOS Simulator notification if no build was created
+  send_notification_ios_simulator_no_build:
+    after: [get_ios_simulator_build]
+    if: ${{ !needs.get_ios_simulator_build.outputs.build_id }}
+    steps:
+      - name: Notify No iOS Simulator Build
+        run: |
+          set -e
+          MSG="⚠️ iOS Simulator Development build was skipped: existing build with same fingerprints found."
+          curl -X POST -H 'Content-type: application/json' \
+            --data "{\"text\":\"$MSG\", \"username\": \"EAS - WORKFLOWS\", \
+            \"icon_url\": \"https://raw.githubusercontent.com/nyplex/bot-icons/main/expo-icon.png\", \
+            \"channel\":\"task-wan\"}" \
+            "$SLACK_WEBHOOK_URL"
 
-  # 8. Send iOS notifications for successful builds
-  send_notification_ios:
-    needs: [get_ios_build]
+  # 10. Send iOS notifications for successful builds
+  send_notification_ios_build_success:
+    after: [build_ios_app]
+    if: success()
     steps:
-      - name: Notify iOS Build
+      - name: Notify iOS Build Success
         run: |
-          if [ "${{ !needs.get_ios_build.outputs.build_id }}" ]; then
-            curl -X POST -H 'Content-type: application/json' --data '{"text":"⚠️ iOS Development build was skipped: existing build with same fingerprints found.", "channel":"task-wan"}' "$SLACK_WEBHOOK_URL"
-          else
-            curl -X POST -H 'Content-type: application/json' --data '{"text":"✅ iOS Development build was successful!", "channel":"task-wan"}' "$SLACK_WEBHOOK_URL"
-          fi
+          set -e
+          MSG="✅ New iOS Development build created.\n"
+          curl -X POST -H 'Content-type: application/json' \
+            --data "{\"text\":\"$MSG\", \"username\": \"EAS - WORKFLOWS\", \
+            \"icon_url\": \"https://raw.githubusercontent.com/nyplex/bot-icons/main/expo-icon.png\", \
+            \"channel\":\"task-wan\"}" \
+            "$SLACK_WEBHOOK_URL"
+  # 11. Send iOS notification if no build was created
+  send_notification_ios_no_build:
+    after: [get_ios_build]
+    if: ${{ !needs.get_ios_build.outputs.build_id }}
+    steps:
+      - name: Notify No iOS Build
+        run: |
+          set -e
+          MSG="⚠️ iOS Development build was skipped: existing build with same fingerprints found."
+          curl -X POST -H 'Content-type: application/json' \
+            --data "{\"text\":\"$MSG\", \"username\": \"EAS - WORKFLOWS\", \
+            \"icon_url\": \"https://raw.githubusercontent.com/nyplex/bot-icons/main/expo-icon.png\", \
+            \"channel\":\"task-wan\"}" \
+            "$SLACK_WEBHOOK_URL"
