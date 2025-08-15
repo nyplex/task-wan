@@ -188,7 +188,13 @@ jobs:
 
   # 8. Extract PR info and notify Jira
   notify_jira:
-    after: [update_android, update_ios, build_android_if_missing, build_ios_if_missing]
+    after:
+      [
+        update_android,
+        update_ios,
+        build_android_if_missing,
+        build_ios_if_missing,
+      ]
     env:
       AFTER_BUILD_ANDROID_IF_MISSING_STATUS: ${{ after.build_android_if_missing.status }}
       AFTER_UPDATE_ANDROID_STATUS: ${{ after.update_android.status }}
@@ -290,9 +296,3 @@ jobs:
             \"channel\":\"task-wan\"}" \
             "$SLACK_WEBHOOK_URL"
           fi
-
-  # 10. Final log message to indicate completion
-  final_log:
-    after: [notify_jira]
-    steps:
-      - run: echo "🔚 All jobs completed (success or failure). Logging final message."
