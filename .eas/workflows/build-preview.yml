@@ -19,14 +19,14 @@ jobs:
       platform: ios
       profile: preview
 
-  # 3. Build iOS simulator app for preview
-  build_ios_simulator_app:
-    type: build
-    env:
-      EXPO_PUBLIC_APP_VARIANT: "preview"
-    params:
-      platform: ios
-      profile: preview-simulator
+  # # 3. Build iOS simulator app for preview
+  # build_ios_simulator_app:
+  #   type: build
+  #   env:
+  #     EXPO_PUBLIC_APP_VARIANT: "preview"
+  #   params:
+  #     platform: ios
+  #     profile: preview-simulator
 
   # 4. Notify Slack about Android build success
   send_notification_android:
@@ -87,15 +87,15 @@ jobs:
             "$SLACK_WEBHOOK_URL"
 
   # 8. Notify Slack about iOS simulator build success
-  send_notification_ios_simulator:
-    after: [build_ios_simulator_app]
-    steps:
-      - name: Notify iOS Simulator Build
-        run: |
-          set -e
-          MSG="✅ New iOS Simulator PREVIEW build created.\n"
-          curl -X POST -H 'Content-type: application/json' \
-            --data "{\"text\":\"$MSG\", \"username\": \"EAS - WORKFLOWS\", \
-            \"icon_url\": \"https://raw.githubusercontent.com/nyplex/bot-icons/main/expo-icon.png\", \
-            \"channel\":\"task-wan\"}" \
-            "$SLACK_WEBHOOK_URL"
+  # send_notification_ios_simulator:
+  #   after: [build_ios_simulator_app]
+  #   steps:
+  #     - name: Notify iOS Simulator Build
+  #       run: |
+  #         set -e
+  #         MSG="✅ New iOS Simulator PREVIEW build created.\n"
+  #         curl -X POST -H 'Content-type: application/json' \
+  #           --data "{\"text\":\"$MSG\", \"username\": \"EAS - WORKFLOWS\", \
+  #           \"icon_url\": \"https://raw.githubusercontent.com/nyplex/bot-icons/main/expo-icon.png\", \
+  #           \"channel\":\"task-wan\"}" \
+  #           "$SLACK_WEBHOOK_URL"
