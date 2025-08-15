@@ -1,7 +1,7 @@
 name: Require PR Label
 on:
   pull_request:
-    types: [opened, labeled, unlabeled, synchronize, reopened]
+    types: [labeled, unlabeled, opened, reopened, synchronize]
 
 jobs:
   check-label:
@@ -12,8 +12,14 @@ jobs:
         with:
           script: |
             const labels = context.payload.pull_request.labels;
-            if (!labels || labels.length === 0) {
-              core.setFailed("❌ This PR must have at least one label before merging.");
+            const baseBranch = context.payload.pull_request.base.ref;
+            const requiredBranches = ["develop", "staging", "main"];
+            if (requiredBranches.includes(baseBranch)) {
+              if (!labels || labels.length === 0) {
+                core.setFailed("❌ This PR must have at least one label before merging.");
+              } else {
+                console.log(`✅ Found labels: ${labels.map(l => l.name).join(", ")}`);
+              }
             } else {
-              console.log(`✅ Found labels: ${labels.map(l => l.name).join(", ")}`);
+              console.log(`ℹ️ Label check skipped for base branch: ${baseBranch}`);
             }

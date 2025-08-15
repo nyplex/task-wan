@@ -67,23 +67,6 @@
       }
     },
 
-    // E2E TEST BUILD CONFIGURATION
-    "e2e-test": {
-      "withoutCredentials": true,
-      "environment": "preview",
-      "channel": "staging",
-      "ios": {
-        "simulator": true
-      },
-      "android": {
-        "buildType": "apk"
-      },
-      "env": {
-        "EXPO_PUBLIC_APP_VARIANT": "staging",
-        "EAS_BUILD_PROFILE": "e2e-test"
-      }
-    },
-
     // PRODUCTION BUILD CONFIGURATION
     "production": {
       "distribution": "store",
@@ -104,6 +87,16 @@
 
   // EAS SUBMIT CONFIGURATION
   "submit": {
-    "production": {}
+    "production": {
+      "android": {
+        "track": "internal",
+        "releaseStatus": "draft"
+      },
+      "ios": {
+        "bundleIdentifier": "com.nyplex.taskwan",
+        "appleTeamId": "A7FT82MA3V",
+        "language": "en-GB"
+      }
+    }
   }
 }

@@ -18,7 +18,7 @@ const StartScreen = () => {
       <Slider onIndexChange={(i) => setIndex(i)}>
         <SliderChild
           imageSource={require("@/assets/images/start-1.png")}
-          title="Easy Time Management"
+          title="Latest Update TKW-49"
           description="With management based on priority and daily tasks, it will give you convenience in
           managing and determining the tasks that must be done first"
         />
