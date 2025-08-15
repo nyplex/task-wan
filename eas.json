@@ -93,8 +93,6 @@
         "releaseStatus": "draft"
       },
       "ios": {
-        "ascAppId": "1660443855",
-        "appName": "Task Wan",
         "bundleIdentifier": "com.nyplex.taskwan",
         "appleTeamId": "A7FT82MA3V",
         "language": "en-GB"
