@@ -141,7 +141,7 @@ jobs:
   # 5. Single notifier for all successes
   notify_android_results:
     after: [build_android, update_android]
-    env: 
+    env:
       AFTER_BUILD_ANDROID_STATUS: ${{ after.build_android.status }}
       AFTER_UPDATE_ANDROID_STATUS: ${{ after.update_android.status }}
     if: after.build_android.status == 'success' || after.update_android.status == 'success'
@@ -166,7 +166,7 @@ jobs:
   # 6. Single notifier for all iOS results
   notify_ios_results:
     after: [build_ios, update_ios]
-    env: 
+    env:
       AFTER_BUILD_IOS_STATUS: ${{ after.build_ios.status }}
       AFTER_UPDATE_IOS_STATUS: ${{ after.update_ios.status }}
     if: after.build_ios.status == 'success' || after.update_ios.status == 'success'
@@ -257,8 +257,8 @@ jobs:
       AFTER_SUBMIT_ANDROID_STATUS: ${{ after.submit_android_build.status }}
       AFTER_SUBMIT_IOS_STATUS: ${{ after.submit_ios_build.status }}
     if: |
-        (after.update_android.status == 'success' && after.update_ios.status == 'success') ||
-        (after.submit_android_build.status == 'success' && after.submit_ios_build.status == 'success')
+      (after.update_android.status == 'success' && after.update_ios.status == 'success') ||
+      (after.submit_android_build.status == 'success' && after.submit_ios_build.status == 'success')
     steps:
       - run: |
           echo "Extracting PR info..."
@@ -367,9 +367,3 @@ jobs:
             \"channel\":\"task-wan\"}" \
             "$SLACK_WEBHOOK_URL"
           fi
-
-  # 13. Final log message to indicate completion
-  final_log:
-    after: [notify_jira]
-    steps:
-      - run: echo "🔚 All jobs completed (success or failure). Logging final message."
