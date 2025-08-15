@@ -275,9 +275,3 @@ jobs:
             \"channel\":\"task-wan\"}" \
             "$SLACK_WEBHOOK_URL"
           fi
-
-  # 11. Final log message to indicate completion
-  final_log:
-    after: [notify_jira]
-    steps:
-      - run: echo "🔚 All jobs completed (success or failure). Logging final message."

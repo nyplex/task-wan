@@ -187,7 +187,7 @@ jobs:
   # 7. Extract PR info and notify Jira
   notify_jira:
     after: [android_repack, ios_repack, build_android, build_ios]
-    env: 
+    env:
       AFTER_ANDROID_REPACK_STATUS: ${{ after.android_repack.status }}
       AFTER_IOS_REPACK_STATUS: ${{ after.ios_repack.status }}
       AFTER_BUILD_ANDROID_STATUS: ${{ after.build_android.status }}
@@ -288,9 +288,3 @@ jobs:
             \"channel\":\"task-wan\"}" \
             "$SLACK_WEBHOOK_URL"
           fi
-
-  # 9. Final log message to indicate completion
-  final_log:
-    after: [notify_jira]
-    steps:
-      - run: echo "🔚 All jobs completed (success or failure). Logging final message."
