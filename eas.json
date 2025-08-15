@@ -93,11 +93,9 @@
         "releaseStatus": "draft"
       },
       "ios": {
-        "appleId": "alex@nyplex.dev",
         "bundleIdentifier": "com.nyplex.taskwan",
         "appleTeamId": "A7FT82MA3V",
-        "language": "en-GB",
-        "sku": "com.nyplex.taskwan"
+        "language": "en-GB"
       }
     }
   }
