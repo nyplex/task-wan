@@ -134,6 +134,8 @@
     "updates": {
       "url": "https://u.expo.dev/eeb8a74a-56e0-4299-8f39-b42e74c93076"
     },
-    "runtimeVersion": "1.0.0"
+    "runtimeVersion": {
+      "policy": "fingerprint"
+    }
   }
 }
