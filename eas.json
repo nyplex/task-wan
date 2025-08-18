@@ -95,7 +95,8 @@
       "ios": {
         "bundleIdentifier": "com.nyplex.taskwan",
         "appleTeamId": "A7FT82MA3V",
-        "language": "en-GB"
+        "language": "en-GB",
+        "ascAppId": "6751126763"
       }
     }
   }
