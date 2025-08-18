@@ -35,7 +35,7 @@ export const addTaskApi = apiSlice.injectEndpoints({
           );
           return { data: task };
         } catch {
-          return { error: { status: 500, data: "Failed to update profile" } };
+          return { error: { status: 500, data: "Failed to add task" } };
         }
       },
     }),

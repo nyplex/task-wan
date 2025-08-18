@@ -4,7 +4,7 @@ import { powersync } from "@/powersync/system";
 
 export const getTaskApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getTask: builder.query<TaskRecord, number>({
+    getTask: builder.query<TaskRecord, string>({
       queryFn: async (taskId) => {
         try {
           const result = (await powersync.get(

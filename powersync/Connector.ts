@@ -86,8 +86,5 @@ export class Connector implements PowerSyncBackendConnector {
     // CRITICAL: Complete the transaction only after ALL operations succeed
     await transaction.complete();
     console.log("✅ Transaction completed successfully");
-
-    // Completes the transaction and moves onto the next one
-    await transaction.complete();
   }
 }
