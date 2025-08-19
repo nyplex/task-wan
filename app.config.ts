@@ -48,12 +48,13 @@ export default ({ config }: { config: any }) => ({
   ios: {
     ...config.ios,
     bundleIdentifier: getUniqueIdentifier(),
-    googleServicesFile: process.env.GOOGLE_SERVICES_INFO_PLIST,
+    googleServicesFile:
+      process.env.GOOGLE_SERVICES_INFO_PLIST || "./GoogleService-Info.plist",
   },
   android: {
     ...config.android,
     package: getUniqueIdentifier(),
-    googleServicesFile: GOOGLE_SERVICES,
+    googleServicesFile: GOOGLE_SERVICES || "./google-services.json",
   },
   plugins: [
     ...config.plugins,

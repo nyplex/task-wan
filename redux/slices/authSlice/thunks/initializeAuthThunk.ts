@@ -1,8 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Session } from "@supabase/supabase-js";
 import { setSession } from "../authSlice";
-import { apiSlice } from "../../apiSlice/apiSlice";
 import { setupPowerSync } from "@/powersync/system";
+import { getProfileApi } from "../../apiSlice/endpoints/profile/getProfile";
 
 // This thunk initializes the authentication by downloading necessary data
 export const initializeAuthThunk = createAsyncThunk(
@@ -21,7 +21,9 @@ export const initializeAuthThunk = createAsyncThunk(
 
       await thunkAPI
         .dispatch(
-          apiSlice.endpoints.getProfile.initiate({ userID: session.user.id }),
+          getProfileApi.endpoints.getProfile.initiate({
+            userID: session.user.id,
+          }),
         )
         .unwrap();
     } catch (error) {

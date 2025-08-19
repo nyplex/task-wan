@@ -1,10 +1,10 @@
-import { apiSlice } from "@/redux/slices/apiSlice/apiSlice";
 import { setSession } from "../../authSlice";
 import { initializeAuthThunk } from "../initializeAuthThunk";
+import { getProfileApi } from "@/redux/slices/apiSlice/endpoints/profile/getProfile";
 
 jest.mock("../../authSlice", () => ({ setSession: jest.fn() }));
-jest.mock("@/redux/slices/apiSlice/apiSlice", () => ({
-  apiSlice: {
+jest.mock("@/redux/slices/apiSlice/endpoints/profile/getProfile", () => ({
+  getProfileApi: {
     endpoints: {
       getProfile: {
         initiate: jest.fn(),
@@ -48,7 +48,7 @@ describe("initializeAuthThunk", () => {
 
   it("dispatches setSession and getProfile with valid session", async () => {
     const unwrap = jest.fn().mockResolvedValue({ profile: "data" });
-    (apiSlice.endpoints.getProfile.initiate as jest.Mock).mockReturnValue({
+    (getProfileApi.endpoints.getProfile.initiate as jest.Mock).mockReturnValue({
       unwrap,
     });
     const result = await initializeAuthThunk(session)(
@@ -57,7 +57,7 @@ describe("initializeAuthThunk", () => {
       thunkAPI,
     );
     expect(setSession).toHaveBeenCalledWith(session);
-    expect(apiSlice.endpoints.getProfile.initiate).toHaveBeenCalledWith({
+    expect(getProfileApi.endpoints.getProfile.initiate).toHaveBeenCalledWith({
       userID: "user123",
     });
     expect(unwrap).toHaveBeenCalled();
@@ -66,7 +66,7 @@ describe("initializeAuthThunk", () => {
 
   it("rejects with error if getProfile throws", async () => {
     const unwrap = jest.fn().mockRejectedValue(new Error("Profile error"));
-    (apiSlice.endpoints.getProfile.initiate as jest.Mock).mockReturnValue({
+    (getProfileApi.endpoints.getProfile.initiate as jest.Mock).mockReturnValue({
       unwrap,
     });
     const result = await initializeAuthThunk(session)(
@@ -79,7 +79,7 @@ describe("initializeAuthThunk", () => {
 
   it("rejects with unknown error if getProfile throws non-Error", async () => {
     const unwrap = jest.fn().mockRejectedValue("Unknown");
-    (apiSlice.endpoints.getProfile.initiate as jest.Mock).mockReturnValue({
+    (getProfileApi.endpoints.getProfile.initiate as jest.Mock).mockReturnValue({
       unwrap,
     });
     const result = await initializeAuthThunk(session)(

@@ -4,33 +4,29 @@ import ProfileItem from "@/components/UI/ProfileItem";
 import { Box } from "@/components/gluestack/box";
 import { VStack } from "@/components/gluestack/vstack";
 import useAuth from "@/hooks/useAuth";
-import {
-  useGetProfileQuery,
-  useUpdateProfileMutation,
-} from "@/redux/slices/apiSlice/apiSlice";
 import { useSelector } from "react-redux";
-import { selectAuthStatus } from "@/redux/slices/authSlice/authSelectors";
+import {
+  selectAuthStatus,
+  selectSession,
+} from "@/redux/slices/authSlice/authSelectors";
+import { useGetProfileQuery } from "@/redux/slices/apiSlice/endpoints/profile/getProfile";
+import { useUpdateProfileMutation } from "@/redux/slices/apiSlice/endpoints/profile/updateProfile";
 
 const ProfileScreen = () => {
-  const { logout, user } = useAuth();
+  const { logout } = useAuth();
   const authIsLoading = useSelector(selectAuthStatus);
-
-  const {
-    // isFetching,
-    // isError,
-    // isLoading,
-    data: rawData,
-  } = useGetProfileQuery({ userID: user?.id! });
-  // console.log("ProfileScreen data:", data);
+  const session = useSelector(selectSession);
   const [updateProfile] = useUpdateProfileMutation();
+  const { data } = useGetProfileQuery({ userID: session?.user.id! });
+  console.log("ProfileScreen data:", data);
 
   const onPressEdit = async () => {
     try {
       const { data, error } = await updateProfile({
-        id: user?.id!,
-        username: "Alexandre",
+        id: session?.user.id!,
+        name: "Alexandre",
         email: "test@gmail.com",
-        location: "London",
+        location: "London, UK",
         profession: "Software Engineer",
         avatar: "https://example.com/avatar.jpg",
         dob: "07-07-1990",
@@ -55,9 +51,9 @@ const ProfileScreen = () => {
         <Box className="h-[80px]">
           <Box className="absolute top-[-125px] left-0 right-0 justify-center items-center">
             <ProfileCard
-              name={rawData?.username!}
-              location="London"
-              profession="Software"
+              name={data?.name || "Unknown"}
+              location={data?.location || "Unknown"}
+              profession={data?.profession || "Unknown"}
             />
           </Box>
         </Box>
