@@ -5,14 +5,14 @@ import ScreenWrapper from "@/components/layout/ScreenWrapper";
 import ProfileItem from "@/components/UI/ProfileItem";
 
 const SettingsScreen = () => {
-  const navigaation = useRouter();
+  const navigation = useRouter();
 
   return (
     <ScreenWrapper
       header={
         <HeaderLayout
           icon="arrow-left"
-          onPressIcon={() => navigaation.back()}
+          onPressIcon={() => navigation.back()}
           title="Settings"
         />
       }

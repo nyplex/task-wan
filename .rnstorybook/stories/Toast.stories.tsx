@@ -1,6 +1,6 @@
 import { View } from "react-native";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Box } from "../../components/gluestack/box";
+import { Box } from "../../gluestack-ui/box";
 import Button from "../../components/buttons/Button";
 import useToast from "../../hooks/useToast";
 
