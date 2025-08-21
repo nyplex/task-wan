@@ -4,8 +4,8 @@ import Animated, {
   withSpring,
   useSharedValue,
 } from "react-native-reanimated";
-import { Pressable } from "../gluestack/pressable";
-import { Box } from "../gluestack/box";
+import { Pressable } from "../../gluestack-ui/pressable";
+import { Box } from "../../gluestack-ui/box";
 
 const SWITCH_WIDTH = 44;
 const SWITCH_HEIGHT = 20;

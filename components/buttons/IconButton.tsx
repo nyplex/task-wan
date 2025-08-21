@@ -1,5 +1,5 @@
 import React from "react";
-import { Pressable } from "../gluestack/pressable";
+import { Pressable } from "../../gluestack-ui/pressable";
 import Icon, { IconList } from "../UI/Icon";
 import { clsx } from "clsx";
 

@@ -1,19 +1,12 @@
 import { Stack } from "expo-router";
 
-const _layout = () => {
+const Layout = () => {
   return (
     <Stack>
       <Stack.Screen
-        name="Profile"
+        name="profile"
         options={{
           title: "profile",
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="MyProfile"
-        options={{
-          title: "my profile",
           headerShown: false,
         }}
       />
@@ -21,4 +14,4 @@ const _layout = () => {
   );
 };
 
-export default _layout;
+export default Layout;

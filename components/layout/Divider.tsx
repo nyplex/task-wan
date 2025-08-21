@@ -1,8 +1,8 @@
 import { StyleProp } from "react-native";
-import { Box } from "../gluestack/box";
-import { HStack } from "../gluestack/hstack";
-import { Divider as GSDivider } from "../gluestack/divider";
-import Text from "../Text";
+import { Box } from "../../gluestack-ui/box";
+import { HStack } from "../../gluestack-ui/hstack";
+import { Divider as GSDivider } from "../../gluestack-ui/divider";
+import Text from "../primitives/Text";
 import { clsx } from "clsx";
 
 type Props = {

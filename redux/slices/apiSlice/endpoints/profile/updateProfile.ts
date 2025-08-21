@@ -39,7 +39,7 @@ export const updateProfileApi = apiSlice.injectEndpoints({
       },
     }),
   }),
-  overrideExisting: false,
+  overrideExisting: true,
 });
 
 export const { useUpdateProfileMutation } = updateProfileApi;

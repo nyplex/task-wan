@@ -1,7 +1,7 @@
-import Text from "../Text";
-import { Box } from "../gluestack/box";
-import { HStack } from "../gluestack/hstack";
-import { Pressable } from "../gluestack/pressable";
+import Text from "../primitives/Text";
+import { Box } from "../../gluestack-ui/box";
+import { HStack } from "../../gluestack-ui/hstack";
+import { Pressable } from "../../gluestack-ui/pressable";
 
 type Props = {
   tabs: string[];

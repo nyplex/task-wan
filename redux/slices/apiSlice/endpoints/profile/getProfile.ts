@@ -23,7 +23,7 @@ export const getProfileApi = apiSlice.injectEndpoints({
       // providesTags: ["Profile"],
     }),
   }),
-  overrideExisting: false,
+  overrideExisting: true,
 });
 
 export const { useGetProfileQuery } = getProfileApi;

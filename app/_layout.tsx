@@ -5,14 +5,14 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { ThemeProvider, DefaultTheme } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { Stack } from "expo-router";
-import { GluestackUIProvider } from "@/components/gluestack/gluestack-ui-provider";
+import { GluestackUIProvider } from "@/gluestack-ui/gluestack-ui-provider";
 import { Provider, useSelector } from "react-redux";
 import { selectSession } from "@/redux/slices/authSlice/authSelectors";
 import { selectAppState } from "@/redux/slices/appSlice/appSelectors";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 import store from "@/redux/store";
 import useInitializeApp from "@/hooks/useInitializeApp";
-import useAuthListener from "@/hooks/useAuthListener";
+import useAuthListener from "@/features/authentication/hooks/useAuthListener";
 import useErrors from "@/hooks/useErrors";
 import { BottomSheetProvider } from "@/context/BottomSheetProvider";
 
@@ -55,9 +55,9 @@ function InnerLayout() {
         </Stack.Protected>
         <Stack.Protected guard={!session && !IS_STORYBOOK}>
           <Stack.Screen
-            name="(app)"
+            name="(auth)"
             options={{
-              title: "(app)",
+              title: "(auth)",
               headerShown: false,
             }}
           />

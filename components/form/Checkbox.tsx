@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Pressable } from "../gluestack/pressable";
+import { Pressable } from "../../gluestack-ui/pressable";
 import Icon from "../UI/Icon";
 
 type Props = {

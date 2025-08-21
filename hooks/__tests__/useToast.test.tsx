@@ -1,8 +1,8 @@
 import { renderHook, act } from "@testing-library/react-native";
 import useToast from "../useToast";
-import { useToast as useToastGS } from "@/components/gluestack/toast";
+import { useToast as useToastGS } from "@/gluestack-ui/toast";
 
-jest.mock("@/components/gluestack/toast", () => ({
+jest.mock("@/gluestack-ui/toast", () => ({
   useToast: jest.fn(),
   Toast: jest.fn(({ children }) => children),
 }));

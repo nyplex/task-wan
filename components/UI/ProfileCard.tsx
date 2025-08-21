@@ -1,7 +1,7 @@
-import { Box } from "../gluestack/box";
-import { HStack } from "../gluestack/hstack";
+import { Box } from "../../gluestack-ui/box";
+import { HStack } from "../../gluestack-ui/hstack";
 import Avatar from "./Avatar";
-import Text from "../Text";
+import Text from "../primitives/Text";
 import Icon from "./Icon";
 
 type Props = {
@@ -20,8 +20,17 @@ const ProfileCard = ({
   tasksCompleted,
 }: Props) => {
   return (
-    <Box className="w-full h-[205px] justify-end rounded-[10px] shadow-soft-1">
-      <Box className="bg-white w-full h-[180px] rounded-[10px]">
+    <Box className="w-full h-[205px] justify-end rounded-[10px]">
+      <Box
+        className="bg-white w-full h-[180px] rounded-[10px]"
+        style={{
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.1,
+          shadowRadius: 5,
+          elevation: 5,
+        }}
+      >
         <Box className="absolute top-[-25px] left-1/2 transform -translate-x-1/2">
           <Avatar fallbackName={name} avatarURL={avatarURL} />
         </Box>

@@ -1,5 +1,5 @@
-import Text from "../Text";
-import { Pressable } from "../gluestack/pressable";
+import Text from "../primitives/Text";
+import { Pressable } from "../../gluestack-ui/pressable";
 
 type Props = {
   title: string;

@@ -1,11 +1,12 @@
 import { KeyboardType } from "react-native";
-import { Box } from "@/components/gluestack/box";
-import { VStack } from "../gluestack/vstack";
-import { Input as InputGS, InputField } from "@/components/gluestack/input";
-import { HStack } from "@/components/gluestack/hstack";
-import Icon, { IconList } from "../UI/Icon";
-import Text from "../Text";
+import { Input as InputGS, InputField } from "@/gluestack-ui/input";
+import { HStack } from "@/gluestack-ui/hstack";
+import { VStack } from "@/gluestack-ui/vstack";
+import { Pressable } from "../../gluestack-ui/pressable";
+import { Box } from "@/gluestack-ui/box";
 import { clsx } from "clsx";
+import Icon, { IconList } from "../UI/Icon";
+import Text from "../primitives/Text";
 
 type Props = {
   isInvalid?: boolean;
@@ -22,6 +23,7 @@ type Props = {
   onChangeText?: (text: string) => void;
   onBlur?: () => void;
   onFocus?: () => void;
+  onPress?: () => void;
 };
 
 const Input = ({
@@ -39,6 +41,7 @@ const Input = ({
   onChangeText,
   onBlur,
   onFocus,
+  onPress,
 }: Props) => {
   const CNInput = clsx("text-buttons-text flex-1", {
     "h-[48px] rounded-r-[10px]": true,
@@ -60,42 +63,45 @@ const Input = ({
   });
 
   return (
-    <VStack>
-      <HStack>
-        {leftIcon && (
-          <Box className={CNIconBox}>
-            <Icon icon={leftIcon} size="medium" color="white" disabled />
-          </Box>
-        )}
-        <InputGS
-          isInvalid={isInvalid}
-          isDisabled={isDisabled}
-          testID="input-field"
-          className={CNInput}
+    <Pressable onPress={onPress} disabled={isDisabled} testID="input-pressable">
+      <VStack>
+        <HStack>
+          {leftIcon && (
+            <Box className={CNIconBox}>
+              <Icon icon={leftIcon} size="medium" color="white" disabled />
+            </Box>
+          )}
+          <InputGS
+            isInvalid={isInvalid}
+            isDisabled={isDisabled}
+            testID="input-field"
+            className={CNInput}
+          >
+            <InputField
+              placeholder={placeholder}
+              placeholderTextColor="#9A9A9A"
+              value={value}
+              onChangeText={onChangeText}
+              maxLength={maxLength}
+              keyboardType={keyboardType}
+              autoCapitalize={autoCapitalize}
+              autoCorrect={autoCorrect}
+              secureTextEntry={secureTextEntry}
+              onBlur={onBlur}
+              onFocus={onFocus}
+            />
+          </InputGS>
+        </HStack>
+        <Text
+          className="text-right px-2 text-red-500 line-clamp-1"
+          size="bodyXS"
+          weight="medium"
+          testID="input-invalid-text"
         >
-          <InputField
-            placeholder={placeholder}
-            placeholderTextColor="#9A9A9A"
-            value={value}
-            onChangeText={onChangeText}
-            maxLength={maxLength}
-            keyboardType={keyboardType}
-            autoCapitalize={autoCapitalize}
-            autoCorrect={autoCorrect}
-            secureTextEntry={secureTextEntry}
-            onBlur={onBlur}
-            onFocus={onFocus}
-          />
-        </InputGS>
-      </HStack>
-      <Text
-        className="text-right px-2 text-red-500 line-clamp-1"
-        size="bodyXS"
-        weight="medium"
-      >
-        {isInvalid && invalidText ? invalidText : ""}
-      </Text>
-    </VStack>
+          {isInvalid && invalidText ? invalidText : ""}
+        </Text>
+      </VStack>
+    </Pressable>
   );
 };
 

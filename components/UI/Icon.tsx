@@ -19,7 +19,8 @@ export type IconList =
   | "users"
   | "more-horizontal"
   | "edit-2"
-  | "check";
+  | "check"
+  | "briefcase";
 
 type Props = {
   icon: IconList;

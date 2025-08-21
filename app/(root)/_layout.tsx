@@ -1,6 +1,6 @@
 import { Stack } from "expo-router";
 
-const _layout = () => {
+const Layout = () => {
   return (
     <Stack
       screenOptions={{
@@ -8,8 +8,10 @@ const _layout = () => {
       }}
     >
       <Stack.Screen name="(tabs)" />
+      <Stack.Screen name="editProfile" />
+      <Stack.Screen name="settings" />
     </Stack>
   );
 };
 
-export default _layout;
+export default Layout;

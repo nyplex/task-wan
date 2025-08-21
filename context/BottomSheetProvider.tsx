@@ -9,12 +9,12 @@ import Animated, {
   useAnimatedGestureHandler,
 } from "react-native-reanimated";
 import { PanGestureHandler } from "react-native-gesture-handler";
-import { Pressable } from "@/components/gluestack/pressable";
-import LogoutBottomSheet from "@/components/bottomSheets/LogoutBottomSheet";
+import { Pressable } from "@/gluestack-ui/pressable";
+import LogoutBottomSheet from "@/components/bottom-sheet/LogoutBottomSheet";
 // --- Added new InfoBottomSheet ---
 import InfoBottomSheet, {
   InfoBottomSheetProps,
-} from "@/components/bottomSheets/InfoBottomSheet";
+} from "@/components/bottom-sheet/InfoBottomSheet";
 
 // -----------------
 // Type Definitions

@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Pressable } from "../gluestack/pressable";
-import { HStack } from "../gluestack/hstack";
+import { Pressable } from "../../gluestack-ui/pressable";
+import { HStack } from "../../gluestack-ui/hstack";
 import CalendarModal from "../UI/CalendarModal";
 import Icon from "../UI/Icon";
-import Text from "../Text";
+import Text from "../primitives/Text";
 
 type Props = {
   currentDate: number;

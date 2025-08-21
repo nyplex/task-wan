@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Box } from "../gluestack/box";
-import { HStack } from "../gluestack/hstack";
-import Text from "../Text";
+import { Box } from "../../gluestack-ui/box";
+import { HStack } from "../../gluestack-ui/hstack";
+import Text from "../primitives/Text";
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
 
