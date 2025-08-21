@@ -1,6 +1,6 @@
 import { useRouter } from "expo-router";
 import { useSelector } from "react-redux";
-import { selectAuthStatus } from "@/redux/slices/authSlice/authSelectors";
+import { selectAuthStatus } from "@/features/authentication/authSlice/authSelectors";
 import Animated, {
   useAnimatedStyle,
   interpolate,

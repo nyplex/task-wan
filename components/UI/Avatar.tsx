@@ -2,9 +2,9 @@ import {
   Avatar as AvatarGS,
   AvatarFallbackText,
   AvatarImage,
-} from "../../gluestack-ui/avatar";
-import { Box } from "../../gluestack-ui/box";
-import { Pressable } from "../../gluestack-ui/pressable";
+} from "@/gluestack-ui/avatar";
+import { Box } from "@/gluestack-ui/box";
+import { Pressable } from "@/gluestack-ui/pressable";
 import Icon from "./Icon";
 
 type Props = {

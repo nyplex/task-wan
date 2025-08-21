@@ -1,7 +1,7 @@
-import { Pressable } from "../../gluestack-ui/pressable";
-import { HStack } from "../../gluestack-ui/hstack";
-import { Box } from "../../gluestack-ui/box";
-import Text from "../primitives/Text";
+import { Pressable } from "@/gluestack-ui/pressable";
+import { HStack } from "@/gluestack-ui/hstack";
+import { Box } from "@/gluestack-ui/box";
+import Text from "./Text";
 
 type Props = {
   title: string;

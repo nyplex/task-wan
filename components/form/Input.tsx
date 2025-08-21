@@ -2,11 +2,11 @@ import { KeyboardType } from "react-native";
 import { Input as InputGS, InputField } from "@/gluestack-ui/input";
 import { HStack } from "@/gluestack-ui/hstack";
 import { VStack } from "@/gluestack-ui/vstack";
-import { Pressable } from "../../gluestack-ui/pressable";
+import { Pressable } from "@/gluestack-ui/pressable";
 import { Box } from "@/gluestack-ui/box";
 import { clsx } from "clsx";
-import Icon, { IconList } from "../UI/Icon";
-import Text from "../primitives/Text";
+import Icon, { IconList } from "@/components/UI/Icon";
+import Text from "@/components/UI/Text";
 
 type Props = {
   isInvalid?: boolean;

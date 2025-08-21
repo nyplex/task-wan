@@ -1,4 +1,4 @@
-import Text from "@/components/primitives/Text";
+import Text from "@/components/UI/Text";
 import Icon from "@/components/UI/Icon";
 import { HStack } from "@/gluestack-ui/hstack";
 

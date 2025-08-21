@@ -9,13 +9,16 @@ import { Session } from "@supabase/supabase-js";
 
 jest.mock("@powersync/react-native", () => ({}));
 jest.mock("@powersync/op-sqlite", () => ({}));
-jest.mock("@/redux/slices/authSlice/thunks/initializeAuthThunk", () => ({
-  initializeAuthThunk: {
-    pending: { type: "initializeAuthThunk/pending" },
-    fulfilled: { type: "initializeAuthThunk/fulfilled" },
-    rejected: { type: "initializeAuthThunk/rejected" },
-  },
-}));
+jest.mock(
+  "@/features/authentication/authSlice/thunks/initializeAuthThunk",
+  () => ({
+    initializeAuthThunk: {
+      pending: { type: "initializeAuthThunk/pending" },
+      fulfilled: { type: "initializeAuthThunk/fulfilled" },
+      rejected: { type: "initializeAuthThunk/rejected" },
+    },
+  }),
+);
 
 describe("authSlice reducer", () => {
   const initialState: AuthStateType = {

@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { useGetProfileQuery } from "@/redux/slices/apiSlice/endpoints/profile/getProfile";
-import { selectSession } from "@/redux/slices/authSlice/authSelectors";
+import { selectSession } from "@/features/authentication/authSlice/authSelectors";
 import { Box } from "@/gluestack-ui/box";
 import ProfileCard from "@/components/UI/ProfileCard";
 

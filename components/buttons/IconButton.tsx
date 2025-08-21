@@ -1,6 +1,6 @@
 import React from "react";
-import { Pressable } from "../../gluestack-ui/pressable";
-import Icon, { IconList } from "../UI/Icon";
+import { Pressable } from "@/gluestack-ui/pressable";
+import Icon, { IconList } from "@/components/UI/Icon";
 import { clsx } from "clsx";
 
 type Props = {

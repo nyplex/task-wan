@@ -1,4 +1,4 @@
-import Text from "@/components/primitives/Text";
+import Text from "@/components/UI/Text";
 import { VStack } from "@/gluestack-ui/vstack";
 
 const morningGreeting = [

@@ -1,8 +1,8 @@
-import { Box } from "../../gluestack-ui/box";
-import { HStack } from "../../gluestack-ui/hstack";
-import { Pressable } from "../../gluestack-ui/pressable";
-import { VStack } from "../../gluestack-ui/vstack";
-import Text from "../primitives/Text";
+import { Box } from "@/gluestack-ui/box";
+import { HStack } from "@/gluestack-ui/hstack";
+import { Pressable } from "@/gluestack-ui/pressable";
+import { VStack } from "@/gluestack-ui/vstack";
+import Text from "./Text";
 import Icon from "./Icon";
 
 type Props = {

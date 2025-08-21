@@ -1,6 +1,6 @@
 import { Image } from "expo-image";
 import { Box } from "@/gluestack-ui/box";
-import Text from "@/components/primitives/Text";
+import Text from "@/components/UI/Text";
 
 type Props = {
   title: string;

@@ -1,8 +1,8 @@
 import { useRouter } from "expo-router";
 import { useSelector } from "react-redux";
-import { selectAuthStatus } from "@/redux/slices/authSlice/authSelectors";
+import { selectAuthStatus } from "@/features/authentication/authSlice/authSelectors";
 import { Box } from "@/gluestack-ui/box";
-import Text from "@/components/primitives/Text";
+import Text from "@/components/UI/Text";
 
 const LoginFooter = () => {
   const router = useRouter();

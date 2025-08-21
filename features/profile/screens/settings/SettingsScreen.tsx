@@ -2,7 +2,7 @@ import { useRouter } from "expo-router";
 import { Box } from "@/gluestack-ui/box";
 import HeaderLayout from "@/components/layout/HeaderLayout";
 import ScreenWrapper from "@/components/layout/ScreenWrapper";
-import Text from "@/components/primitives/Text";
+import Text from "@/components/UI/Text";
 
 const SettingsScreen = () => {
   const navigaation = useRouter();

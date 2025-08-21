@@ -1,4 +1,4 @@
-import { apiSlice } from "../../apiSlice";
+import { apiSlice } from "@/redux/slices/apiSlice/apiSlice";
 import { powersync } from "@/powersync/system";
 import { getSubtasksApi } from "./getSubtasks";
 

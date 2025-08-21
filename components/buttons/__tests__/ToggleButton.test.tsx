@@ -3,7 +3,7 @@ import { render, fireEvent } from "@testing-library/react-native";
 import ToggleButton from "../ToggleButton"; // Adjust the path as needed
 
 // Mock the custom Text component
-jest.mock("@/components/primitives/Text", () => {
+jest.mock("@/components/UI/Text", () => {
   const { Text } = require("react-native");
   const MockText = ({ children, ...props }: { children: string }) => (
     <Text testID="toggle-text" {...props}>

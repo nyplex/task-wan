@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import { useSelector } from "react-redux";
-import { selectAuthStatus } from "@/redux/slices/authSlice/authSelectors";
+import { selectAuthStatus } from "@/features/authentication/authSlice/authSelectors";
 import useAuth from "@/features/authentication/hooks/useAuth";
-import Text from "@/components/primitives/Text";
+import Text from "@/components/UI/Text";
 
 const ResendCodeBtn = () => {
   const { email } = useLocalSearchParams();

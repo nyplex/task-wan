@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { selectAuthStatus } from "@/redux/slices/authSlice/authSelectors";
+import { selectAuthStatus } from "@/features/authentication/authSlice/authSelectors";
 import useAuth from "@/features/authentication/hooks/useAuth";
 import ProfileItem from "@/components/UI/ProfileItem";
 

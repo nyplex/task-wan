@@ -1,4 +1,4 @@
-import Text from "@/components/primitives/Text";
+import Text from "@/components/UI/Text";
 import PriorityTaskCard from "@/components/UI/PriorityTaskCard";
 import { Box } from "@/gluestack-ui/box";
 import { FlashList } from "@shopify/flash-list";

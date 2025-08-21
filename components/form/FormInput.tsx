@@ -5,7 +5,7 @@ import {
   Path,
   RegisterOptions,
 } from "react-hook-form";
-import { IconList } from "../UI/Icon";
+import { IconList } from "@/components/UI/Icon";
 import Input from "./Input";
 
 type FormInputProps<T extends FieldValues> = {

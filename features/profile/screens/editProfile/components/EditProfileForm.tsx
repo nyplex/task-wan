@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { useUpdateProfileMutation } from "@/redux/slices/apiSlice/endpoints/profile/updateProfile";
-import { selectSession } from "@/redux/slices/authSlice/authSelectors";
+import { selectSession } from "@/features/authentication/authSlice/authSelectors";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import { Box } from "@/gluestack-ui/box";
 import Button from "@/components/buttons/Button";

@@ -1,7 +1,7 @@
-import Text from "../primitives/Text";
-import Button from "../buttons/Button";
-import { Box } from "../../gluestack-ui/box";
-import { VStack } from "../../gluestack-ui/vstack";
+import { VStack } from "@/gluestack-ui/vstack";
+import { Box } from "@/gluestack-ui/box";
+import Button from "@/components/buttons/Button";
+import Text from "@/components/UI/Text";
 
 type Props = {
   onPressLogout: () => void;

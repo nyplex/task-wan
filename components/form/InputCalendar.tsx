@@ -3,8 +3,8 @@ import { HStack } from "@/gluestack-ui/hstack";
 import { Pressable } from "@/gluestack-ui/pressable";
 import { Box } from "@/gluestack-ui/box";
 import { clsx } from "clsx";
-import Icon from "../UI/Icon";
-import Text from "../primitives/Text";
+import Icon from "@/components/UI/Icon";
+import Text from "@/components/UI/Text";
 
 type Props = {
   isInvalid?: boolean;

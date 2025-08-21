@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
-import { selectAuthStatus } from "@/redux/slices/authSlice/authSelectors";
+import { selectAuthStatus } from "@/features/authentication/authSlice/authSelectors";
 import { VStack } from "@/gluestack-ui/vstack";
 import { Box } from "@/gluestack-ui/box";
 import { isValidEmail } from "@/utils/isValidEmail";

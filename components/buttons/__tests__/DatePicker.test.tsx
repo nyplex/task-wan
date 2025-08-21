@@ -3,7 +3,7 @@ import { render, fireEvent } from "@testing-library/react-native";
 import DatePicker from "../DatePicker";
 
 // Mock the CalendarModal with testID and props handling
-jest.mock("../../UI/CalendarModal", () => {
+jest.mock("@/components/UI/CalendarModal", () => {
   const compoenent = ({
     isOpen,
     onSelect,

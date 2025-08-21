@@ -1,15 +1,18 @@
 import { renderHook } from "@testing-library/react-native";
 import useAuthListener from "../useAuthListener";
-import { useAppDispatch } from "../../../../hooks/redux";
-import { initializeAuthThunk } from "@/redux/slices/authSlice/thunks/initializeAuthThunk";
+import { useAppDispatch } from "@/hooks/redux";
+import { initializeAuthThunk } from "@/features/authentication/authSlice/thunks/initializeAuthThunk";
 
 jest.mock("@/hooks/redux", () => ({ useAppDispatch: jest.fn() }));
-jest.mock("@/redux/slices/authSlice/thunks/initializeAuthThunk", () => ({
-  initializeAuthThunk: jest.fn((session) => ({
-    type: "INIT",
-    payload: session,
-  })),
-}));
+jest.mock(
+  "@/features/authentication/authSlice/thunks/initializeAuthThunk",
+  () => ({
+    initializeAuthThunk: jest.fn((session) => ({
+      type: "INIT",
+      payload: session,
+    })),
+  }),
+);
 
 const mockDispatch = jest.fn();
 const mockUnsubscribe = jest.fn();

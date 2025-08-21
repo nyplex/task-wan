@@ -1,8 +1,8 @@
 import { useMemo } from "react";
-import { Box } from "../../gluestack-ui/box";
-import { Pressable } from "../../gluestack-ui/pressable";
+import { Box } from "@/gluestack-ui/box";
+import { Pressable } from "@/gluestack-ui/pressable";
 import { Svg, Circle, Polygon } from "react-native-svg";
-import ThemedText from "../primitives/Text";
+import ThemedText from "./Text";
 
 export const LightCircles = () => (
   <Svg

@@ -1,7 +1,7 @@
 import React from "react";
-import Text from "../primitives/Text";
-import { Box } from "../../gluestack-ui/box";
-import { VStack } from "../../gluestack-ui/vstack";
+import Text from "@/components/UI/Text";
+import { Box } from "@/gluestack-ui/box";
+import { VStack } from "@/gluestack-ui/vstack";
 
 // Simple info bottom sheet for demonstration
 export type InfoBottomSheetProps = {

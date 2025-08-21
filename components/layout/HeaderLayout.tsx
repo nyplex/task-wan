@@ -1,7 +1,7 @@
-import { HStack } from "../../gluestack-ui/hstack";
-import { IconList } from "../UI/Icon";
-import IconButton from "../buttons/IconButton";
-import Text from "../primitives/Text";
+import { HStack } from "@/gluestack-ui/hstack";
+import { IconList } from "@/components/UI/Icon";
+import IconButton from "@/components/buttons/IconButton";
+import Text from "@/components/UI/Text";
 
 type Props = {
   onPressIcon: () => void;

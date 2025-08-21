@@ -1,7 +1,7 @@
 import React from "react";
 import { renderHook } from "@testing-library/react-native";
-import { useBottomSheet } from "../useBottomSheet";
-import { BottomSheetContext } from "../../context/BottomSheetProvider";
+import { useBottomSheet } from "@/hooks/useBottomSheet";
+import { BottomSheetContext } from "@/context/BottomSheetProvider";
 
 // Minimal context value for testing
 const mockContextValue = {

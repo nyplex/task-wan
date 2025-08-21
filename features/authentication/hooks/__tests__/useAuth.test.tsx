@@ -2,36 +2,36 @@ import { renderHook, act } from "@testing-library/react-native";
 import useAuth from "../useAuth";
 import { useRouter } from "expo-router";
 import { useSelector } from "react-redux";
-import { setIsLoading } from "@/redux/slices/authSlice/authSlice";
+import { setIsLoading } from "@/features/authentication/authSlice/authSlice";
 
 // Mocks
 jest.mock("expo-router", () => ({ useRouter: jest.fn() }));
 jest.mock("react-redux", () => ({ useSelector: jest.fn() }));
 jest.mock("@/hooks/redux", () => ({ useAppDispatch: () => jest.fn() }));
-jest.mock("@/redux/slices/authSlice/thunks/loginThunk", () => ({
+jest.mock("@/features/authentication/authSlice/thunks/loginThunk", () => ({
   loginThunk: jest.fn(() => async () => {}),
 }));
 
-jest.mock("@/redux/slices/authSlice/thunks/signupThunk", () => ({
+jest.mock("@/features/authentication/authSlice/thunks/signupThunk", () => ({
   signupThunk: jest.fn(() => async () => {}),
 }));
 
-jest.mock("@/redux/slices/authSlice/thunks/verifyOTPThunk", () => ({
+jest.mock("@/features/authentication/authSlice/thunks/verifyOTPThunk", () => ({
   verifyOTPThunk: jest.fn(() => async () => {}),
 }));
 
-jest.mock("@/redux/slices/authSlice/thunks/resendOTPThunk", () => ({
+jest.mock("@/features/authentication/authSlice/thunks/resendOTPThunk", () => ({
   resendOTPThunk: jest.fn(() => async () => {}),
 }));
 
-jest.mock("@/redux/slices/authSlice/thunks/logoutThunk", () => ({
+jest.mock("@/features/authentication/authSlice/thunks/logoutThunk", () => ({
   logoutThunk: jest.fn(() => async () => {}),
 }));
 
 jest.mock("@/redux/slices/errorsSlice/errorsSlice", () => ({
   addError: jest.fn(),
 }));
-jest.mock("@/redux/slices/authSlice/authSlice", () => ({
+jest.mock("@/features/authentication/authSlice/authSlice", () => ({
   setIsLoading: jest.fn(),
 }));
 
@@ -132,7 +132,7 @@ describe("useAuth", () => {
     jest.doMock("@/redux/slices/errorsSlice/errorsSlice", () => ({
       addError: jest.fn(),
     }));
-    jest.doMock("@/redux/slices/authSlice/authSlice", () => ({
+    jest.doMock("@/features/authentication/authSlice/authSlice", () => ({
       setIsLoading: jest.fn(),
     }));
 
@@ -142,7 +142,7 @@ describe("useAuth", () => {
     } = require("@/redux/slices/errorsSlice/errorsSlice");
     const {
       setIsLoading: setIsLoadingMock,
-    } = require("@/redux/slices/authSlice/authSlice");
+    } = require("@/features/authentication/authSlice/authSlice");
 
     const { result } = renderHook(() => useAuthError());
     await act(async () => {

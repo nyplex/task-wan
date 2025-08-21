@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Calendar } from "react-native-calendars";
 import Feather from "@expo/vector-icons/Feather";
-import Text from "../primitives/Text";
+import Text from "./Text";
 import dayjs from "dayjs";
-import { Box } from "../../gluestack-ui/box";
-import { Modal, ModalBackdrop, ModalContent } from "../../gluestack-ui/modal";
+import { Box } from "@/gluestack-ui/box";
+import { Modal, ModalBackdrop, ModalContent } from "@/gluestack-ui/modal";
 
 type Props = {
   isOpen: boolean;

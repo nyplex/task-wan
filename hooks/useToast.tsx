@@ -1,6 +1,6 @@
 import React from "react";
 import { useToast as useToastGS, Toast } from "@/gluestack-ui/toast";
-import Text from "@/components/primitives/Text";
+import Text from "@/components/UI/Text";
 
 const useToast = () => {
   const toast = useToastGS();

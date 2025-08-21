@@ -5,7 +5,7 @@ const Settings = () => {
   const navigation = useRouter();
 
   const onPressEdit = () => {
-    navigation.navigate("/(root)/Settings");
+    navigation.navigate("/(root)/settings");
   };
   return <ProfileItem icon="settings" title="Settings" onPress={onPressEdit} />;
 };

@@ -1,4 +1,4 @@
-import { Box } from "../../gluestack-ui/box";
+import { Box } from "@/gluestack-ui/box";
 
 type Props = {
   header: React.ReactNode;

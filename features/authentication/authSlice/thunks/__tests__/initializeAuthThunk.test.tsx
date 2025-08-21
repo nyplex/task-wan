@@ -1,8 +1,10 @@
-import { setSession } from "../../authSlice";
-import { initializeAuthThunk } from "../initializeAuthThunk";
+import { setSession } from "@/features/authentication/authSlice/authSlice";
 import { getProfileApi } from "@/redux/slices/apiSlice/endpoints/profile/getProfile";
+import { initializeAuthThunk } from "../initializeAuthThunk";
 
-jest.mock("../../authSlice", () => ({ setSession: jest.fn() }));
+jest.mock("@/features/authentication/authSlice/authSlice", () => ({
+  setSession: jest.fn(),
+}));
 jest.mock("@/redux/slices/apiSlice/endpoints/profile/getProfile", () => ({
   getProfileApi: {
     endpoints: {

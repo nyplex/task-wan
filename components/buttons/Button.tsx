@@ -1,11 +1,8 @@
 import { useState } from "react";
-import {
-  ButtonSpinner,
-  Button as GSButton,
-} from "@/gluestack-ui/button";
-import { HStack } from "../../gluestack-ui/hstack";
-import ThemedText from "../primitives/Text";
+import { ButtonSpinner, Button as GSButton } from "@/gluestack-ui/button";
+import { HStack } from "@/gluestack-ui/hstack";
 import { clsx } from "clsx";
+import ThemedText from "@/components/UI/Text";
 
 type Props = {
   title: string;

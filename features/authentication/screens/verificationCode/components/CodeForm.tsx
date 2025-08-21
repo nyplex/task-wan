@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import { useSelector } from "react-redux";
-import { selectAuthStatus } from "@/redux/slices/authSlice/authSelectors";
+import { selectAuthStatus } from "@/features/authentication/authSlice/authSelectors";
 import CodeInput from "@/components/form/CodeInput";
 import useAuth from "@/features/authentication/hooks/useAuth";
 

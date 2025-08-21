@@ -4,7 +4,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { useReanimatedKeyboardAnimation } from "react-native-keyboard-controller";
 import { Box } from "@/gluestack-ui/box";
-import Text from "@/components/primitives/Text";
+import Text from "@/components/UI/Text";
 
 const BodyContent = () => {
   const { progress } = useReanimatedKeyboardAnimation();

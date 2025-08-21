@@ -5,8 +5,8 @@ import Animated, {
   useAnimatedProps,
   withTiming,
 } from "react-native-reanimated";
-import { Box } from "../../gluestack-ui/box";
-import Text from "../primitives/Text";
+import { Box } from "@/gluestack-ui/box";
+import Text from "./Text";
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 

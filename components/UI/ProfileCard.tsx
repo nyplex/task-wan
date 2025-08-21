@@ -1,7 +1,7 @@
-import { Box } from "../../gluestack-ui/box";
-import { HStack } from "../../gluestack-ui/hstack";
+import { Box } from "@/gluestack-ui/box";
+import { HStack } from "@/gluestack-ui/hstack";
 import Avatar from "./Avatar";
-import Text from "../primitives/Text";
+import Text from "./Text";
 import Icon from "./Icon";
 
 type Props = {

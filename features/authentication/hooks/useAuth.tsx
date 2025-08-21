@@ -1,14 +1,14 @@
-import { selectSession } from "@/redux/slices/authSlice/authSelectors";
-import { useAppDispatch } from "../../../hooks/redux";
+import { selectSession } from "@/features/authentication/authSlice/authSelectors";
+import { useAppDispatch } from "@/hooks/redux";
 import { addError } from "@/redux/slices/errorsSlice/errorsSlice";
-import { loginThunk } from "@/redux/slices/authSlice/thunks/loginThunk";
-import { signupThunk } from "@/redux/slices/authSlice/thunks/signupThunk";
-import { verifyOTPThunk } from "@/redux/slices/authSlice/thunks/verifyOTPThunk";
-import { resendOTPThunk } from "@/redux/slices/authSlice/thunks/resendOTPThunk";
-import { logoutThunk } from "@/redux/slices/authSlice/thunks/logoutThunk";
+import { loginThunk } from "@/features/authentication/authSlice/thunks/loginThunk";
+import { signupThunk } from "@/features/authentication/authSlice/thunks/signupThunk";
+import { verifyOTPThunk } from "@/features/authentication/authSlice/thunks/verifyOTPThunk";
+import { resendOTPThunk } from "@/features/authentication/authSlice/thunks/resendOTPThunk";
+import { logoutThunk } from "@/features/authentication/authSlice/thunks/logoutThunk";
 import { useRouter } from "expo-router";
 import { useSelector } from "react-redux";
-import { setIsLoading } from "@/redux/slices/authSlice/authSlice";
+import { setIsLoading } from "@/features/authentication/authSlice/authSlice";
 import { GlobalError } from "@/types/errors";
 
 const useAuth = () => {

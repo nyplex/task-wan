@@ -1,20 +1,33 @@
+// Polyfills & global styles
 import "@azure/core-asynciterator-polyfill";
 import "@/global.css";
+
+// React Native core
 import { ActivityIndicator, View } from "react-native";
+
+// Gesture & keyboard
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { KeyboardProvider } from "react-native-keyboard-controller";
+
+// Navigation & status bar
 import { ThemeProvider, DefaultTheme } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { Stack } from "expo-router";
+
+// UI Providers
 import { GluestackUIProvider } from "@/gluestack-ui/gluestack-ui-provider";
+import { BottomSheetProvider } from "@/context/BottomSheetProvider";
+
+// Redux
 import { Provider, useSelector } from "react-redux";
-import { selectSession } from "@/redux/slices/authSlice/authSelectors";
-import { selectAppState } from "@/redux/slices/appSlice/appSelectors";
-import { KeyboardProvider } from "react-native-keyboard-controller";
 import store from "@/redux/store";
+import { selectSession } from "@/features/authentication/authSlice/authSelectors";
+import { selectAppState } from "@/redux/slices/appSlice/appSelectors";
+
+// Hooks
 import useInitializeApp from "@/hooks/useInitializeApp";
 import useAuthListener from "@/features/authentication/hooks/useAuthListener";
 import useErrors from "@/hooks/useErrors";
-import { BottomSheetProvider } from "@/context/BottomSheetProvider";
 
 function InnerLayout() {
   useErrors();

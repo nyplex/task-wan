@@ -1,5 +1,5 @@
 import Feather from "@expo/vector-icons/Feather";
-import { Pressable } from "../../gluestack-ui/pressable";
+import { Pressable } from "@/gluestack-ui/pressable";
 
 type Props = {
   onPress?: () => void;
