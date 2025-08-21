@@ -12,7 +12,7 @@ type Props = {
   setValue: UseFormSetValue<FormValues>;
 };
 
-const DOBCalendar = ({ setShowCalendar, getValues, setValue }: Props) => {
+const DOBPicker = ({ setShowCalendar, getValues, setValue }: Props) => {
   return (
     <Modal animationType="none" transparent>
       <Pressable
@@ -57,4 +57,4 @@ const DOBCalendar = ({ setShowCalendar, getValues, setValue }: Props) => {
     </Modal>
   );
 };
-export default DOBCalendar;
+export default DOBPicker;

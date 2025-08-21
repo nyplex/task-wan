@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "@testing-library/react-native";
-import BodyContent from "../components/BodyContent";
+import BodyContent from "../components/VerificationContent";
 
 // Mock Image import
 jest.mock("@/assets/images/verifyEmail.png", () => "verifyEmail.png");

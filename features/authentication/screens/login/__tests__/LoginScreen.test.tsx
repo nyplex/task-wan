@@ -6,15 +6,12 @@ const AppTitle = () => <></>;
 AppTitle.displayName = "AppTitle";
 const LoginForm = () => <></>;
 LoginForm.displayName = "LoginForm";
-const LoginDivider = () => <></>;
-LoginDivider.displayName = "LoginDivider";
 const LoginThirdParty = () => <></>;
 LoginThirdParty.displayName = "LoginThirdParty";
 const LoginFooter = () => <></>;
 LoginFooter.displayName = "LoginFooter";
 
 jest.mock("../components/LoginForm", () => LoginForm);
-jest.mock("../components/LoginDivider", () => LoginDivider);
 jest.mock("../components/LoginThirdParty", () => LoginThirdParty);
 jest.mock("../components/LoginFooter", () => LoginFooter);
 jest.mock("@/components/UI/AppTitle", () => AppTitle);
@@ -35,7 +32,6 @@ describe("LoginScreen", () => {
     const { UNSAFE_queryAllByType } = render(<LoginScreen />);
     expect(UNSAFE_queryAllByType(AppTitle).length).toBe(1);
     expect(UNSAFE_queryAllByType(LoginForm).length).toBe(1);
-    expect(UNSAFE_queryAllByType(LoginDivider).length).toBe(1);
     expect(UNSAFE_queryAllByType(LoginThirdParty).length).toBe(1);
     expect(UNSAFE_queryAllByType(LoginFooter).length).toBe(1);
   });

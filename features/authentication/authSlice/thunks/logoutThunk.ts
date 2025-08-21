@@ -1,7 +1,7 @@
-import { supabase } from "@/lib/supabase";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { GlobalError } from "@/types/errors";
 import { apiSlice } from "@/redux/slices/apiSlice/apiSlice";
+import { supabase } from "@/lib/supabase";
+import { GlobalError } from "@/types/errors";
 
 export const logoutThunk = createAsyncThunk<
   void,

@@ -2,14 +2,14 @@ import { Box } from "@/gluestack-ui/box";
 import { HStack } from "@/gluestack-ui/hstack";
 import Text from "@/components/UI/Text";
 import Divider from "@/components/layout/Divider";
-import Header from "./components/Header";
+import RegisterHeader from "./components/RegisterHeader";
 import RegisterForm from "./components/RegisterForm";
 import SocialAuthButton from "@/components/buttons/SocialAuthButton";
 
 const RegisterScreen = () => {
   return (
-    <Box className="flex-1 bg-backrgound pt-safe-offset-4 px-4">
-      <Header />
+    <Box className="flex-1 bg-background pt-safe-offset-4 px-4">
+      <RegisterHeader />
       <Text weight="semi-bold" className="text-center">
         Create your account
       </Text>

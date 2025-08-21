@@ -2,9 +2,9 @@ import { Box } from "@/gluestack-ui/box";
 import { VStack } from "@/gluestack-ui/vstack";
 import ProfileHeader from "./components/ProfileHeader";
 import ProfileItem from "@/components/UI/ProfileItem";
-import EditProfile from "./containers/EditProfile";
-import Logout from "./containers/Logout";
-import Settings from "./containers/Settings";
+import EditProfile from "./components/MyProfileButton";
+import Logout from "./components/LogoutButton";
+import Settings from "./components/SettingsButton";
 
 const ProfileScreen = () => {
   return (

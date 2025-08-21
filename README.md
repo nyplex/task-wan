@@ -19,11 +19,16 @@
 
 ## 🛠️ Tech Stack
 
-- **React Native** (Expo bare workflow)
+- **React Native** (Expo Continuous Native Generation (CNG))
+- **EAS Build** for building native apps
 - **Expo Router** for navigation
 - **Redux** for state management
 - **PowerSync** for real-time/offline data sync
 - **Supabase** for backend/auth
+- **Gluestack** for UI components
+- **Jest** for testing
+- **Maestro** for end-to-end testing
+- **Storybook** for UI component development
 - **TypeScript**
 
 ---
@@ -69,15 +74,27 @@
 
 ## 🗂️ Project Structure
 
+- `__mocks__/` — Mock data for testing
+- `.eas/` — EAS workflows
+- `.github/` — GitHub Actions workflows
+- `.rnstorybook/` — Storybook configuration + stories
 - `app/` — App entry and screens (Expo Router)
+- `assets/` — Images and other static assets
 - `components/` — Reusable UI components
-- `context/` — React context providers
-- `redux/` — Redux store, slices, and middleware
-- `powersync/` — PowerSync integration
-- `lib/` — Supabase and other libraries
-- `assets/` — Fonts and images
-- `types/` — TypeScript types
+- `context/` — Context providers for global state
+- `features/` — Feature-specific screens, components, and logic
+- `gluestack-ui/` — Gluestack UI components
+- `hooks/` — Global custom hooks
+- `lib/` — Utility functions and libraries
+- `maestro/` — End-to-end tests
+- `plugins/` — Custom Expo plugins
+- `poweersync/` — PowerSync configuration
+- `redux/` — Redux store and global slices
+- `types/` — Global TypeScript types
 - `utils/` — Utility functions
+- `app.config.ts` — Expo app configuration
+- `app.json` — Expo app manifest
+- `eas.json` — EAS build configuration
 
 ---
 
@@ -96,4 +113,7 @@ This project was built to demonstrate my ability to deliver a production-ready, 
 
 ## 📄 License
 
-MIT
+Creative Commons Non-Commercial (CC BY-NC)
+- Allows copying, modifying and merging. 
+- No commercial use allowed.
+- Must credit the original creator.

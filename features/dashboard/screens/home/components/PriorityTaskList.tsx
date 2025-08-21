@@ -1,7 +1,7 @@
-import Text from "@/components/UI/Text";
-import PriorityTaskCard from "@/components/UI/PriorityTaskCard";
-import { Box } from "@/gluestack-ui/box";
 import { FlashList } from "@shopify/flash-list";
+import { Box } from "@/gluestack-ui/box";
+import PriorityTaskCard from "@/components/UI/PriorityTaskCard";
+import Text from "@/components/UI/Text";
 
 const bg = [
   "Sky Blue",

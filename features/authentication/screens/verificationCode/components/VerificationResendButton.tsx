@@ -5,7 +5,7 @@ import { selectAuthStatus } from "@/features/authentication/authSlice/authSelect
 import useAuth from "@/features/authentication/hooks/useAuth";
 import Text from "@/components/UI/Text";
 
-const ResendCodeBtn = () => {
+const VerificationResendButton = () => {
   const { email } = useLocalSearchParams();
   const { resendOTP } = useAuth();
   const isLoading = useSelector(selectAuthStatus);
@@ -53,4 +53,4 @@ const ResendCodeBtn = () => {
   );
 };
 
-export default ResendCodeBtn;
+export default VerificationResendButton;

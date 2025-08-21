@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Header hides AppTitle when keyboard is open (progress=1) 1`] = `
+exports[`RegisterHeader hides AppTitle when keyboard is open (progress=1) 1`] = `
 <View>
   <View
     accessibilityState={
@@ -55,7 +55,7 @@ exports[`Header hides AppTitle when keyboard is open (progress=1) 1`] = `
 </View>
 `;
 
-exports[`Header matches the snapshot 1`] = `
+exports[`RegisterHeader matches the snapshot 1`] = `
 <View>
   <View
     accessibilityState={
@@ -110,7 +110,7 @@ exports[`Header matches the snapshot 1`] = `
 </View>
 `;
 
-exports[`Header shows AppTitle when keyboard is closed (progress=0) 1`] = `
+exports[`RegisterHeader shows AppTitle when keyboard is closed (progress=0) 1`] = `
 <View>
   <View
     accessibilityState={

@@ -1,6 +1,6 @@
-import { Box } from "@/gluestack-ui/box";
-import { HStack } from "@/gluestack-ui/hstack";
 import { Pressable } from "@/gluestack-ui/pressable";
+import { HStack } from "@/gluestack-ui/hstack";
+import { Box } from "@/gluestack-ui/box";
 import Text from "./Text";
 import Icon from "./Icon";
 

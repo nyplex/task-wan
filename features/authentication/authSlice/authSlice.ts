@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Session } from "@supabase/supabase-js";
 import { initializeAuthThunk } from "./thunks/initializeAuthThunk";
+import { Session } from "@supabase/supabase-js";
 
 export interface AuthStateType {
   session: Session | null;

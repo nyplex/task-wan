@@ -1,6 +1,6 @@
 import React from "react";
 import { render, fireEvent, act, waitFor } from "@testing-library/react-native";
-import ResendCodeBtn from "../components/ResendCodeBtn"; // Adjust path as needed
+import ResendCodeBtn from "../components/VerificationResendButton"; // Adjust path as needed
 import { useSelector } from "react-redux";
 import { useLocalSearchParams } from "expo-router";
 import useAuth from "@/features/authentication/hooks/useAuth";

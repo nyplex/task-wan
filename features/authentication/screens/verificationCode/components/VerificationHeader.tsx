@@ -5,7 +5,7 @@ import { Box } from "@/gluestack-ui/box";
 import AppTitle from "@/components/UI/AppTitle";
 import BackButtonIcon from "@/components/buttons/BackButtonIcon";
 
-const Header = () => {
+const VerificationCode = () => {
   const router = useRouter();
   const isLoading = useSelector(selectAuthStatus);
 
@@ -19,4 +19,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default VerificationCode;

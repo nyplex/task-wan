@@ -1,7 +1,7 @@
+import { Pressable } from "@/gluestack-ui/pressable";
+import { HStack } from "@/gluestack-ui/hstack";
 import Text from "@/components/UI/Text";
 import Icon from "@/components/UI/Icon";
-import { HStack } from "@/gluestack-ui/hstack";
-import { Pressable } from "@/gluestack-ui/pressable";
 
 type Props = {
   timestamp: number;

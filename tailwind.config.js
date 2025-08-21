@@ -44,7 +44,7 @@ module.exports = {
           disabled: "var(--color-typo-disabled)",
         },
         error: "var(--color-error)",
-        backrgound: "var(--color-background)",
+        background: "var(--color-background)",
       },
 
       fontFamily: {

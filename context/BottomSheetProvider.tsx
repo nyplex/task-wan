@@ -11,7 +11,6 @@ import Animated, {
 import { PanGestureHandler } from "react-native-gesture-handler";
 import { Pressable } from "@/gluestack-ui/pressable";
 import LogoutBottomSheet from "@/components/bottom-sheet/LogoutBottomSheet";
-// --- Added new InfoBottomSheet ---
 import InfoBottomSheet, {
   InfoBottomSheetProps,
 } from "@/components/bottom-sheet/InfoBottomSheet";

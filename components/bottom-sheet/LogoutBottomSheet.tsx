@@ -1,7 +1,7 @@
 import { VStack } from "@/gluestack-ui/vstack";
 import { Box } from "@/gluestack-ui/box";
-import Button from "@/components/buttons/Button";
 import Text from "@/components/UI/Text";
+import Button from "@/components/buttons/Button";
 
 type Props = {
   onPressLogout: () => void;

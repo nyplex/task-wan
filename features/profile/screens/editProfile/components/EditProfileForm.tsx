@@ -1,14 +1,17 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
+import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import { useSelector } from "react-redux";
 import { useUpdateProfileMutation } from "@/redux/slices/apiSlice/endpoints/profile/updateProfile";
 import { selectSession } from "@/features/authentication/authSlice/authSelectors";
-import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
+import { isValidEmail } from "@/utils/isValidEmail";
+import { VStack } from "@/gluestack-ui/vstack";
 import { Box } from "@/gluestack-ui/box";
+import FormInput from "@/components/form/FormInput";
 import Button from "@/components/buttons/Button";
 import Avatar from "@/components/UI/Avatar";
-import ProfileFormInputs from "./ProfileFormInputs";
-import DOBCalendar from "./DOBCalendar";
+import InputCalendar from "./InputCalendar";
+import DOBPicker from "./DOBPicker";
 
 export type FormValues = {
   name: string;
@@ -46,10 +49,10 @@ const EditProfileForm = () => {
       const { data, error } = await updateProfile({
         id: session?.user.id!,
         name: "Alexandre",
-        email: "test@gmail.com",
+        // email: "test@gmail.com",
         location: "London, UK",
         profession: "Software Engineer",
-        avatar: "https://example.com/avatar.jpg",
+        // avatar: "https://example.com/avatar.jpg",
         dob: "07-07-1990",
       });
       console.log("Profile updated:", data);
@@ -76,13 +79,50 @@ const EditProfileForm = () => {
             <Avatar editable fallbackName="N" />
           </Box>
 
-          <ProfileFormInputs
-            control={control}
-            setShowCalendar={setShowCalendar}
-          />
+          <VStack className="gap-6">
+            <FormInput<FormValues>
+              control={control}
+              name="name"
+              placeholder="Name"
+              icon="user"
+              rules={{ required: { value: true, message: "Name is required" } }}
+            />
+            <FormInput<FormValues>
+              control={control}
+              name="profession"
+              placeholder="Profession"
+              icon="briefcase"
+            />
+            <Controller
+              control={control}
+              name="dob"
+              render={({ field: { value } }) => (
+                <InputCalendar
+                  isInvalid={false}
+                  isDisabled={false}
+                  value={value}
+                  placeholder="Date of Birth"
+                  invalidText=" "
+                  onPress={() => setShowCalendar(true)}
+                />
+              )}
+            />
+            <FormInput<FormValues>
+              control={control}
+              name="email"
+              placeholder="Email"
+              icon="mail"
+              keyboardType="email-address"
+              rules={{
+                required: { value: true, message: "Email is required" },
+                validate: (val) =>
+                  isValidEmail(val.trim()) || "Invalid email address",
+              }}
+            />
+          </VStack>
 
           {showCalendar && (
-            <DOBCalendar
+            <DOBPicker
               setShowCalendar={setShowCalendar}
               getValues={getValues}
               setValue={setValue}

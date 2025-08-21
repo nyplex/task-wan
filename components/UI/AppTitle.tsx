@@ -1,5 +1,5 @@
-import ThemedText from "./Text";
 import { Box } from "@/gluestack-ui/box";
+import ThemedText from "./Text";
 
 const AppTitle = () => {
   return (

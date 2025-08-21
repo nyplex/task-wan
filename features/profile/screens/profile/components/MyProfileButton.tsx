@@ -1,7 +1,7 @@
 import { useRouter } from "expo-router";
 import ProfileItem from "@/components/UI/ProfileItem";
 
-const EditProfile = () => {
+const MyProfileButton = () => {
   const navigation = useRouter();
 
   const onPressEdit = () => {
@@ -9,4 +9,4 @@ const EditProfile = () => {
   };
   return <ProfileItem icon="user" title="My Profile" onPress={onPressEdit} />;
 };
-export default EditProfile;
+export default MyProfileButton;

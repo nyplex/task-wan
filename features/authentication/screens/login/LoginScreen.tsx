@@ -1,15 +1,16 @@
 import Animated, {
-  useAnimatedStyle,
   interpolate,
+  useAnimatedStyle,
 } from "react-native-reanimated";
 import { useReanimatedKeyboardAnimation } from "react-native-keyboard-controller";
 import { Box } from "@/gluestack-ui/box";
-import Text from "@/components/UI/Text";
+import { HStack } from "@/gluestack-ui/hstack";
 import AppTitle from "@/components/UI/AppTitle";
-import LoginThirdParty from "./components/LoginThirdParty";
-import LoginDivider from "./components/LoginDivider";
+import Text from "@/components/UI/Text";
+import Divider from "@/components/layout/Divider";
 import LoginFooter from "./components/LoginFooter";
 import LoginForm from "./components/LoginForm";
+import LoginThirdParty from "./components/LoginThirdParty";
 
 const LoginScreen = () => {
   const { progress } = useReanimatedKeyboardAnimation();
@@ -30,7 +31,7 @@ const LoginScreen = () => {
 
   return (
     <Box
-      className="flex-1 bg-backrgound pt-safe-offset-4 px-4"
+      className="flex-1 bg-background pt-safe-offset-4 px-4"
       testID="login-screen-root"
     >
       <Animated.View style={animatedStyles} className="overflow-hidden">
@@ -43,7 +44,9 @@ const LoginScreen = () => {
         </Text>
       </Box>
       <LoginForm />
-      <LoginDivider />
+      <HStack className="items-center mt-8 px-8" testID="login-divider">
+        <Divider title="Or login with" />
+      </HStack>
       <LoginThirdParty />
       <LoginFooter />
     </Box>

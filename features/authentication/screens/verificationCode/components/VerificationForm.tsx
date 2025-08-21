@@ -5,7 +5,7 @@ import { selectAuthStatus } from "@/features/authentication/authSlice/authSelect
 import CodeInput from "@/components/form/CodeInput";
 import useAuth from "@/features/authentication/hooks/useAuth";
 
-const CodeForm = () => {
+const VerificationCodeForm = () => {
   const isLoading = useSelector(selectAuthStatus);
   const { email } = useLocalSearchParams();
   const { verifyOTP } = useAuth();
@@ -30,4 +30,4 @@ const CodeForm = () => {
   );
 };
 
-export default CodeForm;
+export default VerificationCodeForm;

@@ -1,12 +1,12 @@
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { selectAuthStatus } from "@/features/authentication/authSlice/authSelectors";
+import { isValidEmail } from "@/utils/isValidEmail";
 import { VStack } from "@/gluestack-ui/vstack";
 import { Box } from "@/gluestack-ui/box";
-import { isValidEmail } from "@/utils/isValidEmail";
-import useAuth from "@/features/authentication/hooks/useAuth";
 import Button from "@/components/buttons/Button";
 import FormInput from "@/components/form/FormInput";
+import useAuth from "@/features/authentication/hooks/useAuth";
 
 type FormValues = {
   email: string;

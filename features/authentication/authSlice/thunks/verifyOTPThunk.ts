@@ -1,5 +1,5 @@
-import { supabase } from "@/lib/supabase";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { supabase } from "@/lib/supabase";
 import { GlobalError } from "@/types/errors";
 
 export const verifyOTPThunk = createAsyncThunk<

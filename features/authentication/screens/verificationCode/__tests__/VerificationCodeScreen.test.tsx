@@ -13,19 +13,19 @@ CodeForm.displayName = "CodeForm";
 const ResendCodeBtn = () => <></>;
 ResendCodeBtn.displayName = "ResendCodeBtn";
 
-jest.mock("../components/Header", () => ({
+jest.mock("../components/VerificationHeader", () => ({
   __esModule: true,
   default: Header,
 }));
-jest.mock("../components/BodyContent", () => ({
+jest.mock("../components/VerificationContent", () => ({
   __esModule: true,
   default: BodyContent,
 }));
-jest.mock("../components/CodeForm", () => ({
+jest.mock("../components/VerificationForm", () => ({
   __esModule: true,
   default: CodeForm,
 }));
-jest.mock("../components/ResendCodeBtn", () => ({
+jest.mock("../components/VerificationResendButton", () => ({
   __esModule: true,
   default: ResendCodeBtn,
 }));

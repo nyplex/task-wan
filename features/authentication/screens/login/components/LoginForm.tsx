@@ -4,8 +4,8 @@ import { selectAuthStatus } from "@/features/authentication/authSlice/authSelect
 import { isValidEmail } from "@/utils/isValidEmail";
 import { VStack } from "@/gluestack-ui/vstack";
 import Button from "@/components/buttons/Button";
-import useAuth from "@/features/authentication/hooks/useAuth";
 import FormInput from "@/components/form/FormInput";
+import useAuth from "@/features/authentication/hooks/useAuth";
 
 type FormValues = {
   email: string;

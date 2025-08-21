@@ -1,7 +1,7 @@
 import { render, fireEvent, waitFor } from "@testing-library/react-native";
 import { useRouter } from "expo-router";
 import { useSelector } from "react-redux";
-import Header from "../components/Header";
+import Header from "../components/VerificationHeader";
 
 // Mocks
 jest.mock("expo-router", () => ({

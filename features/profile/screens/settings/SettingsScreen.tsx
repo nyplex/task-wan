@@ -1,8 +1,8 @@
 import { useRouter } from "expo-router";
-import { Box } from "@/gluestack-ui/box";
+import { VStack } from "@/gluestack-ui/vstack";
 import HeaderLayout from "@/components/layout/HeaderLayout";
 import ScreenWrapper from "@/components/layout/ScreenWrapper";
-import Text from "@/components/UI/Text";
+import ProfileItem from "@/components/UI/ProfileItem";
 
 const SettingsScreen = () => {
   const navigaation = useRouter();
@@ -17,11 +17,13 @@ const SettingsScreen = () => {
         />
       }
     >
-      <Box className="flex-1">
-        <Text className="text-center text-lg font-semibold">
-          Settings Screen
-        </Text>
-      </Box>
+      <VStack className="mt-[50px] flex-1 mb-safe-offset-4 gap-6">
+        <ProfileItem icon="bell" title="Notifications" />
+        <ProfileItem icon="lock" title="Security" />
+        <ProfileItem icon="life-buoy" title="Help" />
+        <ProfileItem icon="info" title="About" />
+        <ProfileItem icon="users" title="Share with a friend" />
+      </VStack>
     </ScreenWrapper>
   );
 };

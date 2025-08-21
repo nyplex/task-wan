@@ -2,7 +2,7 @@
 
 exports[`LoginScreen matches the rendered output snapshot 1`] = `
 <View
-  className="flex-1 bg-backrgound pt-safe-offset-4 px-4"
+  className="flex-1 bg-background pt-safe-offset-4 px-4"
   testID="login-screen-root"
 >
   <View
@@ -28,6 +28,39 @@ exports[`LoginScreen matches the rendered output snapshot 1`] = `
     >
       Login to your account
     </Text>
+  </View>
+  <View
+    className="flex-row items-center mt-8 px-8"
+    testID="login-divider"
+  >
+    <View
+      style={
+        {
+          "width": "100%",
+        }
+      }
+      testID="divider-container"
+    >
+      <View
+        className="flex-row items-center w-full gap-[5px]"
+      >
+        <View
+          aria-orientation="horizontal"
+          className="w-full based-styles h-[1px] flex-1 bg-typography-secondary"
+          testID="divider-with-title"
+        />
+        <Text
+          className="based-styles font-regular text-[12px] tracking-[0px] text-typography-secondary -mt-[2px]"
+        >
+          Or login with
+        </Text>
+        <View
+          aria-orientation="horizontal"
+          className="w-full based-styles h-[1px] flex-1 bg-typography-secondary"
+          testID="divider-with-title"
+        />
+      </View>
+    </View>
   </View>
 </View>
 `;

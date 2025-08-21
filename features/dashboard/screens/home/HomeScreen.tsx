@@ -1,9 +1,11 @@
+import { ScrollView } from "react-native";
+import { HStack } from "@/gluestack-ui/hstack";
 import { Box } from "@/gluestack-ui/box";
-import Header from "./components/Header";
+import Text from "@/components/UI/Text";
+import Icon from "@/components/UI/Icon";
 import WelcomeMessage from "./components/WelcomeMessage";
 import PriorityTaskList from "./components/PriorityTaskList";
 import DailyTaskList from "./components/DailyTaskList";
-import { ScrollView } from "react-native";
 
 export default function HomeScreen() {
   return (
@@ -12,9 +14,12 @@ export default function HomeScreen() {
       stickyHeaderHiddenOnScroll
       stickyHeaderIndices={[0]}
     >
-      <Box className="flex-1 bg-backrgound py-safe-offset-4">
+      <Box className="flex-1 bg-background py-safe-offset-4">
         <Box className="px-4">
-          <Header />
+          <HStack className="justify-between items-center">
+            <Text size="bodyS">Saturday, Feb 20 2022</Text>
+            <Icon icon="bell" />
+          </HStack>
           <WelcomeMessage />
         </Box>
         <PriorityTaskList />

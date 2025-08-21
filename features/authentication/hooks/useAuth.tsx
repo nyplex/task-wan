@@ -1,13 +1,13 @@
-import { selectSession } from "@/features/authentication/authSlice/authSelectors";
+import { useRouter } from "expo-router";
+import { useSelector } from "react-redux";
 import { useAppDispatch } from "@/hooks/redux";
 import { addError } from "@/redux/slices/errorsSlice/errorsSlice";
+import { selectSession } from "@/features/authentication/authSlice/authSelectors";
 import { loginThunk } from "@/features/authentication/authSlice/thunks/loginThunk";
 import { signupThunk } from "@/features/authentication/authSlice/thunks/signupThunk";
 import { verifyOTPThunk } from "@/features/authentication/authSlice/thunks/verifyOTPThunk";
 import { resendOTPThunk } from "@/features/authentication/authSlice/thunks/resendOTPThunk";
 import { logoutThunk } from "@/features/authentication/authSlice/thunks/logoutThunk";
-import { useRouter } from "expo-router";
-import { useSelector } from "react-redux";
 import { setIsLoading } from "@/features/authentication/authSlice/authSlice";
 import { GlobalError } from "@/types/errors";
 

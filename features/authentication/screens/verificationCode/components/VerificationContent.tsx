@@ -6,7 +6,7 @@ import { useReanimatedKeyboardAnimation } from "react-native-keyboard-controller
 import { Box } from "@/gluestack-ui/box";
 import Text from "@/components/UI/Text";
 
-const BodyContent = () => {
+const VerificationContent = () => {
   const { progress } = useReanimatedKeyboardAnimation();
 
   const animatedStyles = useAnimatedStyle(() => {
@@ -46,4 +46,4 @@ const BodyContent = () => {
   );
 };
 
-export default BodyContent;
+export default VerificationContent;

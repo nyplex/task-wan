@@ -1,7 +1,7 @@
-import Text from "@/components/UI/Text";
-import TaskCard from "@/components/UI/TaskCard";
-import { Box } from "@/gluestack-ui/box";
 import { FlashList } from "@shopify/flash-list";
+import { Box } from "@/gluestack-ui/box";
+import TaskCard from "@/components/UI/TaskCard";
+import Text from "@/components/UI/Text";
 
 const DailyTaskList = () => {
   return (

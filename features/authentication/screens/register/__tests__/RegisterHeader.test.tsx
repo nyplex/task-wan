@@ -1,6 +1,6 @@
 import React from "react";
 import { render, fireEvent } from "@testing-library/react-native";
-import Header from "../components/Header";
+import RegisterHeader from "../components/RegisterHeader";
 
 jest.mock("expo-router", () => ({ useRouter: () => ({ back: jest.fn() }) }));
 jest.mock("react-redux", () => ({ useSelector: () => false }));
@@ -25,24 +25,24 @@ jest.mock("@/components/buttons/BackButtonIcon", () => {
   return MockBackButtonIcon;
 });
 
-describe("Header", () => {
+describe("RegisterHeader", () => {
   it("hides AppTitle when keyboard is open (progress=1)", () => {
     jest.mock("react-native-keyboard-controller", () => ({
       useReanimatedKeyboardAnimation: () => ({ progress: { value: 1 } }),
     }));
-    const { toJSON } = render(<Header />);
+    const { toJSON } = render(<RegisterHeader />);
     // You can check the style or snapshot for the hidden state
     expect(toJSON()).toMatchSnapshot();
   });
 
   it("shows AppTitle when keyboard is closed (progress=0)", () => {
-    const { toJSON } = render(<Header />);
+    const { toJSON } = render(<RegisterHeader />);
     // You can check the style or snapshot for the visible state
     expect(toJSON()).toMatchSnapshot();
   });
 
   it("renders BackButtonIcon and AppTitle", () => {
-    const { getByTestId } = render(<Header />);
+    const { getByTestId } = render(<RegisterHeader />);
     expect(getByTestId("back-button")).toBeTruthy();
   });
 
@@ -51,13 +51,13 @@ describe("Header", () => {
     jest
       .spyOn(require("expo-router"), "useRouter")
       .mockReturnValue({ back: mockBack });
-    const { getByTestId } = render(<Header />);
+    const { getByTestId } = render(<RegisterHeader />);
     fireEvent.press(getByTestId("back-button"));
     expect(mockBack).toHaveBeenCalled();
   });
 
   it("matches the snapshot", () => {
-    const { toJSON } = render(<Header />);
+    const { toJSON } = render(<RegisterHeader />);
     expect(toJSON()).toMatchSnapshot();
   });
 });

@@ -2,7 +2,7 @@
 
 exports[`StartScreen matches the rendered output snapshot 1`] = `
 <View
-  className="flex-1 py-safe-offset-4 bg-backrgound"
+  className="flex-1 py-safe-offset-4 bg-background"
 >
   <View
     className="mb-4 px-4"

@@ -1,7 +1,7 @@
 import { useRouter } from "expo-router";
 import HeaderLayout from "@/components/layout/HeaderLayout";
 
-const Header = () => {
+const EditProfileHeader = () => {
   const navigation = useRouter();
   return (
     <HeaderLayout
@@ -11,4 +11,4 @@ const Header = () => {
     />
   );
 };
-export default Header;
+export default EditProfileHeader;

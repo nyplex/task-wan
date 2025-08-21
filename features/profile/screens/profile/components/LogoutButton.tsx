@@ -3,7 +3,7 @@ import { selectAuthStatus } from "@/features/authentication/authSlice/authSelect
 import useAuth from "@/features/authentication/hooks/useAuth";
 import ProfileItem from "@/components/UI/ProfileItem";
 
-const Logout = () => {
+const LogoutButton = () => {
   const { logout } = useAuth();
   const authIsLoading = useSelector(selectAuthStatus);
 
@@ -16,4 +16,4 @@ const Logout = () => {
     />
   );
 };
-export default Logout;
+export default LogoutButton;

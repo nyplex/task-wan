@@ -1,6 +1,6 @@
 import React from "react";
 import { render, fireEvent, waitFor } from "@testing-library/react-native";
-import CodeForm from "../components/CodeForm";
+import CodeForm from "../components/VerificationForm";
 import { useSelector } from "react-redux";
 import { useLocalSearchParams } from "expo-router";
 import useAuth from "@/features/authentication/hooks/useAuth";

@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Box } from "@/gluestack-ui/box";
+import { useEffect, useState, useCallback } from "react";
 import { HStack } from "@/gluestack-ui/hstack";
-import Text from "./Text";
-import dayjs from "dayjs";
+import { Box } from "@/gluestack-ui/box";
 import duration from "dayjs/plugin/duration";
+import dayjs from "dayjs";
+import Text from "./Text";
 
 dayjs.extend(duration);
 
@@ -17,7 +17,7 @@ const TaskTimer = ({ timestamp }: Props) => {
   const [hoursLeft, setHoursLeft] = useState(0);
   const [minutesLeft, setMinutesLeft] = useState(0);
 
-  const calculateTimeLeft = React.useCallback(() => {
+  const calculateTimeLeft = useCallback(() => {
     const now = dayjs();
     const target = dayjs(timestamp);
 
