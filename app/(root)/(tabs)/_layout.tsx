@@ -1,6 +1,6 @@
-import { Tabs } from "expo-router";
 import React from "react";
 import { Platform } from "react-native";
+import { Tabs } from "expo-router";
 
 export default function TabLayout() {
   return (
@@ -16,13 +16,13 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="Home"
+        name="home"
         options={{
           title: "Home",
         }}
       />
       <Tabs.Screen
-        name="Calendar"
+        name="calendar"
         options={{
           title: "Calendar",
         }}
@@ -30,7 +30,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="(profile)"
         options={{
-          title: "Profile",
+          title: "profile",
           headerShown: false,
         }}
       />

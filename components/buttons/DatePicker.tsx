@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Pressable } from "../gluestack/pressable";
-import { HStack } from "../gluestack/hstack";
-import CalendarModal from "../UI/CalendarModal";
-import Icon from "../UI/Icon";
-import Text from "../Text";
+import { Pressable } from "@/gluestack-ui/pressable";
+import { HStack } from "@/gluestack-ui/hstack";
+import CalendarModal from "@/components/UI/CalendarModal";
+import Icon from "@/components/UI/Icon";
+import Text from "@/components/UI/Text";
 
 type Props = {
   currentDate: number;
@@ -34,7 +34,6 @@ const DatePicker = ({ currentDate, disabled, onDateChange }: Props) => {
 
       <CalendarModal
         isOpen={showCalendar}
-        initialDate={currentDate}
         onSelect={(date) => {
           onDateChange(date);
           setShowCalendar(false);

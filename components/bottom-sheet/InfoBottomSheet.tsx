@@ -1,0 +1,22 @@
+import { VStack } from "@/gluestack-ui/vstack";
+import { Box } from "@/gluestack-ui/box";
+import Text from "@/components/UI/Text";
+
+// Simple info bottom sheet for demonstration
+export type InfoBottomSheetProps = {
+  message: string;
+  onPressOk: () => void;
+};
+
+const InfoBottomSheet = ({ message, onPressOk }: InfoBottomSheetProps) => {
+  return (
+    <Box className="px-4 my-4 w-full justify-center items-center">
+      <Text className="text-center">{message}</Text>
+      <VStack className="justify-center items-center mt-8 gap-8 w-full max-w-[400px]">
+        <Text onPress={onPressOk}>OK</Text>
+      </VStack>
+    </Box>
+  );
+};
+
+export default InfoBottomSheet;

@@ -4,24 +4,24 @@ import {
   BottomSheetProvider,
   BottomSheetContext,
 } from "../BottomSheetProvider";
-import { Pressable } from "@/components/gluestack/pressable";
-import LogoutBottomSheet from "@/components/bottomSheets/LogoutBottomSheet";
+import { Pressable } from "@/gluestack-ui/pressable";
+import LogoutBottomSheet from "@/components/bottom-sheet/LogoutBottomSheet";
 
-import InfoBottomSheet from "@/components/bottomSheets/InfoBottomSheet";
+import InfoBottomSheet from "@/components/bottom-sheet/InfoBottomSheet";
 
 // Use official reanimated mock for reliability
 jest.mock("react-native-reanimated", () =>
   require("react-native-reanimated/mock"),
 );
 
-jest.mock("@/components/bottomSheets/LogoutBottomSheet", () =>
+jest.mock("@/components/bottom-sheet/LogoutBottomSheet", () =>
   jest.fn(() => null),
 );
 // --- Mock InfoBottomSheet for testing ---
-jest.mock("@/components/bottomSheets/InfoBottomSheet", () =>
+jest.mock("@/components/bottom-sheet/InfoBottomSheet", () =>
   jest.fn(() => null),
 );
-jest.mock("@/components/gluestack/pressable", () => {
+jest.mock("@/gluestack-ui/pressable", () => {
   const { Pressable } = jest.requireActual("react-native");
   return { Pressable };
 });

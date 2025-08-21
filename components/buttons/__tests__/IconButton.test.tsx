@@ -3,7 +3,7 @@ import { render, fireEvent } from "@testing-library/react-native";
 import IconButton from "../IconButton"; // Adjust the path
 
 // Mock the Icon component
-jest.mock("../../UI/Icon", () => {
+jest.mock("@/components/UI/Icon", () => {
   const { Text } = require("react-native");
   const component = ({
     icon,

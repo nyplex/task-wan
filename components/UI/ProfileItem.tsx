@@ -1,7 +1,7 @@
-import { Box } from "../gluestack/box";
-import { HStack } from "../gluestack/hstack";
-import { Pressable } from "../gluestack/pressable";
-import Text from "../Text";
+import { Pressable } from "@/gluestack-ui/pressable";
+import { HStack } from "@/gluestack-ui/hstack";
+import { Box } from "@/gluestack-ui/box";
+import Text from "./Text";
 import Icon from "./Icon";
 
 type Props = {
@@ -32,7 +32,7 @@ const ProfileItem = ({
   return (
     <Pressable
       role="button"
-      className="py-2 px-4 active:bg-primary-700 h-[54px] items-center justify-center"
+      className="py-2 px-6 active:bg-primary-700 h-[54px] items-center justify-center"
       disabled={disabled}
       onPress={onPress}
     >

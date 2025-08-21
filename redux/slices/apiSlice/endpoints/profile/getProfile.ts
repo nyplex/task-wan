@@ -1,4 +1,4 @@
-import { apiSlice } from "../../apiSlice";
+import { apiSlice } from "@/redux/slices/apiSlice/apiSlice";
 import { UserRecord } from "@/powersync/AppSchema";
 import { powersync } from "@/powersync/system";
 
@@ -23,7 +23,7 @@ export const getProfileApi = apiSlice.injectEndpoints({
       // providesTags: ["Profile"],
     }),
   }),
-  overrideExisting: false,
+  overrideExisting: true,
 });
 
 export const { useGetProfileQuery } = getProfileApi;
