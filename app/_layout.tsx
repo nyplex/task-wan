@@ -57,7 +57,7 @@ function InnerLayout() {
   return (
     <>
       <Stack>
-        <Stack.Protected guard={IS_STORYBOOK}>
+        {/* <Stack.Protected guard={IS_STORYBOOK}>
           <Stack.Screen
             name="Storybook"
             options={{
@@ -65,7 +65,7 @@ function InnerLayout() {
               headerShown: false,
             }}
           />
-        </Stack.Protected>
+        </Stack.Protected> */}
         <Stack.Protected guard={!session && !IS_STORYBOOK}>
           <Stack.Screen
             name="(auth)"

@@ -14,6 +14,9 @@ jest.mock("@/redux/slices/apiSlice/endpoints/profile/getProfile", () => ({
     },
   },
 }));
+jest.mock("@/powersync/system", () => ({
+  setupPowerSync: jest.fn().mockResolvedValue(undefined),
+}));
 
 describe("initializeAuthThunk", () => {
   const dispatch = jest.fn((fn) => (typeof fn === "function" ? fn() : fn));

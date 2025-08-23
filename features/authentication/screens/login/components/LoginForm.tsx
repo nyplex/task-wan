@@ -7,7 +7,7 @@ import Button from "@/components/buttons/Button";
 import FormInput from "@/components/form/FormInput";
 import useAuth from "@/features/authentication/hooks/useAuth";
 
-type FormValues = {
+type LoginFormValues = {
   email: string;
 };
 
@@ -19,7 +19,7 @@ const LoginForm = () => {
     control,
     handleSubmit,
     formState: { isSubmitting, isValid },
-  } = useForm<FormValues>({
+  } = useForm<LoginFormValues>({
     mode: "onSubmit",
     reValidateMode: "onChange",
     defaultValues: {
@@ -33,7 +33,7 @@ const LoginForm = () => {
 
   return (
     <VStack className="mt-8 gap-4">
-      <FormInput<FormValues>
+      <FormInput<LoginFormValues>
         keyboardType="email-address"
         control={control}
         autoCorrect={false}

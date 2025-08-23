@@ -8,7 +8,7 @@ import Button from "@/components/buttons/Button";
 import FormInput from "@/components/form/FormInput";
 import useAuth from "@/features/authentication/hooks/useAuth";
 
-type FormValues = {
+type RegisterFormValues = {
   email: string;
   username: string;
 };
@@ -21,7 +21,7 @@ const RegisterForm = () => {
     control,
     handleSubmit,
     formState: { isSubmitting, isValid },
-  } = useForm<FormValues>({
+  } = useForm<RegisterFormValues>({
     mode: "onSubmit",
     reValidateMode: "onChange",
     defaultValues: {
@@ -39,7 +39,7 @@ const RegisterForm = () => {
 
   return (
     <VStack className="gap-2 mt-4">
-      <FormInput<FormValues>
+      <FormInput<RegisterFormValues>
         control={control}
         name="email"
         placeholder="Email"
@@ -56,7 +56,7 @@ const RegisterForm = () => {
         }}
         isDisabled={isLoading}
       />
-      <FormInput<FormValues>
+      <FormInput<RegisterFormValues>
         control={control}
         name="username"
         placeholder="Username"
