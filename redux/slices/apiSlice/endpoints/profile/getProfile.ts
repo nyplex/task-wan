@@ -20,7 +20,9 @@ export const getProfileApi = apiSlice.injectEndpoints({
           return { error: { status: 500, data: "Failed to fetch profile" } };
         }
       },
-      // providesTags: ["Profile"],
+      providesTags: (result, error, { userID }) => [
+        { type: "Profile", id: userID },
+      ],
     }),
   }),
   overrideExisting: true,

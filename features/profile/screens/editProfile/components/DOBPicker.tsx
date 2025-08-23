@@ -1,6 +1,7 @@
+import { memo } from "react";
 import { Modal } from "react-native";
 import { UseFormSetValue } from "react-hook-form";
-import { FormValues } from "./EditProfileForm";
+import { EditProfileFormValues } from "./EditProfileForm";
 import { Pressable } from "@/gluestack-ui/pressable";
 import { Box } from "@/gluestack-ui/box";
 import Button from "@/components/buttons/Button";
@@ -9,7 +10,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 type Props = {
   setShowCalendar: (show: boolean) => void;
   getValues: (field: string) => string;
-  setValue: UseFormSetValue<FormValues>;
+  setValue: UseFormSetValue<EditProfileFormValues>;
 };
 
 const DOBPicker = ({ setShowCalendar, getValues, setValue }: Props) => {
@@ -57,4 +58,4 @@ const DOBPicker = ({ setShowCalendar, getValues, setValue }: Props) => {
     </Modal>
   );
 };
-export default DOBPicker;
+export default memo(DOBPicker);
