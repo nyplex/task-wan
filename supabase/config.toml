@@ -1,0 +1,6 @@
+[auth]
+# Your app's redirect URL (deep link or localhost)
+redirect_urls = [
+  "myapp://auth-callback",      # deep link for your Expo app
+  "http://localhost:3000"       # web/local testing
+]

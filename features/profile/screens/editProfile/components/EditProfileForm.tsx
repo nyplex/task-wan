@@ -46,7 +46,11 @@ const EditProfileForm = () => {
               title="Save Changes"
               onPress={onSubmit}
               isLoading={form.formState.isSubmitting || isUpdating}
-              disabled={form.formState.isSubmitting || !form.formState.isValid}
+              disabled={
+                form.formState.isSubmitting ||
+                !form.formState.isValid ||
+                !form.formState.isDirty
+              }
             />
           </Box>
         </Box>
