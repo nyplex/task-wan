@@ -7,12 +7,18 @@ import {
   UpdateProfilePayload,
   useUpdateProfileMutation,
 } from "@/redux/slices/apiSlice/endpoints/profile/updateProfile";
+import { addError } from "@/redux/slices/errorsSlice/errorsSlice";
 import { selectSession } from "@/features/authentication/authSlice/authSelectors";
 import { EditProfileFormValues } from "../screens/editProfile/components/EditProfileForm";
+import { GlobalError } from "@/types/errors";
+import { useAppDispatch } from "@/hooks/redux";
+import useToast from "@/hooks/useToast";
 
 const useEditProfile = () => {
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const session = useSelector(selectSession);
+  const { handleToast } = useToast();
   const skip = !session?.user?.id;
   const {
     data: profileData,
@@ -47,6 +53,7 @@ const useEditProfile = () => {
 
   const onSubmit = form.handleSubmit(async (values) => {
     if (!session?.user?.id) return;
+
     const payload: UpdateProfilePayload = {
       id: session.user.id,
       name: values.name.trim(),
@@ -57,13 +64,27 @@ const useEditProfile = () => {
     try {
       // use unwrap to throw on error
       await updateProfile(payload).unwrap();
-      // success UX
-      // e.g. show toast/snackbar (implement your toast util) then navigate back
-      // toast.success("Profile updated");
+      handleToast("Success", "Your profile has been updated.");
       router.back();
-    } catch (err) {
-      console.error("Update failed", err);
-      // toast.error("Failed to update profile");
+    } catch (error) {
+      if (error instanceof Error) {
+        dispatch(
+          addError({
+            message: "An unknown error occurred during login.",
+            source: "useAuth/login",
+            type: "auth",
+          }),
+        );
+      } else {
+        const typedError = error as GlobalError;
+        dispatch(
+          addError({
+            message: typedError.message,
+            source: typedError.source,
+            type: typedError.type,
+          }),
+        );
+      }
     }
   });
 
