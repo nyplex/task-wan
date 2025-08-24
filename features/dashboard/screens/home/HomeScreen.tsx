@@ -17,7 +17,14 @@ export default function HomeScreen() {
       <Box className="flex-1 bg-background py-safe-offset-4">
         <Box className="px-4">
           <HStack className="justify-between items-center">
-            <Text size="bodyS">Saturday, Feb 20 2022</Text>
+            <Text size="bodyS">
+              {new Date().toLocaleDateString("en-GB", {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </Text>
             <Icon icon="bell" />
           </HStack>
           <WelcomeMessage />
