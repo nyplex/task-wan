@@ -1,20 +1,33 @@
+// Polyfills & global styles
 import "@azure/core-asynciterator-polyfill";
 import "@/global.css";
+
+// React Native core
 import { ActivityIndicator, View } from "react-native";
+
+// Gesture & keyboard
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { KeyboardProvider } from "react-native-keyboard-controller";
+
+// Navigation & status bar
 import { ThemeProvider, DefaultTheme } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { Stack } from "expo-router";
-import { GluestackUIProvider } from "@/components/gluestack/gluestack-ui-provider";
-import { Provider, useSelector } from "react-redux";
-import { selectSession } from "@/redux/slices/authSlice/authSelectors";
-import { selectAppState } from "@/redux/slices/appSlice/appSelectors";
-import { KeyboardProvider } from "react-native-keyboard-controller";
-import store from "@/redux/store";
-import useInitializeApp from "@/hooks/useInitializeApp";
-import useAuthListener from "@/hooks/useAuthListener";
-import useErrors from "@/hooks/useErrors";
+
+// UI Providers
+import { GluestackUIProvider } from "@/gluestack-ui/gluestack-ui-provider";
 import { BottomSheetProvider } from "@/context/BottomSheetProvider";
+
+// Redux
+import { Provider, useSelector } from "react-redux";
+import store from "@/redux/store";
+import { selectSession } from "@/features/authentication/authSlice/authSelectors";
+import { selectAppState } from "@/redux/slices/appSlice/appSelectors";
+
+// Hooks
+import useInitializeApp from "@/hooks/useInitializeApp";
+import useAuthListener from "@/features/authentication/hooks/useAuthListener";
+import useErrors from "@/hooks/useErrors";
 
 function InnerLayout() {
   useErrors();
@@ -44,7 +57,7 @@ function InnerLayout() {
   return (
     <>
       <Stack>
-        <Stack.Protected guard={IS_STORYBOOK}>
+        {/* <Stack.Protected guard={IS_STORYBOOK}>
           <Stack.Screen
             name="Storybook"
             options={{
@@ -52,12 +65,12 @@ function InnerLayout() {
               headerShown: false,
             }}
           />
-        </Stack.Protected>
+        </Stack.Protected> */}
         <Stack.Protected guard={!session && !IS_STORYBOOK}>
           <Stack.Screen
-            name="(app)"
+            name="(auth)"
             options={{
-              title: "(app)",
+              title: "(auth)",
               headerShown: false,
             }}
           />

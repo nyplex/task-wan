@@ -46,3 +46,8 @@ google-services.json
 GoogleService-Info.plist
 .eas/.env
 .vscode/
+.temp/
+/supabase/.branches
+server.cert
+sync-rules-dev.yaml
+dump.sql

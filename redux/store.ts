@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { listenerMiddleware } from "./middlewares/listenerMiddlewares";
 import devToolsEnhancer from "redux-devtools-expo-dev-plugin";
 import appReducer from "./slices/appSlice/appSlice";
-import authReducer from "./slices/authSlice/authSlice";
+import authReducer from "@/features/authentication/authSlice/authSlice";
 import errorsReducer from "./slices/errorsSlice/errorsSlice";
 import { apiSlice } from "./slices/apiSlice/apiSlice";
 

@@ -1,17 +1,17 @@
 import { renderHook } from "@testing-library/react-native";
-import useErrors from "../useErrors";
+import useErrors from "@/hooks/useErrors";
 import { useSelector } from "react-redux";
-import { useAppDispatch } from "../redux";
+import { useAppDispatch } from "@/hooks/redux";
 import { clearErrors } from "@/redux/slices/errorsSlice/errorsSlice";
-import useToast from "../useToast";
+import useToast from "@/hooks/useToast";
 
 jest.mock("react-redux", () => ({ useSelector: jest.fn() }));
-jest.mock("../redux", () => ({ useAppDispatch: jest.fn() }));
+jest.mock("@/hooks/redux", () => ({ useAppDispatch: jest.fn() }));
 jest.mock("@/redux/slices/errorsSlice/errorsSlice", () => ({
   clearErrors: jest.fn(() => ({ type: "CLEAR_ERRORS" })),
   selectErrors: jest.fn(() => []),
 }));
-jest.mock("../useToast", () => jest.fn());
+jest.mock("@/hooks/useToast", () => jest.fn());
 
 const mockDispatch = jest.fn();
 const mockHandleToast = jest.fn();

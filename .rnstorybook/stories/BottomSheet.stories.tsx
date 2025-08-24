@@ -1,12 +1,12 @@
 import { View } from "react-native";
 import type { Meta, StoryObj } from "@storybook/react";
 import { action } from "storybook/actions";
-import { Box } from "../../components/gluestack/box";
+import { Box } from "../../gluestack-ui/box";
 import { useBottomSheet } from "../../hooks/useBottomSheet";
 import Button from "../../components/buttons/Button";
 
 const meta = {
-  title: "BottomSheets/Logout",
+  title: "Bottom-sheet/Logout",
   component: Button,
   decorators: [
     (Story) => (

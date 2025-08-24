@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useMemo } from "react";
+import { useRef, useState, useEffect, useMemo } from "react";
 import { FlatList, View, Text, TouchableOpacity } from "react-native";
 import { format, startOfMonth, endOfMonth, isSameDay, addDays } from "date-fns";
 

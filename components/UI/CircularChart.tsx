@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import Svg, { Circle } from "react-native-svg";
 import Animated, {
   useSharedValue,
   useAnimatedProps,
   withTiming,
 } from "react-native-reanimated";
-import { Box } from "../gluestack/box";
-import Text from "../Text";
+import { Box } from "@/gluestack-ui/box";
+import Text from "./Text";
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 

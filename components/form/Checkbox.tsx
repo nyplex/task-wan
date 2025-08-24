@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Pressable } from "../gluestack/pressable";
-import Icon from "../UI/Icon";
+import { Pressable } from "@/gluestack-ui/pressable";
+import Icon from "@/components/UI/Icon";
 
 type Props = {
   checked?: boolean;

@@ -1,4 +1,4 @@
-import { apiSlice } from "../../apiSlice";
+import { apiSlice } from "@/redux/slices/apiSlice/apiSlice";
 import { UserRecord } from "@/powersync/AppSchema";
 import { powersync } from "@/powersync/system";
 
@@ -20,10 +20,12 @@ export const getProfileApi = apiSlice.injectEndpoints({
           return { error: { status: 500, data: "Failed to fetch profile" } };
         }
       },
-      // providesTags: ["Profile"],
+      providesTags: (result, error, { userID }) => [
+        { type: "Profile", id: userID },
+      ],
     }),
   }),
-  overrideExisting: false,
+  overrideExisting: true,
 });
 
 export const { useGetProfileQuery } = getProfileApi;

@@ -55,4 +55,14 @@ describe("Input", () => {
     const icon = getByTestId("icon");
     expect(icon.props.children).toContain("Feather Icon");
   });
+
+  it("calls onPress when Pressable wrapper is pressed", () => {
+    const onPressMock = jest.fn();
+    const { getByTestId } = render(
+      <Input placeholder="Press me" onPress={onPressMock} />,
+    );
+    const pressable = getByTestId("input-pressable");
+    fireEvent.press(pressable);
+    expect(onPressMock).toHaveBeenCalled();
+  });
 });

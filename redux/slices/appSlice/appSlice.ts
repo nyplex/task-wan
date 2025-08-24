@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { initializeAuthThunk } from "../authSlice/thunks/initializeAuthThunk";
+import { initializeAuthThunk } from "@/features/authentication/authSlice/thunks/initializeAuthThunk";
 import { initializeAppThunk } from "./thunks/initializeAppThunk";
 
 export interface AppStateType {

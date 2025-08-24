@@ -1,7 +1,7 @@
 import { Image } from "expo-image";
-import { Pressable } from "../gluestack/pressable";
-import { Box } from "../gluestack/box";
-import { ButtonSpinner } from "../gluestack/button";
+import { Pressable } from "@/gluestack-ui/pressable";
+import { ButtonSpinner } from "@/gluestack-ui/button";
+import { Box } from "@/gluestack-ui/box";
 
 type Props = {
   provider: "google" | "apple";

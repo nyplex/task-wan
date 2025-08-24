@@ -1,5 +1,5 @@
-import { Box } from "../gluestack/box";
-import Text from "../Text";
+import { Box } from "@/gluestack-ui/box";
+import Text from "./Text";
 
 type Props = {
   progress: number;

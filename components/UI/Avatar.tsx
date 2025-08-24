@@ -2,9 +2,9 @@ import {
   Avatar as AvatarGS,
   AvatarFallbackText,
   AvatarImage,
-} from "../gluestack/avatar";
-import { Box } from "../gluestack/box";
-import { Pressable } from "../gluestack/pressable";
+} from "@/gluestack-ui/avatar";
+import { Box } from "@/gluestack-ui/box";
+import { Pressable } from "@/gluestack-ui/pressable";
 import Icon from "./Icon";
 
 type Props = {
@@ -50,7 +50,7 @@ const Avatar = ({
         {editable && (
           <Box
             testID="avatar-edit-icon-wrapper"
-            className="absolute -bottom-1 -right-1 bg-white rounded-full p-2 border-[1px] border-primary-50"
+            className="absolute -bottom-0 -right-1 bg-white rounded-full p-2 border-[1px] border-primary-50"
           >
             <Icon icon="edit-2" size="small" />
           </Box>

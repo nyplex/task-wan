@@ -15,13 +15,16 @@ jest.mock("@/redux/slices/appSlice/thunks/initializeAppThunk", () => ({
   },
 }));
 
-jest.mock("@/redux/slices/authSlice/thunks/initializeAuthThunk", () => ({
-  initializeAuthThunk: {
-    pending: { type: "initializeAuthThunk/pending" },
-    fulfilled: { type: "initializeAuthThunk/fulfilled" },
-    rejected: { type: "initializeAuthThunk/rejected" },
-  },
-}));
+jest.mock(
+  "@/features/authentication/authSlice/thunks/initializeAuthThunk",
+  () => ({
+    initializeAuthThunk: {
+      pending: { type: "initializeAuthThunk/pending" },
+      fulfilled: { type: "initializeAuthThunk/fulfilled" },
+      rejected: { type: "initializeAuthThunk/rejected" },
+    },
+  }),
+);
 
 const getInitialState: AppStateType = {
   isAppReady: false,

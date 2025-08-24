@@ -1,10 +1,10 @@
 import { renderHook } from "@testing-library/react-native";
-import useInitializeApp from "../useInitializeApp";
-import { useAppDispatch } from "../redux";
+import useInitializeApp from "@/hooks/useInitializeApp";
+import { useAppDispatch } from "@/hooks/redux";
 import { initializeAppThunk } from "@/redux/slices/appSlice/thunks/initializeAppThunk";
 import { addError } from "@/redux/slices/errorsSlice/errorsSlice";
 
-jest.mock("../redux", () => ({ useAppDispatch: jest.fn() }));
+jest.mock("@/hooks/redux", () => ({ useAppDispatch: jest.fn() }));
 
 jest.mock("@/redux/slices/appSlice/thunks/initializeAppThunk", () => ({
   initializeAppThunk: jest.fn(() => ({ type: "initializeAppThunk" })),
