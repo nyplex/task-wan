@@ -15,13 +15,18 @@ const DailyTaskList = () => {
       <Box className="mt-4 flex-1 px-4">
         <FlashList
           data={subtasks}
-          estimatedItemSize={188}
+          estimatedItemSize={46}
           renderItem={({ item }) => (
             <TaskCard title={item.title} isSelected={false} showSelect />
           )}
           showsHorizontalScrollIndicator={false}
           ItemSeparatorComponent={() => <Box className="h-4" />}
           contentContainerClassName="pb-safe-offset-4"
+          ListEmptyComponent={
+            <Box className="h-[46px] justify-center">
+              <Text className="text-center">No tasks for today</Text>
+            </Box>
+          }
         />
       </Box>
     </Box>
