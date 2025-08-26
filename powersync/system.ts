@@ -31,7 +31,7 @@ export const setupPowerSync = async (token: string) => {
 
   // Wait for PowerSync to be ready
   while (!powersync.ready && Date.now() - start < timeout) {
-    await new Promise((resolve) => setTimeout(resolve, 50));
+    await new Promise((resolve) => setTimeout(resolve, 150));
   }
 
   return powersync.ready;

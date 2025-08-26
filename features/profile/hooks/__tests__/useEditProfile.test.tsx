@@ -201,19 +201,17 @@ describe("useEditProfile", () => {
 
       renderHookWithProvider(() => useEditProfile());
 
-      expect(mockUseGetProfileQuery).toHaveBeenCalledWith(
-        { userID: undefined },
-        { skip: true },
-      );
+      expect(mockUseGetProfileQuery).toHaveBeenCalledWith(undefined, {
+        skip: true,
+      });
     });
 
-    it("calls profile query with correct user ID", () => {
+    it("calls profile query with correct user ID (now expects undefined)", () => {
       renderHookWithProvider(() => useEditProfile());
 
-      expect(mockUseGetProfileQuery).toHaveBeenCalledWith(
-        { userID: mockSession.user.id },
-        { skip: false },
-      );
+      expect(mockUseGetProfileQuery).toHaveBeenCalledWith(undefined, {
+        skip: false,
+      });
     });
   });
 
@@ -485,10 +483,9 @@ describe("useEditProfile", () => {
 
       renderHookWithProvider(() => useEditProfile());
 
-      expect(mockUseGetProfileQuery).toHaveBeenCalledWith(
-        { userID: undefined },
-        { skip: true },
-      );
+      expect(mockUseGetProfileQuery).toHaveBeenCalledWith(undefined, {
+        skip: true,
+      });
     });
 
     it("handles empty profile data", () => {

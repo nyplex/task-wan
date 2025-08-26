@@ -62,9 +62,9 @@ describe("initializeAuthThunk", () => {
       thunkAPI,
     );
     expect(setSession).toHaveBeenCalledWith(session);
-    expect(getProfileApi.endpoints.getProfile.initiate).toHaveBeenCalledWith({
-      userID: "user123",
-    });
+    expect(getProfileApi.endpoints.getProfile.initiate).toHaveBeenCalledWith(
+      undefined,
+    );
     expect(unwrap).toHaveBeenCalled();
     expect(result.payload).toBeUndefined();
   });

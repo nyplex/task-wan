@@ -4,4 +4,5 @@
     "source.fixAll": "explicit",
     "source.fixAll.eslint": "explicit"
   },
+  "deno.enable": true,
 }
