@@ -28,28 +28,31 @@ const PriorityTaskList = () => {
         My Priority Task
       </Text>
       <Box className="h-[188px] mt-4">
-        {data && data.length > 0 ? (
-          <FlashList
-            data={data || []}
-            estimatedItemSize={188}
-            renderItem={({ item }) => (
+        <FlashList
+          data={data || []}
+          estimatedItemSize={188}
+          renderItem={({ item }) => (
+            <Box style={{ height: 188 }}>
               <PriorityTaskCard
                 title={item.title || "No Title"}
                 timeLeft={getTimeLeft(item.end_date)}
                 progress={getTaskProgress(item)}
                 bgColor={bg[Math.floor(Math.random() * bg.length)] as any}
               />
-            )}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            ItemSeparatorComponent={() => <Box className="w-4" />}
-            contentContainerClassName="px-4"
-          />
-        ) : (
-          <Text className="px-4" size="bodyL">
-            No priority tasks available
-          </Text>
-        )}
+            </Box>
+          )}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          ItemSeparatorComponent={() => <Box className="w-4" />}
+          contentContainerClassName="px-4 w-full"
+          ListEmptyComponent={
+            <Box className="h-[188px] w-full">
+              <Text className="text-center" size="bodyL">
+                No priority tasks available
+              </Text>
+            </Box>
+          }
+        />
       </Box>
     </Box>
   );
