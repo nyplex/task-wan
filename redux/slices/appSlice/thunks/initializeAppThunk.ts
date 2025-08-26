@@ -5,7 +5,8 @@ export const initializeAppThunk = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       // Simulate async boot logic (e.g., fetch remote config, permissions, OTAs, appVersion etc...)
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      await new Promise((resolve) => setTimeout(resolve, 0));
+      return;
       // throw new Error("Simulated error during app initialization"); // Simulate an error for testing
     } catch (error) {
       if (error instanceof Error) {

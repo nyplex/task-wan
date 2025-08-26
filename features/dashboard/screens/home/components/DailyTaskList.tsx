@@ -2,8 +2,11 @@ import { FlashList } from "@shopify/flash-list";
 import { Box } from "@/gluestack-ui/box";
 import TaskCard from "@/components/UI/TaskCard";
 import Text from "@/components/UI/Text";
+import useGetDailyTasks from "@/features/dashboard/hooks/useGetDailyTasks";
 
 const DailyTaskList = () => {
+  const subtasks = useGetDailyTasks();
+
   return (
     <Box className="mt-8">
       <Text className="px-4" size="bodyL" weight="bold">
@@ -11,10 +14,7 @@ const DailyTaskList = () => {
       </Text>
       <Box className="mt-4 flex-1 px-4">
         <FlashList
-          data={Array.from({ length: 10 }, (_, i) => ({
-            id: i,
-            title: `Task ${i + 1}`,
-          }))}
+          data={subtasks}
           estimatedItemSize={188}
           renderItem={({ item }) => (
             <TaskCard title={item.title} isSelected={false} showSelect />

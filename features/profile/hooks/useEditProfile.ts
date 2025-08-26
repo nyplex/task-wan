@@ -24,7 +24,7 @@ const useEditProfile = () => {
     data: profileData,
     isFetching: isProfileFetching,
     isError: profileError,
-  } = useGetProfileQuery({ userID: session?.user?.id! }, { skip });
+  } = useGetProfileQuery(undefined, { skip });
 
   const [updateProfile, { isLoading: isUpdating }] = useUpdateProfileMutation();
 
