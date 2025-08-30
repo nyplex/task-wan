@@ -2,10 +2,23 @@ import { useGetActiveTasksQuery } from "@/redux/slices/apiSlice/endpoints/tasks/
 import { filterAndOrderTasks } from "../utils/filterAndOrderTasks";
 
 const useGetPriorityTasks = () => {
-  const { data: tasks } = useGetActiveTasksQuery();
+  const {
+    data: tasks,
+    isError,
+    isLoading,
+    isSuccess,
+    status,
+  } = useGetActiveTasksQuery();
+
   const orderedTasks = filterAndOrderTasks(tasks || []);
 
-  return orderedTasks;
+  return {
+    tasks: orderedTasks,
+    isError,
+    isLoading,
+    isSuccess,
+    status,
+  };
 };
 
 export default useGetPriorityTasks;

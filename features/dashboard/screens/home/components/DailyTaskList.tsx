@@ -1,11 +1,15 @@
+import { useRouter } from "expo-router";
 import { FlashList } from "@shopify/flash-list";
 import { Box } from "@/gluestack-ui/box";
 import TaskCard from "@/components/UI/TaskCard";
 import Text from "@/components/UI/Text";
 import useGetDailyTasks from "@/features/dashboard/hooks/useGetDailyTasks";
+import DailTasksLoader from "./DailyTasksLoader";
+import EmptyDailyTask from "./EmptyDailyTask";
 
 const DailyTaskList = () => {
-  const subtasks = useGetDailyTasks();
+  const navigation = useRouter();
+  const { tasks, isLoading } = useGetDailyTasks();
 
   return (
     <Box className="mt-8">
@@ -14,18 +18,26 @@ const DailyTaskList = () => {
       </Text>
       <Box className="mt-4 flex-1 px-4">
         <FlashList
-          data={subtasks}
+          data={tasks}
           estimatedItemSize={46}
           renderItem={({ item }) => (
-            <TaskCard title={item.title} isSelected={false} showSelect />
+            <TaskCard
+              title={item.title}
+              isSelected={false}
+              showSelect
+              onPress={() => {
+                navigation.navigate({
+                  pathname: "/(root)/(dailyTask)/[taskID]",
+                  params: { taskID: item.id },
+                });
+              }}
+            />
           )}
           showsHorizontalScrollIndicator={false}
           ItemSeparatorComponent={() => <Box className="h-4" />}
           contentContainerClassName="pb-safe-offset-4"
           ListEmptyComponent={
-            <Box className="h-[46px] justify-center">
-              <Text className="text-center">No tasks for today</Text>
-            </Box>
+            isLoading ? <DailTasksLoader /> : <EmptyDailyTask />
           }
         />
       </Box>

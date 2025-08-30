@@ -1,9 +1,25 @@
 import { useGetTodaySubtasksQuery } from "@/redux/slices/apiSlice/endpoints/subtasks/getSubtasks";
 
 const useGetDailyTasks = () => {
-  const { data: tasks } = useGetTodaySubtasksQuery();
+  const {
+    data: tasks,
+    isFetching,
+    isError,
+    isLoading,
+    isSuccess,
+    status,
+  } = useGetTodaySubtasksQuery();
 
-  if (!tasks) return [];
+  if (!tasks) {
+    return {
+      tasks: [],
+      isFetching,
+      isError,
+      isLoading,
+      isSuccess,
+      status,
+    };
+  }
 
   // Helper to check if a date string is today (ignoring time)
   const isToday = (dateStr: string) => {
@@ -29,7 +45,14 @@ const useGetDailyTasks = () => {
     return 0;
   });
 
-  return [...todayTasks, ...otherTasks];
+  return {
+    tasks: [...todayTasks, ...otherTasks],
+    isFetching,
+    isError,
+    isLoading,
+    isSuccess,
+    status,
+  };
 };
 
 export default useGetDailyTasks;
