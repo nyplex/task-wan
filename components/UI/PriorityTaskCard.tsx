@@ -91,7 +91,7 @@ const PriorityTaskCard = ({
     10: "#8B5CF6", // Violet
   };
 
-  const backgroundColor = bgColors[bgColor] || "#FBBF24"; // Default to Yellow if not found
+  const backgroundColor = bgColors[String(bgColor + 1)] || "#FBBF24";
 
   const Overlay = useMemo(() => {
     const backgroundOverlays = [LightDots, LightCircles, LightTriangles];
