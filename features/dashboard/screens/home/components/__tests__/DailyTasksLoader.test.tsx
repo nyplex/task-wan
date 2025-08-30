@@ -1,8 +1,8 @@
 import React from "react";
 import { render } from "@testing-library/react-native";
-import DailTasksLoader from "../DailyTasksLoader";
+import DailyTasksLoader from "../DailyTasksLoader";
 
-// You may need to mock hooks or data sources used inside PriorityTasksLoader
+// You may need to mock hooks or data sources used inside DailyTasksLoader
 jest.mock("@/features/dashboard/hooks/useGetDailyTasks", () => ({
   __esModule: true,
   default: jest.fn(() => [
@@ -18,12 +18,12 @@ jest.mock("@/features/dashboard/hooks/useGetDailyTasks", () => ({
 
 describe("DailyTasksLoader", () => {
   it("renders without crashing", () => {
-    const { toJSON } = render(<DailTasksLoader />);
+    const { toJSON } = render(<DailyTasksLoader />);
     expect(toJSON()).toBeTruthy();
   });
 
   it("matches snapshot", () => {
-    const tree = render(<DailTasksLoader />).toJSON();
+    const tree = render(<DailyTasksLoader />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 });

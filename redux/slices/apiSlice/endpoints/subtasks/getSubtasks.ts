@@ -28,8 +28,6 @@ export const getSubtasksApi = apiSlice.injectEndpoints({
         try {
           const userId = await getUserId();
           const today = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
-          // fake await of 5 seconds
-          await new Promise((resolve) => setTimeout(resolve, 3000));
           const result = (await powersync.getAll(
             `SELECT * FROM subtasks
             WHERE task_id IS NULL

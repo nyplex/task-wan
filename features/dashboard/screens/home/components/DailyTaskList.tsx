@@ -4,7 +4,7 @@ import { Box } from "@/gluestack-ui/box";
 import TaskCard from "@/components/UI/TaskCard";
 import Text from "@/components/UI/Text";
 import useGetDailyTasks from "@/features/dashboard/hooks/useGetDailyTasks";
-import DailTasksLoader from "./DailyTasksLoader";
+import DailyTasksLoader from "./DailyTasksLoader";
 import EmptyDailyTask from "./EmptyDailyTask";
 
 const DailyTaskList = () => {
@@ -37,7 +37,7 @@ const DailyTaskList = () => {
           ItemSeparatorComponent={() => <Box className="h-4" />}
           contentContainerClassName="pb-safe-offset-4"
           ListEmptyComponent={
-            isLoading ? <DailTasksLoader /> : <EmptyDailyTask />
+            isLoading ? <DailyTasksLoader /> : <EmptyDailyTask />
           }
         />
       </Box>

@@ -129,7 +129,7 @@ const PriorityTaskCard = ({
           <Box className="relative w-full h-2 mt-2 rounded-full bg-white/20 backdrop-blur-md border border-white/30 overflow-hidden">
             <Box
               className="h-full rounded-full bg-slate-300"
-              style={{ width: `${50}%` }}
+              style={{ width: `${progress}%` }}
             />
           </Box>
           <ThemedText size="caption" className="text-white text-right">
