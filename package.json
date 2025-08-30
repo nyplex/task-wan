@@ -4,7 +4,7 @@
   "main": "expo-router/entry",
   "version": "53.0.26",
   "scripts": {
-    "start": "expo start",
+    "start": "npx expo start",
     "reset-project": "node ./scripts/reset-project.js",
     "android": "DARK_MODE=media expo start --android",
     "ios": "DARK_MODE=media expo start --ios",
@@ -13,7 +13,8 @@
     "test-watch": "jest --watchAll",
     "test": "jest",
     "storybook-generate": "sb-rn-get-stories",
-    "prebuild": "npx expo prebuild --clean && node ./scripts/patch_podfile_op_sqlite.js"
+    "prebuild": "npx expo prebuild --clean && node ./scripts/patch_podfile_op_sqlite.js",
+    "ngrok": "ngrok tcp --region=eu --remote-addr=10.tcp.eu.ngrok.io:24023 54322"
   },
   "dependencies": {
     "@azure/core-asynciterator-polyfill": "^1.0.2",

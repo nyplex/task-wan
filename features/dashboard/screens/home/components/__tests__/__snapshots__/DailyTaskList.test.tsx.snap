@@ -1,0 +1,159 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DailyTaskList matches snapshot 1`] = `
+<View
+  className="mt-8"
+>
+  <Text
+    className="font-body based-styles font-bold text-typography-primary text-[20px] tracking-[0.5px] px-4"
+  >
+    Daily Tasks
+  </Text>
+  <View
+    className="mt-4 flex-1 px-4"
+  >
+    <View
+      testID="flash-list"
+    >
+      <View
+        testID="flash-list-item-0"
+      >
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          className="data-[focus-visible=true]:outline-none data-[focus-visible=true]:ring-indicator-info data-[focus-visible=true]:ring-2 data-[disabled=true]:opacity-40 h-[46px] w-full bg-white rounded-[10px] border-[1px] border-primary-700 py-2 px-3 items-center"
+          collapsable={false}
+          dataSet={
+            {
+              "active": "false",
+              "disabled": "false",
+              "focus": "false",
+              "focusVisible": "false",
+              "hover": "false",
+            }
+          }
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          role="button"
+          states={
+            {
+              "active": false,
+              "disabled": undefined,
+              "focus": false,
+              "focusVisible": false,
+              "hover": false,
+            }
+          }
+        >
+          <View
+            className="flex-row items-center justify-between flex-1 w-full gap-2"
+          >
+            <Text
+              className="based-styles font-regular text-typography-primary text-[16px] tracking-[0px] line-clamp-1 flex-1"
+            >
+              Task 1
+            </Text>
+            <View
+              className="h-6 w-6 rounded-full border-2 border-primary-0 items-center justify-center p-[1px]"
+              testID="select-circle"
+            />
+          </View>
+        </View>
+      </View>
+      <View
+        testID="flash-list-item-1"
+      >
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          className="data-[focus-visible=true]:outline-none data-[focus-visible=true]:ring-indicator-info data-[focus-visible=true]:ring-2 data-[disabled=true]:opacity-40 h-[46px] w-full bg-white rounded-[10px] border-[1px] border-primary-700 py-2 px-3 items-center"
+          collapsable={false}
+          dataSet={
+            {
+              "active": "false",
+              "disabled": "false",
+              "focus": "false",
+              "focusVisible": "false",
+              "hover": "false",
+            }
+          }
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          role="button"
+          states={
+            {
+              "active": false,
+              "disabled": undefined,
+              "focus": false,
+              "focusVisible": false,
+              "hover": false,
+            }
+          }
+        >
+          <View
+            className="flex-row items-center justify-between flex-1 w-full gap-2"
+          >
+            <Text
+              className="based-styles font-regular text-typography-primary text-[16px] tracking-[0px] line-clamp-1 flex-1"
+            >
+              Task 2
+            </Text>
+            <View
+              className="h-6 w-6 rounded-full border-2 border-primary-0 items-center justify-center p-[1px]"
+              testID="select-circle"
+            />
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;

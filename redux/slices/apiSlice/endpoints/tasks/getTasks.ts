@@ -33,6 +33,8 @@ export const getTasksApi = apiSlice.injectEndpoints({
       queryFn: async () => {
         try {
           const userId = await getUserId();
+          // fake await of 5 seconds
+          await new Promise((resolve) => setTimeout(resolve, 5000));
           const rows = (await powersync.getAll(
             `SELECT 
               t.id,

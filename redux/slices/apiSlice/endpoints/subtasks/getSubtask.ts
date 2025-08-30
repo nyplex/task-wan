@@ -20,7 +20,6 @@ export const getSubtaskApi = apiSlice.injectEndpoints({
           return { error: { status: 500, data: "Failed to fetch subtask" } };
         }
       },
-      // providesTags: ["Profile"],
     }),
   }),
   overrideExisting: "throw",
