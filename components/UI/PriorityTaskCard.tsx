@@ -81,7 +81,7 @@ const PriorityTaskCard = ({
   const bgColors: Record<string, string> = {
     1: "#60A5FA", // Sky Blue
     2: "#34D399", // Green
-    3: "#FBBF24", // Yellow
+    3: "#A855F7", // Purple
     4: "#F472B6", // Rose Pink
     5: "#6366F1", // Purple
     6: "#64748B", // Grey
@@ -89,6 +89,7 @@ const PriorityTaskCard = ({
     8: "#84CC16", // Lime Green
     9: "#2DD4BF", // Cyan
     10: "#8B5CF6", // Violet
+    11: "#FBBF24", // Default Yellow
   };
 
   const backgroundColor = bgColors[String(bgColor + 1)] || "#FBBF24";
