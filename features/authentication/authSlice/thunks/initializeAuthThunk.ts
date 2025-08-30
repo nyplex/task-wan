@@ -17,14 +17,8 @@ export const initializeAuthThunk = createAsyncThunk(
 
       await setupPowerSync(session.access_token);
 
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
       await thunkAPI
-        .dispatch(
-          getProfileApi.endpoints.getProfile.initiate({
-            userID: session.user.id,
-          }),
-        )
+        .dispatch(getProfileApi.endpoints.getProfile.initiate(undefined))
         .unwrap();
     } catch (error) {
       if (error instanceof Error) {

@@ -65,17 +65,7 @@ type Props = {
   title: string;
   timeLeft: string;
   progress: number;
-  bgColor:
-    | "Sky Blue"
-    | "Green"
-    | "Yellow"
-    | "Rose Pink"
-    | "Purple"
-    | "Grey"
-    | "Orange"
-    | "Lime Green"
-    | "Cyan"
-    | "Violet";
+  bgColor: number;
   disabled?: boolean;
   onPress?: () => void;
 };
@@ -89,19 +79,20 @@ const PriorityTaskCard = ({
   onPress,
 }: Props) => {
   const bgColors: Record<string, string> = {
-    "Sky Blue": "#60A5FA",
-    Green: "#34D399",
-    Yellow: "#FBBF24",
-    "Rose Pink": "#F472B6",
-    Purple: "#6366F1",
-    Grey: "#64748B",
-    Orange: "#FB923C",
-    "Lime Green": "#84CC16",
-    Cyan: "#2DD4BF",
-    Violet: "#8B5CF6",
+    1: "#60A5FA", // Sky Blue
+    2: "#34D399", // Green
+    3: "#A855F7", // Purple
+    4: "#F472B6", // Rose Pink
+    5: "#6366F1", // Purple
+    6: "#64748B", // Grey
+    7: "#FB923C", // Orange
+    8: "#84CC16", // Lime Green
+    9: "#2DD4BF", // Cyan
+    10: "#8B5CF6", // Violet
+    11: "#FBBF24", // Default Yellow
   };
 
-  const backgroundColor = bgColors[bgColor] || "#FBBF24"; // Default to Yellow if not found
+  const backgroundColor = bgColors[String(bgColor + 1)] || "#FBBF24";
 
   const Overlay = useMemo(() => {
     const backgroundOverlays = [LightDots, LightCircles, LightTriangles];
@@ -113,13 +104,13 @@ const PriorityTaskCard = ({
     <Pressable
       onPress={onPress}
       disabled={disabled}
-      className="h-[188px] w-[129px] rounded-[20px]"
+      className="h-[200px] w-[150px] rounded-[20px]"
       style={{ backgroundColor }}
     >
       <Overlay />
       <Box className="p-2 flex-1">
-        <Box className="bg-white self-end px-2 py-1 rounded-full">
-          <ThemedText size="bodyXS" className="self-start">
+        <Box className="self-end px-2 py-1 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 shadow-sm">
+          <ThemedText size="bodyXS" className="self-start text-white">
             {timeLeft}
           </ThemedText>
         </Box>
@@ -136,10 +127,10 @@ const PriorityTaskCard = ({
           <ThemedText size="caption" className="text-white">
             Progress
           </ThemedText>
-          <Box className="bg-white h-1 w-full rounded-full mt-1">
+          <Box className="relative w-full h-2 mt-2 rounded-full bg-white/20 backdrop-blur-md border border-white/30 overflow-hidden">
             <Box
-              className="bg-primary-500 h-full rounded-full"
-              style={{ width: `${progress}%` }} // Example progress, can be dynamic
+              className="h-full rounded-full bg-slate-300"
+              style={{ width: `${progress}%` }}
             />
           </Box>
           <ThemedText size="caption" className="text-white text-right">

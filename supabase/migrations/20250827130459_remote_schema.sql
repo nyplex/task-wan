@@ -42,14 +42,14 @@ CREATE EXTENSION IF NOT EXISTS "pgjwt" WITH SCHEMA "extensions";
 
 
 
-
+CREATE SCHEMA IF NOT EXISTS pgmq;
 
 CREATE EXTENSION IF NOT EXISTS "pgmq" WITH SCHEMA "pgmq";
 
 
 
 
-
+CREATE ROLE powersync_role;
 
 CREATE EXTENSION IF NOT EXISTS "supabase_vault" WITH SCHEMA "vault";
 
@@ -184,7 +184,7 @@ CREATE TABLE IF NOT EXISTS "public"."users" (
     "email" "text" NOT NULL,
     "location" "text",
     "dob" "date",
-    "name" "text",
+    "name" "text" NOT NULL,
     CONSTRAINT "email_format" CHECK (("email" ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'::"text"))
 );
 

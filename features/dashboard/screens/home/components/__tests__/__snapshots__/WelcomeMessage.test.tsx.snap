@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WelcomeMessage matches snapshot 1`] = `
+[
+  <Text>
+    Welcome Alex
+  </Text>,
+  <Text>
+    Hello, test!
+  </Text>,
+]
+`;
