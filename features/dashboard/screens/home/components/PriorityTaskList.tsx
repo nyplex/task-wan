@@ -14,7 +14,7 @@ const getBgColor = (id: string | number) => {
     Math.abs(
       [...id.toString()].reduce((acc, char) => acc + char.charCodeAt(0), 0),
     ) % 10;
-  return index + 1;
+  return index;
 };
 
 const PriorityTaskList = () => {
