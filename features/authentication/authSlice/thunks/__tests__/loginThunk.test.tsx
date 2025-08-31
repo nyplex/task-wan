@@ -26,6 +26,20 @@ describe("loginThunk", () => {
       source: "loginThunk",
       type: "auth",
     });
+    expect(result.meta.requestStatus).toBe("rejected");
+  });
+
+  it("skips OTP for Maestro in development/preview", async () => {
+    const OLD_ENV = process.env.EXPO_PUBLIC_APP_VARIANT;
+    process.env.EXPO_PUBLIC_APP_VARIANT = "development";
+    const result = await loginThunk({ email: "maestro@e2e.com" })(
+      dispatch,
+      getState,
+      thunkAPI,
+    );
+    expect(result.payload).toBeUndefined();
+    expect(result.meta.requestStatus).toBe("fulfilled");
+    process.env.EXPO_PUBLIC_APP_VARIANT = OLD_ENV;
   });
 
   it("rejects if supabase returns error", async () => {
@@ -37,11 +51,8 @@ describe("loginThunk", () => {
       getState,
       thunkAPI,
     );
-    expect(result.payload).toEqual({
-      message: "Login error",
-      source: "loginThunk/supabase",
-      type: "auth",
-    });
+    expect(result.meta.requestStatus).toBe("rejected");
+    expect((result as any).error.message).toBe("Login error");
   });
 
   it("resolves if login is successful", async () => {
@@ -54,6 +65,7 @@ describe("loginThunk", () => {
       thunkAPI,
     );
     expect(result.payload).toBeUndefined();
+    expect(result.meta.requestStatus).toBe("fulfilled");
   });
 
   it("rejects with error if exception is thrown", async () => {
@@ -65,10 +77,7 @@ describe("loginThunk", () => {
       getState,
       thunkAPI,
     );
-    expect(result.payload).toEqual({
-      message: "Network error",
-      source: "loginThunk",
-      type: "auth",
-    });
+    expect(result.meta.requestStatus).toBe("rejected");
+    expect((result as any).error.message).toBe("Network error");
   });
 });

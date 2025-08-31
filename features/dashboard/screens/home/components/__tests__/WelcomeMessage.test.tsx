@@ -36,8 +36,8 @@ describe("WelcomeMessage", () => {
       isError: false,
       name: undefined,
     });
-    const { getByText } = render(<WelcomeMessage />);
-    expect(getByText("Loading...")).toBeTruthy();
+    const { getByTestId } = render(<WelcomeMessage />);
+    expect(getByTestId("loading-box")).toBeTruthy();
   });
 
   it("shows error state", () => {

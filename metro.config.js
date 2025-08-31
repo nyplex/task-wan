@@ -1,8 +1,8 @@
-const { getDefaultConfig } = require("expo/metro-config");
 const { withNativeWind } = require("nativewind/metro");
 const withStorybook = require("@storybook/react-native/metro/withStorybook");
+const { getSentryExpoConfig } = require("@sentry/react-native/metro");
 
-const config = getDefaultConfig(__dirname);
+const config = getSentryExpoConfig(__dirname);
 
 // PowerSync inlineRequires blockList patch
 config.transformer.getTransformOptions = async () => ({

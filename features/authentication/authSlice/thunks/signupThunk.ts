@@ -1,13 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { supabase } from "@/lib/supabase";
-import { GlobalError } from "@/types/errors";
 
 export const signupThunk = createAsyncThunk<
   void,
-  { email: string; username: string },
-  {
-    rejectValue: GlobalError;
-  }
+  { email: string; username: string }
 >(
   "auth/signup",
   async (credentials: { email: string; username: string }, thunkAPI) => {
@@ -42,18 +38,10 @@ export const signupThunk = createAsyncThunk<
       });
 
       if (error) {
-        return thunkAPI.rejectWithValue({
-          message: error.message,
-          source: "signupThunk/supabase",
-          type: "auth",
-        });
+        throw error;
       }
     } catch (error) {
-      return thunkAPI.rejectWithValue({
-        message: error instanceof Error ? error?.message : "Unknown error",
-        source: "signupThunk",
-        type: "auth",
-      });
+      throw error;
     }
   },
 );

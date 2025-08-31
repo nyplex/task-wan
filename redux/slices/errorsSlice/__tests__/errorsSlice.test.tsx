@@ -1,43 +1,62 @@
 import errorsReducer, {
-  addError,
+  pushError,
   clearErrors,
-  ErrorsStateType,
+  popError,
 } from "../errorsSlice";
-import { GlobalError } from "@/types/errors";
 
 describe("errorsSlice reducer", () => {
-  const initialState: ErrorsStateType = {
-    errors: [],
-  };
+  const initialState = { queue: [], current: undefined };
 
   it("should return the initial state", () => {
     expect(errorsReducer(undefined, { type: "@@INIT" })).toEqual(initialState);
   });
 
-  it("should handle addError", () => {
-    const error: GlobalError = {
+  it("should handle pushError", () => {
+    const error: {
+      id: string;
+      message: string;
+      severity: "info" | "error" | "critical";
+      code: string;
+    } = {
+      id: "1",
       message: "Network error",
-      type: "network",
-      source: "api",
+      severity: "error",
+      code: "500",
     };
-    const nextState = errorsReducer(initialState, addError(error));
-    expect(nextState.errors).toEqual([error]);
+    const nextState = errorsReducer(initialState, pushError(error));
+    expect(nextState.queue).toEqual([error]);
+    expect(nextState.current).toEqual(error);
   });
 
-  it("should handle addError multiple times", () => {
-    const error1: GlobalError = { message: "Network error", type: "network" };
-    const error2: GlobalError = { message: "Auth error", type: "auth" };
-    let state = errorsReducer(initialState, addError(error1));
-    state = errorsReducer(state, addError(error2));
-    expect(state.errors).toEqual([error1, error2]);
+  it("should handle pushError multiple times and popError", () => {
+    const error1: {
+      id: string;
+      message: string;
+      severity: "info" | "error" | "critical";
+    } = { id: "1", message: "Network error", severity: "error" };
+    const error2: {
+      id: string;
+      message: string;
+      severity: "info" | "error" | "critical";
+    } = { id: "2", message: "Auth error", severity: "critical" };
+    let state = errorsReducer(initialState, pushError(error1));
+    state = errorsReducer(state, pushError(error2));
+    expect(state.queue).toEqual([error1, error2]);
+    expect(state.current).toEqual(error2);
+    state = errorsReducer(state, popError());
+    expect(state.queue).toEqual([error2]);
+    expect(state.current).toEqual(error2);
   });
 
   it("should handle clearErrors", () => {
-    const error: GlobalError = { message: "Form error", type: "form" };
-    const prevState: ErrorsStateType = {
-      errors: [error],
-    };
+    const error: {
+      id: string;
+      message: string;
+      severity: "info" | "error" | "critical";
+    } = { id: "1", message: "Form error", severity: "info" };
+    const prevState = { queue: [error], current: error };
     const nextState = errorsReducer(prevState, clearErrors());
-    expect(nextState.errors).toEqual([]);
+    expect(nextState.queue).toEqual([]);
+    expect(nextState.current).toBeUndefined();
   });
 });

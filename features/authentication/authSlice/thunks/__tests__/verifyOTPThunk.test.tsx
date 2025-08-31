@@ -41,11 +41,8 @@ describe("verifyOTPThunk", () => {
       email: "test@example.com",
       token: "123456",
     })(dispatch, getState, thunkAPI);
-    expect(result.payload).toEqual({
-      message: "Invalid OTP",
-      source: "verifyOTPThunk/supabase",
-      type: "auth",
-    });
+    expect(result.meta.requestStatus).toBe("rejected");
+    expect(result.payload).toBeUndefined();
   });
 
   it("resolves if OTP is valid", async () => {
@@ -65,10 +62,7 @@ describe("verifyOTPThunk", () => {
       email: "test@example.com",
       token: "123456",
     })(dispatch, getState, thunkAPI);
-    expect(result.payload).toEqual({
-      message: "Network error",
-      source: "verifyOTPThunk",
-      type: "auth",
-    });
+    expect(result.meta.requestStatus).toBe("rejected");
+    expect(result.payload).toBeUndefined();
   });
 });

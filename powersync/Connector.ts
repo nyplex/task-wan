@@ -1,5 +1,5 @@
 import { supabase } from "@/lib/supabase";
-import { handleFailedOp } from "@/redux/slices/apiSlice/utils/handleFailedOp";
+import { handleFailedOp } from "@/redux/utils/handleFailedOp";
 import {
   AbstractPowerSyncDatabase,
   CrudEntry,

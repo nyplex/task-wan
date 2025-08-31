@@ -1,28 +1,11 @@
 import { apiSlice } from "@/redux/slices/apiSlice/apiSlice";
 import { SubtaskRecord } from "@/powersync/AppSchema";
 import { powersync } from "@/powersync/system";
-import { getSubtasksApi } from "./getSubtasks";
+import { buildQueryError } from "@/redux/utils/buildQueryError";
 
 export const addSubtaskApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     addSubtask: builder.mutation<SubtaskRecord, SubtaskRecord>({
-      onQueryStarted: async (subtask, { dispatch, queryFulfilled }) => {
-        const patchResult = dispatch(
-          getSubtasksApi.util.updateQueryData(
-            "getSubtasks",
-            undefined,
-            (draft) => {
-              draft.push(subtask);
-            },
-          ),
-        );
-
-        try {
-          await queryFulfilled;
-        } catch {
-          patchResult.undo();
-        }
-      },
       queryFn: async (subtask: SubtaskRecord) => {
         try {
           await powersync.execute(
@@ -37,8 +20,8 @@ export const addSubtaskApi = apiSlice.injectEndpoints({
             ],
           );
           return { data: subtask };
-        } catch {
-          return { error: { status: 500, data: "Failed to create subtask" } };
+        } catch (e) {
+          return buildQueryError(e, "Failed to create subtask", 500);
         }
       },
     }),

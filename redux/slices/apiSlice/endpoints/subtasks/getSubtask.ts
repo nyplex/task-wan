@@ -1,6 +1,7 @@
 import { apiSlice } from "@/redux/slices/apiSlice/apiSlice";
 import { SubtaskRecord } from "@/powersync/AppSchema";
 import { powersync } from "@/powersync/system";
+import { buildQueryError } from "@/redux/utils/buildQueryError";
 
 export const getSubtaskApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -13,11 +14,15 @@ export const getSubtaskApi = apiSlice.injectEndpoints({
           )) as SubtaskRecord;
 
           if (!result) {
-            return { error: { status: 404, data: "Subtask not found" } };
+            return buildQueryError(
+              new Error("Subtask not found"),
+              "Subtask not found",
+              404,
+            );
           }
           return { data: result };
-        } catch {
-          return { error: { status: 500, data: "Failed to fetch subtask" } };
+        } catch (e) {
+          return buildQueryError(e, "Failed to fetch subtask", 500);
         }
       },
     }),

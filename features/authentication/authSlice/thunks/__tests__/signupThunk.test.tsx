@@ -40,11 +40,8 @@ describe("signupThunk", () => {
       email: "test@example.com",
       username: "alex",
     })(dispatch, getState, thunkAPI);
-    expect(result.payload).toEqual({
-      message: "Signup error",
-      source: "signupThunk/supabase",
-      type: "auth",
-    });
+    expect(result.meta.requestStatus).toBe("rejected");
+    expect(result.payload).toBeUndefined();
   });
 
   it("resolves if signup is successful", async () => {
@@ -66,10 +63,7 @@ describe("signupThunk", () => {
       email: "test@example.com",
       username: "alex",
     })(dispatch, getState, thunkAPI);
-    expect(result.payload).toEqual({
-      message: "Network error",
-      source: "signupThunk",
-      type: "auth",
-    });
+    expect(result.meta.requestStatus).toBe("rejected");
+    expect(result.payload).toBeUndefined();
   });
 });

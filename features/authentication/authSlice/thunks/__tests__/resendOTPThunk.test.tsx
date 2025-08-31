@@ -37,11 +37,12 @@ describe("resendOTPThunk", () => {
       getState,
       thunkAPI,
     );
-    expect(result.payload).toEqual({
-      message: "Resend error",
-      source: "resendOTPThunk/supabase",
-      type: "auth",
-    });
+    expect(result.meta.requestStatus).toBe("rejected");
+    expect((result as any).error).toEqual(
+      expect.objectContaining({
+        message: "Resend error",
+      }),
+    );
   });
 
   it("resolves if resend is successful", async () => {
@@ -65,10 +66,11 @@ describe("resendOTPThunk", () => {
       getState,
       thunkAPI,
     );
-    expect(result.payload).toEqual({
-      message: "Network error",
-      source: "resendOTPThunk",
-      type: "auth",
-    });
+    expect(result.meta.requestStatus).toBe("rejected");
+    expect((result as any).error).toEqual(
+      expect.objectContaining({
+        message: "Network error",
+      }),
+    );
   });
 });

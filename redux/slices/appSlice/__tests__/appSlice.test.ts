@@ -6,15 +6,6 @@ import appReducer, {
   AppStateType,
 } from "../appSlice";
 
-// Mock thunks
-jest.mock("@/redux/slices/appSlice/thunks/initializeAppThunk", () => ({
-  initializeAppThunk: {
-    pending: { type: "initializeAppThunk/pending" },
-    fulfilled: { type: "initializeAppThunk/fulfilled" },
-    rejected: { type: "initializeAppThunk/rejected" },
-  },
-}));
-
 jest.mock(
   "@/features/authentication/authSlice/thunks/initializeAuthThunk",
   () => ({
@@ -31,7 +22,6 @@ const getInitialState: AppStateType = {
   isLoading: false,
   appVersion: "1.0.0",
   theme: "system",
-  appInitDone: false,
   authInitDone: false,
 };
 
@@ -59,43 +49,6 @@ describe("appSlice", () => {
     expect(state.theme).toBe("dark");
   });
 
-  it("should handle initializeApp.pending", () => {
-    const prevState = { ...getInitialState, isLoading: true };
-    const action = { type: "initializeAppThunk/pending" };
-    const state = appReducer(prevState, action);
-    expect(state.isLoading).toBe(true);
-  });
-
-  it("should handle initializeApp.rejected", () => {
-    const prevState = { ...getInitialState, isLoading: true };
-    const action = {
-      type: "initializeAppThunk/rejected",
-      payload: new Error("Initialization failed"),
-    };
-    const state = appReducer(prevState, action);
-    expect(state.isLoading).toBe(false);
-    expect(state.appInitDone).toBe(true);
-    expect(state.isAppReady).toBe(false);
-  });
-
-  it("should handle initializeApp.fulfilled when authInitDone is false", () => {
-    const prevState = { ...getInitialState, authInitDone: false };
-    const action = { type: "initializeAppThunk/fulfilled" };
-    const state = appReducer(prevState, action);
-    expect(state.appInitDone).toBe(true);
-    expect(state.isLoading).toBe(false);
-    expect(state.isAppReady).toBe(false);
-  });
-
-  it("should handle initializeApp.fulfilled when authInitDone is true", () => {
-    const prevState = { ...getInitialState, authInitDone: true };
-    const action = { type: "initializeAppThunk/fulfilled" };
-    const state = appReducer(prevState, action);
-    expect(state.appInitDone).toBe(true);
-    expect(state.isLoading).toBe(false);
-    expect(state.isAppReady).toBe(true);
-  });
-
   it("should handle initializeAuthThunk.pending", () => {
     const prevState = { ...getInitialState, isLoading: true };
     const action = { type: "initializeAuthThunk/pending" };
@@ -113,23 +66,5 @@ describe("appSlice", () => {
     expect(state.isLoading).toBe(false);
     expect(state.authInitDone).toBe(true);
     expect(state.isAppReady).toBe(false);
-  });
-
-  it("should handle initializeAuthThunk.fulfilled when appInitDone is false", () => {
-    const prevState = { ...getInitialState, appInitDone: false };
-    const action = { type: "initializeAuthThunk/fulfilled" };
-    const state = appReducer(prevState, action);
-    expect(state.authInitDone).toBe(true);
-    expect(state.isLoading).toBe(false);
-    expect(state.isAppReady).toBe(false);
-  });
-
-  it("should handle initializeAuthThunk.fulfilled when appInitDone is true", () => {
-    const prevState = { ...getInitialState, appInitDone: true };
-    const action = { type: "initializeAuthThunk/fulfilled" };
-    const state = appReducer(prevState, action);
-    expect(state.authInitDone).toBe(true);
-    expect(state.isLoading).toBe(false);
-    expect(state.isAppReady).toBe(true);
   });
 });

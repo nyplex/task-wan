@@ -1,6 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { setSession } from "@/features/authentication/authSlice/authSlice";
-import { getProfileApi } from "@/redux/slices/apiSlice/endpoints/profile/getProfile";
 import { Session } from "@supabase/supabase-js";
 import { setupPowerSync } from "@/powersync/system";
 
@@ -14,20 +13,9 @@ export const initializeAuthThunk = createAsyncThunk(
       if (!session) {
         return;
       }
-
       await setupPowerSync(session.access_token);
-
-      await thunkAPI
-        .dispatch(getProfileApi.endpoints.getProfile.initiate(undefined))
-        .unwrap();
     } catch (error) {
-      if (error instanceof Error) {
-        return thunkAPI.rejectWithValue(error.message);
-      } else {
-        return thunkAPI.rejectWithValue(
-          "An unknown error occurred during initialization",
-        );
-      }
+      throw error;
     }
   },
 );

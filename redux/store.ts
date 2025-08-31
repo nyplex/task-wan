@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { listenerMiddleware } from "./middlewares/listenerMiddlewares";
 import devToolsEnhancer from "redux-devtools-expo-dev-plugin";
 import appReducer from "./slices/appSlice/appSlice";
 import authReducer from "@/features/authentication/authSlice/authSlice";
 import errorsReducer from "./slices/errorsSlice/errorsSlice";
 import { apiSlice } from "./slices/apiSlice/apiSlice";
+import { errorMiddleware } from "./middlewares/errorMiddleware";
 
 const store = configureStore({
   reducer: {
@@ -15,9 +15,7 @@ const store = configureStore({
   },
   devTools: false,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware()
-      .prepend(listenerMiddleware.middleware)
-      .concat(apiSlice.middleware),
+    getDefaultMiddleware().concat(apiSlice.middleware, errorMiddleware),
   enhancers: (getDefaultEnhancers) =>
     getDefaultEnhancers().concat(
       devToolsEnhancer({

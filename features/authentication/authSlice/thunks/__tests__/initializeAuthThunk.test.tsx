@@ -1,18 +1,8 @@
 import { setSession } from "@/features/authentication/authSlice/authSlice";
-import { getProfileApi } from "@/redux/slices/apiSlice/endpoints/profile/getProfile";
 import { initializeAuthThunk } from "../initializeAuthThunk";
 
 jest.mock("@/features/authentication/authSlice/authSlice", () => ({
   setSession: jest.fn(),
-}));
-jest.mock("@/redux/slices/apiSlice/endpoints/profile/getProfile", () => ({
-  getProfileApi: {
-    endpoints: {
-      getProfile: {
-        initiate: jest.fn(),
-      },
-    },
-  },
 }));
 jest.mock("@/powersync/system", () => ({
   setupPowerSync: jest.fn().mockResolvedValue(undefined),
@@ -51,49 +41,27 @@ describe("initializeAuthThunk", () => {
     expect(result.payload).toBeUndefined();
   });
 
-  it("dispatches setSession and getProfile with valid session", async () => {
-    const unwrap = jest.fn().mockResolvedValue({ profile: "data" });
-    (getProfileApi.endpoints.getProfile.initiate as jest.Mock).mockReturnValue({
-      unwrap,
-    });
+  it("dispatches setSession and calls setupPowerSync with valid session", async () => {
+    const { setupPowerSync } = require("@/powersync/system");
     const result = await initializeAuthThunk(session)(
       dispatch,
       getState,
       thunkAPI,
     );
     expect(setSession).toHaveBeenCalledWith(session);
-    expect(getProfileApi.endpoints.getProfile.initiate).toHaveBeenCalledWith(
-      undefined,
-    );
-    expect(unwrap).toHaveBeenCalled();
+    expect(setupPowerSync).toHaveBeenCalledWith(session.access_token);
     expect(result.payload).toBeUndefined();
   });
 
-  it("rejects with error if getProfile throws", async () => {
-    const unwrap = jest.fn().mockRejectedValue(new Error("Profile error"));
-    (getProfileApi.endpoints.getProfile.initiate as jest.Mock).mockReturnValue({
-      unwrap,
-    });
+  it("rejects with error if setupPowerSync throws", async () => {
+    const { setupPowerSync } = require("@/powersync/system");
+    setupPowerSync.mockRejectedValueOnce(new Error("PowerSync error"));
     const result = await initializeAuthThunk(session)(
       dispatch,
       getState,
       thunkAPI,
     );
-    expect(result.payload).toBe("Profile error");
-  });
-
-  it("rejects with unknown error if getProfile throws non-Error", async () => {
-    const unwrap = jest.fn().mockRejectedValue("Unknown");
-    (getProfileApi.endpoints.getProfile.initiate as jest.Mock).mockReturnValue({
-      unwrap,
-    });
-    const result = await initializeAuthThunk(session)(
-      dispatch,
-      getState,
-      thunkAPI,
-    );
-    expect(result.payload).toBe(
-      "An unknown error occurred during initialization",
-    );
+    expect(result.meta.requestStatus).toBe("rejected");
+    expect((result as any).error.message).toBe("PowerSync error");
   });
 });
