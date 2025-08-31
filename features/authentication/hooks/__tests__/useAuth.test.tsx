@@ -47,7 +47,7 @@ jest.mock("@/features/authentication/authSlice/authSlice", () => ({
   setIsLoading: jest.fn(),
 }));
 jest.mock("@/lib/safe", () => ({
-  safe: (fn: any, ...args: any[]) => fn(),
+  safe: (fn: any) => fn(),
 }));
 
 describe("useAuth", () => {
