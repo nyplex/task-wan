@@ -1,4 +1,3 @@
-import { version } from "../package.json";
 import * as Sentry from "@sentry/react-native";
 import * as Application from "expo-application";
 
@@ -7,7 +6,7 @@ export const SentryInit = () => {
     dsn: process.env.EXPO_PUBLIC_SENTRY_DSN,
     sendDefaultPii: true,
     environment: process.env.EXPO_PUBLIC_APP_VARIANT,
-    release: version,
+    release: "1.0.0",
     dist: Application.nativeBuildVersion || undefined,
     attachScreenshot: true,
     attachViewHierarchy: true,

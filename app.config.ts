@@ -1,4 +1,3 @@
-import { version } from "./package.json";
 const withOpSQLiteStaticPod = require("./plugins/withOpSQLiteStaticPod");
 const withSQLiteThirdPartyPod = require("./plugins/withSQLiteThirdPartyPod");
 const withCustomSQLiteGradleProp = require("./plugins/withCustomSQLiteGradleProp");
@@ -46,7 +45,6 @@ const getAppName = () => {
 export default ({ config }: { config: any }) => ({
   ...config,
   name: getAppName(),
-  version: version,
   ios: {
     ...config.ios,
     bundleIdentifier: getUniqueIdentifier(),

@@ -14,8 +14,9 @@ const useAuthListener = () => {
     const { data: listener } = supabase.auth.onAuthStateChange(
       (_event, session) => {
         const sessionId = session?.user.id ?? null;
+        console.log("Auth state changed:", { sessionId });
 
-        if (lastSessionId.current === sessionId) return;
+        // if (lastSessionId.current === sessionId && sessionId) return;
         lastSessionId.current = sessionId;
 
         if (session) {

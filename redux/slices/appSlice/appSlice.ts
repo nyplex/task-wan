@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { initializeAuthThunk } from "@/features/authentication/authSlice/thunks/initializeAuthThunk";
-import { version } from "@/package.json";
 
 export interface AppStateType {
   isAppReady: boolean;
@@ -13,7 +12,7 @@ export interface AppStateType {
 const initialState: AppStateType = {
   isAppReady: false,
   isLoading: true,
-  appVersion: version,
+  appVersion: "1.0.0",
   theme: "system",
   authInitDone: false,
 };
