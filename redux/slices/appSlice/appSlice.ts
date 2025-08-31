@@ -1,22 +1,19 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { initializeAuthThunk } from "@/features/authentication/authSlice/thunks/initializeAuthThunk";
-import { initializeAppThunk } from "./thunks/initializeAppThunk";
 
 export interface AppStateType {
   isAppReady: boolean;
   isLoading: boolean;
   appVersion: string;
   theme: "light" | "dark" | "system";
-  appInitDone: boolean;
   authInitDone: boolean;
 }
 
 const initialState: AppStateType = {
   isAppReady: false,
-  isLoading: false,
+  isLoading: true,
   appVersion: "1.0.0",
   theme: "system",
-  appInitDone: false,
   authInitDone: false,
 };
 
@@ -36,24 +33,12 @@ export const appSlice = createSlice({
     toggleTheme: (state) => {
       state.theme = state.theme === "dark" ? "light" : "dark";
     },
+    setAuthInitDone: (state, action: PayloadAction<boolean>) => {
+      state.authInitDone = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(initializeAppThunk.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(initializeAppThunk.rejected, (state) => {
-        state.isLoading = false;
-        state.appInitDone = true;
-        state.isAppReady = false;
-      })
-      .addCase(initializeAppThunk.fulfilled, (state) => {
-        state.appInitDone = true;
-        if (state.authInitDone) {
-          state.isLoading = false;
-          state.isAppReady = true;
-        }
-      })
       .addCase(initializeAuthThunk.pending, (state) => {
         state.isLoading = true;
       })
@@ -64,15 +49,18 @@ export const appSlice = createSlice({
       })
       .addCase(initializeAuthThunk.fulfilled, (state) => {
         state.authInitDone = true;
-        if (state.appInitDone) {
-          state.isLoading = false;
-          state.isAppReady = true;
-        }
+        state.isLoading = false;
+        state.isAppReady = true;
       });
   },
 });
 
-export const { setAppReady, setIsLoading, setAppVersion, toggleTheme } =
-  appSlice.actions;
+export const {
+  setAppReady,
+  setIsLoading,
+  setAppVersion,
+  toggleTheme,
+  setAuthInitDone,
+} = appSlice.actions;
 
 export default appSlice.reducer;

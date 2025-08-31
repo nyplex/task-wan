@@ -9,7 +9,7 @@ const AppTitle = () => {
         weight="bold"
         className="text-primary-0 text-center"
       >
-        TASK-WAN
+        TASK WAN
       </ThemedText>
       <ThemedText
         size="body"

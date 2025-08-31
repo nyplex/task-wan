@@ -21,18 +21,24 @@ export const db = wrapPowerSyncWithDrizzle(powersync, {
 
 export const setupPowerSync = async (token: string) => {
   // Uses the backend connector that will be created in the next section
-  const connector = new Connector(token);
-  await powersync.connect(connector);
+  try {
+    const connector = new Connector(token);
+    await powersync.connect(connector);
 
-  console.log("POWERSYNC CONNECTED");
+    console.log("POWERSYNC CONNECTED");
 
-  const start = Date.now();
-  const timeout = 5000; // ms
+    const start = Date.now();
+    const timeout = 5000; // ms
 
-  // Wait for PowerSync to be ready
-  while (!powersync.ready && Date.now() - start < timeout) {
-    await new Promise((resolve) => setTimeout(resolve, 150));
+    // Wait for PowerSync to be ready
+    while (!powersync.ready && Date.now() - start < timeout) {
+      await new Promise((resolve) => setTimeout(resolve, 150));
+    }
+
+    return powersync.ready;
+  } catch {
+    const err = new Error("Failed to setup power sync") as any;
+    err.code = "500";
+    throw err;
   }
-
-  return powersync.ready;
 };

@@ -1,6 +1,6 @@
 import { powersync } from "@/powersync/system";
 import { CrudEntry } from "@powersync/common";
-import { getProfileApi } from "../endpoints/profile/getProfile";
+import { getProfileApi } from "../slices/apiSlice/endpoints/profile/getProfile";
 import store from "@/redux/store";
 
 // Track active watchers to avoid duplicates

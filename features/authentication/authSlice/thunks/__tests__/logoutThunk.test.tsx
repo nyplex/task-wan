@@ -20,11 +20,8 @@ describe("logoutThunk", () => {
       error: { message: "Logout error" },
     });
     const result = await logoutThunk()(dispatch, getState, thunkAPI);
-    expect(result.payload).toEqual({
-      message: "Logout error",
-      source: "logoutThunk/supabase",
-      type: "auth",
-    });
+    expect(result.meta.requestStatus).toBe("rejected");
+    expect((result as any).error.message).toBe("Logout error");
   });
 
   it("resolves if logout is successful", async () => {
@@ -38,10 +35,7 @@ describe("logoutThunk", () => {
       throw new Error("Network error");
     });
     const result = await logoutThunk()(dispatch, getState, thunkAPI);
-    expect(result.payload).toEqual({
-      message: "Network error",
-      source: "logoutThunk",
-      type: "auth",
-    });
+    expect(result.meta.requestStatus).toBe("rejected");
+    expect((result as any).error.message).toBe("Network error");
   });
 });

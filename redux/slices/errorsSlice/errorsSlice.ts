@@ -1,30 +1,42 @@
 import { RootState } from "@/redux/store";
-import { GlobalError } from "@/types/errors";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export interface ErrorsStateType {
-  errors: GlobalError[];
-}
+// define the error type here
+export type Severity = "info" | "error" | "critical";
 
-const initialState: ErrorsStateType = {
-  errors: [],
+type AppError = {
+  id: string;
+  message: string;
+  severity: Severity;
+  code?: string | number;
+  details?: any;
+};
+
+type State = {
+  current?: AppError;
+  queue: AppError[];
 };
 
 export const errorsSlice = createSlice({
-  name: "errors",
-  initialState,
+  name: "appError",
+  initialState: { queue: [] } as State,
   reducers: {
-    addError: (state, action: PayloadAction<GlobalError>) => {
-      const newError = action.payload;
-      state.errors.push(newError);
+    pushError(state, action: PayloadAction<AppError>) {
+      state.queue.push(action.payload);
+      state.current = action.payload;
     },
-    clearErrors: (state) => {
-      state.errors = [];
+    popError(state) {
+      state.queue.shift();
+      state.current = state.queue[0];
+    },
+    clearErrors(state) {
+      state.queue = [];
+      state.current = undefined;
     },
   },
 });
 
-export const { clearErrors, addError } = errorsSlice.actions;
+export const { clearErrors, popError, pushError } = errorsSlice.actions;
 export default errorsSlice.reducer;
 
-export const selectErrors = (state: RootState) => state.errors.errors;
+export const selectErrors = (state: RootState) => state.errors.queue;

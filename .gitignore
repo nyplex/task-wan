@@ -51,3 +51,4 @@ GoogleService-Info.plist
 server.cert
 sync-rules-dev.yaml
 dump.sql
+.env.local

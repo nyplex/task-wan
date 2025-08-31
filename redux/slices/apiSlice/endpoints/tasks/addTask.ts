@@ -1,24 +1,11 @@
 import { apiSlice } from "@/redux/slices/apiSlice/apiSlice";
 import { TaskRecord } from "@/powersync/AppSchema";
 import { powersync } from "@/powersync/system";
-import { getTasksApi } from "./getTasks";
+import { buildQueryError } from "@/redux/utils/buildQueryError";
 
 export const addTaskApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     addTask: builder.mutation<TaskRecord, TaskRecord>({
-      async onQueryStarted(task, { dispatch, queryFulfilled }) {
-        const patchResult = dispatch(
-          getTasksApi.util.updateQueryData("getTasks", undefined, (draft) => {
-            draft.push(task);
-          }),
-        );
-
-        try {
-          await queryFulfilled;
-        } catch {
-          patchResult.undo();
-        }
-      },
       queryFn: async (task: TaskRecord) => {
         try {
           await powersync.execute(
@@ -34,8 +21,8 @@ export const addTaskApi = apiSlice.injectEndpoints({
             ],
           );
           return { data: task };
-        } catch {
-          return { error: { status: 500, data: "Failed to add task" } };
+        } catch (e) {
+          return buildQueryError(e, "Failed to add task", 500);
         }
       },
     }),

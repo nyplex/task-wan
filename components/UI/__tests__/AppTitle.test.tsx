@@ -6,7 +6,7 @@ describe("<AppTitle />", () => {
     const { getByTestId } = render(<AppTitle />);
     const box = getByTestId("AppTitle");
     const [text1, text2] = box.children;
-    expect(text1.props.children).toBe("TASK-WAN");
+    expect(text1.props.children).toBe("TASK WAN");
     expect(text2.props.children).toBe("Management App");
     expect(text1.props.size).toBe("headingXL");
     expect(text1.props.weight).toBe("bold");

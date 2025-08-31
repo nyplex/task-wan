@@ -32,7 +32,7 @@ const useToast = () => {
           <Toast
             nativeID={uniqueToastId}
             variant="solid"
-            className="p-4 rounded-[10px] max-w-[450px]"
+            className="p-4 pt-safe rounded-[10px] max-w-[450px]"
             style={{
               backgroundColor: "#121212",
             }}

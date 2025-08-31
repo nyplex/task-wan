@@ -1,13 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { supabase } from "@/lib/supabase";
-import { GlobalError } from "@/types/errors";
 
 export const verifyOTPThunk = createAsyncThunk<
   void,
-  { email: string; token: string },
-  {
-    rejectValue: GlobalError;
-  }
+  { email: string; token: string }
 >("auth/verifyOTP", async (otp: { email: string; token: string }, thunkAPI) => {
   try {
     if (!otp.email || !otp.token) {
@@ -31,11 +27,7 @@ export const verifyOTPThunk = createAsyncThunk<
         password: process.env.EXPO_PUBLIC_MAESTRO_USER_PASSWORD!,
       });
       if (error) {
-        return thunkAPI.rejectWithValue({
-          message: error.message,
-          source: "verifyOTPThunk/supabase",
-          type: "auth",
-        });
+        throw error;
       }
       return;
     }
@@ -48,17 +40,9 @@ export const verifyOTPThunk = createAsyncThunk<
     });
 
     if (error) {
-      return thunkAPI.rejectWithValue({
-        message: error.message,
-        source: "verifyOTPThunk/supabase",
-        type: "auth",
-      });
+      throw error;
     }
   } catch (error) {
-    return thunkAPI.rejectWithValue({
-      message: error instanceof Error ? error?.message : "Unknown error",
-      source: "verifyOTPThunk",
-      type: "auth",
-    });
+    throw error;
   }
 });

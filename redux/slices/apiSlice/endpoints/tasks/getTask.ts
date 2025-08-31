@@ -1,6 +1,7 @@
 import { apiSlice } from "@/redux/slices/apiSlice/apiSlice";
 import { TaskRecord } from "@/powersync/AppSchema";
 import { powersync } from "@/powersync/system";
+import { buildQueryError } from "@/redux/utils/buildQueryError";
 
 export const getTaskApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -13,11 +14,15 @@ export const getTaskApi = apiSlice.injectEndpoints({
           )) as TaskRecord;
 
           if (!result) {
-            return { error: { status: 404, data: "Task not found" } };
+            return buildQueryError(
+              new Error("Task not found"),
+              "Task not found",
+              404,
+            );
           }
           return { data: result };
-        } catch {
-          return { error: { status: 500, data: "Failed to fetch task" } };
+        } catch (e) {
+          return buildQueryError(e, "Failed to fetch task", 500);
         }
       },
       // providesTags: ["Profile"],

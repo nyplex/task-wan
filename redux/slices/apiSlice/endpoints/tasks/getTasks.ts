@@ -1,7 +1,8 @@
 import { powersync } from "@/powersync/system";
 import { SubtaskRecord } from "@/powersync/AppSchema";
 import { apiSlice } from "@/redux/slices/apiSlice/apiSlice";
-import { getUserId } from "@/redux/slices/apiSlice/utils/getUserId";
+import { getUserId } from "@/lib/getUserId";
+import { buildQueryError } from "@/redux/utils/buildQueryError";
 
 type SubtaskJointRecord = {
   subtask_id: string;
@@ -92,11 +93,8 @@ export const getTasksApi = apiSlice.injectEndpoints({
           });
 
           return { data: Object.values(taskMap) };
-        } catch (err) {
-          if (err instanceof Error && err.message === "Unauthorized") {
-            return { error: { status: 401, data: "Unauthorized" } };
-          }
-          return { error: { status: 500, data: "Failed to fetch tasks" } };
+        } catch (e) {
+          return buildQueryError(e, "Failed to fetch today's tasks", 500);
         }
       },
     }),

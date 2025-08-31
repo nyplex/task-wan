@@ -1,27 +1,42 @@
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useAppDispatch } from "./redux";
-import {
-  clearErrors,
-  selectErrors,
-} from "@/redux/slices/errorsSlice/errorsSlice";
+import { useAppDispatch, useAppSelector } from "./redux";
 import useToast from "./useToast";
+import { popError } from "@/redux/slices/errorsSlice/errorsSlice";
+import { Alert } from "react-native";
 
 const useErrors = () => {
-  const errors = useSelector(selectErrors);
+  const { handleToast } = useToast();
+  const error = useAppSelector((s) => s.errors.current);
 
   const dispatch = useAppDispatch();
-  const { handleToast } = useToast();
 
   useEffect(() => {
-    if (errors.length > 0) {
-      errors.forEach((error) => {
-        handleToast("Oops! An error occurred", "" + error.message, () => {
-          dispatch(clearErrors());
-        });
+    if (!error) return;
+
+    if (error.severity === "info") {
+      handleToast("Info", error.message, () => {
+        dispatch(popError());
       });
+      return;
     }
-  }, [errors, dispatch, handleToast]);
+
+    if (error.severity === "error") {
+      handleToast("Error", error.message, () => {
+        dispatch(popError());
+      });
+      return;
+    }
+
+    // critical -> use modal/alert
+    Alert.alert("Error", error.message, [
+      {
+        text: "Close",
+        onPress: () => dispatch(popError()),
+      },
+    ]);
+  }, [error, dispatch, handleToast]);
+
+  return null;
 };
 
 export default useErrors;

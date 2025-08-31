@@ -1,7 +1,8 @@
 import { powersync } from "@/powersync/system";
 import { SubtaskRecord } from "@/powersync/AppSchema";
 import { apiSlice } from "@/redux/slices/apiSlice/apiSlice";
-import { getUserId } from "@/redux/slices/apiSlice/utils/getUserId";
+import { getUserId } from "@/lib/getUserId";
+import { buildQueryError } from "@/redux/utils/buildQueryError";
 
 export const getSubtasksApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -15,11 +16,8 @@ export const getSubtasksApi = apiSlice.injectEndpoints({
           )) as SubtaskRecord[];
 
           return { data: result };
-        } catch (err) {
-          if (err instanceof Error && err.message === "Unauthorized") {
-            return { error: { status: 401, data: "Unauthorized" } };
-          }
-          return { error: { status: 500, data: "Failed to fetch subtasks" } };
+        } catch (e) {
+          return buildQueryError(e, "Failed to fetch subtasks", 500);
         }
       },
     }),
@@ -42,13 +40,8 @@ export const getSubtasksApi = apiSlice.injectEndpoints({
           )) as SubtaskRecord[];
 
           return { data: result };
-        } catch (err) {
-          if (err instanceof Error && err.message === "Unauthorized") {
-            return { error: { status: 401, data: "Unauthorized" } };
-          }
-          return {
-            error: { status: 500, data: "Failed to fetch today's subtasks" },
-          };
+        } catch (e) {
+          return buildQueryError(e, "Failed to fetch today's subtasks", 500);
         }
       },
     }),

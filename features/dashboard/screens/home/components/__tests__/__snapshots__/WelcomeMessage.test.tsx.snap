@@ -3,7 +3,8 @@
 exports[`WelcomeMessage matches snapshot 1`] = `
 [
   <Text>
-    Welcome Alex
+    Welcome 
+    Alex
   </Text>,
   <Text>
     Hello, test!

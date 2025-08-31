@@ -14,7 +14,7 @@ jest.mock(
   }),
 );
 
-const mockDispatch = jest.fn();
+const mockDispatch = jest.fn(() => ({ unwrap: jest.fn() }));
 const mockUnsubscribe = jest.fn();
 
 const mockOnAuthStateChange = jest.fn((_cb: any) => ({

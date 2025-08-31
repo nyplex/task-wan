@@ -1,7 +1,8 @@
 import { powersync } from "@/powersync/system";
 import { UserRecord } from "@/powersync/AppSchema";
 import { apiSlice } from "@/redux/slices/apiSlice/apiSlice";
-import { getUserId } from "@/redux/slices/apiSlice/utils/getUserId";
+import { getUserId } from "@/lib/getUserId";
+import { buildQueryError } from "@/redux/utils/buildQueryError";
 
 export const getProfileApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -15,14 +16,15 @@ export const getProfileApi = apiSlice.injectEndpoints({
           )) as UserRecord;
 
           if (!result) {
-            return { error: { status: 404, data: "Profile not found" } };
+            return buildQueryError(
+              new Error("Profile not found"),
+              "Profile not found",
+              404,
+            );
           }
           return { data: result };
-        } catch (err) {
-          if (err instanceof Error && err.message === "Unauthorized") {
-            return { error: { status: 401, data: "Unauthorized" } };
-          }
-          return { error: { status: 500, data: "Failed to fetch profile" } };
+        } catch (e) {
+          return buildQueryError(e, "Failed to fetch profile", 500);
         }
       },
       providesTags: (result) => [{ type: "Profile", id: result?.id }],

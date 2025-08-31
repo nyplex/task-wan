@@ -25,32 +25,30 @@ import { selectSession } from "@/features/authentication/authSlice/authSelectors
 import { selectAppState } from "@/redux/slices/appSlice/appSelectors";
 
 // Hooks
-import useInitializeApp from "@/hooks/useInitializeApp";
 import useAuthListener from "@/features/authentication/hooks/useAuthListener";
 import useErrors from "@/hooks/useErrors";
 
+// Sentry & Error Boundary
+import * as Sentry from "@sentry/react-native";
+import { SentryInit } from "@/lib/sentry";
+import { AppErrorBoundary } from "@/components/AppErrorBoundary";
+
+// Initialize Sentry
+SentryInit();
+
 function InnerLayout() {
   useErrors();
-  useInitializeApp();
   useAuthListener();
   const session = useSelector(selectSession);
-  const isAppLoading = useSelector(selectAppState);
+  const appState = useSelector(selectAppState);
 
-  if (isAppLoading.isLoading) {
+  if (appState.isLoading || !appState.isAppReady) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <ActivityIndicator size="large" color="#0000ff" />
       </View>
     );
   }
-
-  // if (!isAppLoading.isAppReady) {
-  //   return (
-  //     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-  //       <Text style={{ fontSize: 18, color: "#000" }}>App is not ready. Please restart...</Text>
-  //     </View>
-  //   );
-  // }
 
   const IS_STORYBOOK = false;
 
@@ -89,33 +87,35 @@ function InnerLayout() {
   );
 }
 
-export default function RootLayout() {
+export default Sentry.wrap(function RootLayout() {
   return (
     <Provider store={store}>
-      <KeyboardProvider>
-        <GestureHandlerRootView style={{ flex: 1 }}>
-          <GluestackUIProvider mode="light">
-            <ThemeProvider
-              value={{
-                ...DefaultTheme,
-                colors: {
-                  ...DefaultTheme.colors,
-                  background: "#ffffff",
-                },
-              }}
-            >
-              <BottomSheetProvider>
-                <InnerLayout />
-                <StatusBar
-                  style="dark"
-                  translucent={true}
-                  backgroundColor="transparent"
-                />
-              </BottomSheetProvider>
-            </ThemeProvider>
-          </GluestackUIProvider>
-        </GestureHandlerRootView>
-      </KeyboardProvider>
+      <AppErrorBoundary>
+        <KeyboardProvider>
+          <GestureHandlerRootView style={{ flex: 1 }}>
+            <GluestackUIProvider mode="light">
+              <ThemeProvider
+                value={{
+                  ...DefaultTheme,
+                  colors: {
+                    ...DefaultTheme.colors,
+                    background: "#ffffff",
+                  },
+                }}
+              >
+                <BottomSheetProvider>
+                  <InnerLayout />
+                  <StatusBar
+                    style="dark"
+                    translucent={true}
+                    backgroundColor="transparent"
+                  />
+                </BottomSheetProvider>
+              </ThemeProvider>
+            </GluestackUIProvider>
+          </GestureHandlerRootView>
+        </KeyboardProvider>
+      </AppErrorBoundary>
     </Provider>
   );
-}
+});

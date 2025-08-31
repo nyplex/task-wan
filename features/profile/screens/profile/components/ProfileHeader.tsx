@@ -1,12 +1,9 @@
-import { useSelector } from "react-redux";
 import { useGetProfileQuery } from "@/redux/slices/apiSlice/endpoints/profile/getProfile";
-import { selectSession } from "@/features/authentication/authSlice/authSelectors";
 import { Box } from "@/gluestack-ui/box";
 import ProfileCard from "@/components/UI/ProfileCard";
 
 const ProfileHeader = () => {
-  const session = useSelector(selectSession);
-  const { data } = useGetProfileQuery({ userID: session?.user.id! });
+  const { data } = useGetProfileQuery();
   return (
     <Box className="top-safe-offset-4 px-4">
       <ProfileCard

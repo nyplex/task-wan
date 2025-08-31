@@ -1,6 +1,7 @@
 import { apiSlice } from "@/redux/slices/apiSlice/apiSlice";
 import { UserRecord } from "@/powersync/AppSchema";
 import { powersync } from "@/powersync/system";
+import { buildQueryError } from "@/redux/utils/buildQueryError";
 
 export type UpdateProfilePayload = Pick<
   UserRecord,
@@ -18,8 +19,8 @@ export const updateProfileApi = apiSlice.injectEndpoints({
               [profile.profession, profile.dob, profile.name, profile.id],
             );
             return { data: profile };
-          } catch {
-            return { error: { status: 500, data: "Failed to update profile" } };
+          } catch (e) {
+            return buildQueryError(e, "Failed to update profile", 500);
           }
         },
         invalidatesTags: (result, error, arg) => [

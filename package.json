@@ -2,7 +2,7 @@
   "name": "task-wan",
   "license": "0BSD",
   "main": "expo-router/entry",
-  "version": "53.0.26",
+  "version": "1.0.0",
   "scripts": {
     "start": "npx expo start",
     "reset-project": "node ./scripts/reset-project.js",
@@ -54,6 +54,7 @@
     "@react-navigation/elements": "^2.3.8",
     "@react-navigation/native": "^7.1.6",
     "@reduxjs/toolkit": "^2.8.2",
+    "@sentry/react-native": "^6.20.0",
     "@shopify/flash-list": "1.7.6",
     "@shopify/react-native-skia": "v2.0.0-next.4",
     "@supabase/supabase-js": "^2.49.4",
