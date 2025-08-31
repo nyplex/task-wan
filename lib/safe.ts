@@ -20,7 +20,7 @@ export async function safe<T>(
       dispatch(
         pushError({
           id: `${Date.now()}`,
-          message: n.message ?? userMessage,
+          message: n.message || userMessage || "An unexpected error occurred",
           severity: (n.severity as any) ?? "error",
           code: n.code,
           details: e,
